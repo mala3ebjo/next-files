@@ -1,0 +1,255 @@
+-- =============================================================================
+-- V6 — Orders, stops, legs, cargo, proofs, ratings, tracking links
+-- =============================================================================
+
+CREATE TABLE orders (
+  id                     BIGINT       NOT NULL AUTO_INCREMENT,
+  code                   VARCHAR(32)  NOT NULL,
+  client_user_id         BIGINT       NOT NULL,
+  client_org_id          BIGINT       NULL,
+  carrier_id             BIGINT       NULL,
+  driver_id              BIGINT       NULL,
+  vehicle_id             BIGINT       NULL,
+  broker_org_id          BIGINT       NULL,
+  status                 VARCHAR(28)  NOT NULL DEFAULT 'DRAFT',
+  payer                  VARCHAR(10)  NOT NULL DEFAULT 'SENDER' COMMENT 'SENDER, RECEIVER',
+  payment_method         VARCHAR(16)  NULL,
+  payment_status         VARCHAR(24)  NOT NULL DEFAULT 'PENDING',
+  is_cross_border        TINYINT(1)   NOT NULL DEFAULT 0,
+  is_scheduled           TINYINT(1)   NOT NULL DEFAULT 0,
+  scheduled_at           DATETIME(3)  NULL,
+  dispatch_due_at        DATETIME(3)  NULL COMMENT 'scheduled_at minus lead time',
+  quote_id               BIGINT       NOT NULL,
+  vehicle_type_id        BIGINT       NOT NULL,
+  subtotal_minor         BIGINT       NOT NULL,
+  discount_minor         BIGINT       NOT NULL DEFAULT 0,
+  tax_minor              BIGINT       NOT NULL DEFAULT 0,
+  total_minor            BIGINT       NOT NULL,
+  currency_code          CHAR(3)      NOT NULL,
+  fx_rate_snapshot       DECIMAL(20,8) NULL,
+  commission_minor       BIGINT       NOT NULL DEFAULT 0,
+  carrier_payout_minor   BIGINT       NOT NULL DEFAULT 0,
+  broker_margin_minor    BIGINT       NOT NULL DEFAULT 0,
+  pickup_country_id      BIGINT       NOT NULL,
+  dropoff_country_id     BIGINT       NOT NULL,
+  distance_km            DECIMAL(10,2) NOT NULL,
+  route_polyline         MEDIUMTEXT   NULL,
+  note                   VARCHAR(500) NULL,
+  assigned_at            DATETIME(3)  NULL,
+  picked_up_at           DATETIME(3)  NULL,
+  delivered_at           DATETIME(3)  NULL,
+  completed_at           DATETIME(3)  NULL,
+  cancelled_at           DATETIME(3)  NULL,
+  created_at             DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  updated_at             DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  deleted_at             DATETIME(3)  NULL,
+  version                INT          NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_order_code (code),
+  KEY ix_order_status_created (status, created_at),
+  KEY ix_order_client (client_user_id, status),
+  KEY ix_order_client_org (client_org_id, status),
+  KEY ix_order_driver (driver_id, status),
+  KEY ix_order_carrier (carrier_id, status),
+  KEY ix_order_dispatch (status, dispatch_due_at),
+  KEY ix_order_country (pickup_country_id, created_at),
+  CONSTRAINT fk_order_client   FOREIGN KEY (client_user_id)    REFERENCES users (id),
+  CONSTRAINT fk_order_org      FOREIGN KEY (client_org_id)     REFERENCES organizations (id),
+  CONSTRAINT fk_order_carrier  FOREIGN KEY (carrier_id)        REFERENCES carrier_profiles (id),
+  CONSTRAINT fk_order_driver   FOREIGN KEY (driver_id)         REFERENCES drivers (id),
+  CONSTRAINT fk_order_vehicle  FOREIGN KEY (vehicle_id)        REFERENCES vehicles (id),
+  CONSTRAINT fk_order_broker   FOREIGN KEY (broker_org_id)     REFERENCES organizations (id),
+  CONSTRAINT fk_order_quote    FOREIGN KEY (quote_id)          REFERENCES price_quotes (id),
+  CONSTRAINT fk_order_vtype    FOREIGN KEY (vehicle_type_id)   REFERENCES vehicle_types (id),
+  CONSTRAINT fk_order_currency FOREIGN KEY (currency_code)     REFERENCES currencies (code),
+  CONSTRAINT fk_order_pickup_c FOREIGN KEY (pickup_country_id) REFERENCES countries (id),
+  CONSTRAINT fk_order_drop_c   FOREIGN KEY (dropoff_country_id) REFERENCES countries (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+ALTER TABLE price_quotes
+  ADD CONSTRAINT fk_quote_order FOREIGN KEY (consumed_order_id) REFERENCES orders (id);
+
+ALTER TABLE drivers
+  ADD CONSTRAINT fk_driver_active_order FOREIGN KEY (active_order_id) REFERENCES orders (id);
+
+CREATE TABLE order_stops (
+  id                     BIGINT       NOT NULL AUTO_INCREMENT,
+  order_id               BIGINT       NOT NULL,
+  sequence_no            INT          NOT NULL,
+  stop_type              VARCHAR(10)  NOT NULL COMMENT 'PICKUP, STOP, DROPOFF',
+  address_line           VARCHAR(300) NOT NULL,
+  lat                    DECIMAL(10,7) NOT NULL,
+  lng                    DECIMAL(10,7) NOT NULL,
+  country_id             BIGINT       NOT NULL,
+  city                   VARCHAR(120) NULL,
+  contact_name           VARCHAR(120) NULL,
+  contact_phone          VARCHAR(24)  NULL,
+  note                   VARCHAR(500) NULL,
+  verification_code_hash VARCHAR(120) NULL COMMENT 'Hashed 4-digit code shown to the contact',
+  geofence_radius_m      INT          NOT NULL DEFAULT 200,
+  eta                    DATETIME(3)  NULL,
+  arrived_at             DATETIME(3)  NULL,
+  completed_at           DATETIME(3)  NULL,
+  created_at             DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  updated_at             DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_stop_sequence (order_id, sequence_no),
+  KEY ix_stop_order (order_id),
+  CONSTRAINT fk_stop_order   FOREIGN KEY (order_id)   REFERENCES orders (id) ON DELETE CASCADE,
+  CONSTRAINT fk_stop_country FOREIGN KEY (country_id) REFERENCES countries (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE order_legs (
+  id                 BIGINT       NOT NULL AUTO_INCREMENT,
+  order_id           BIGINT       NOT NULL,
+  sequence_no        INT          NOT NULL,
+  from_country_id    BIGINT       NOT NULL,
+  to_country_id      BIGINT       NOT NULL,
+  corridor_id        BIGINT       NULL,
+  distance_km        DECIMAL(10,2) NOT NULL,
+  leg_amount_minor   BIGINT       NOT NULL DEFAULT 0,
+  status             VARCHAR(16)  NOT NULL DEFAULT 'PENDING'
+                     COMMENT 'PENDING, ACTIVE, AT_BORDER, CLEARED, COMPLETED, HELD',
+  border_entered_at  DATETIME(3)  NULL,
+  border_cleared_at  DATETIME(3)  NULL,
+  hold_reason        VARCHAR(500) NULL,
+  created_at         DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  updated_at         DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_leg_sequence (order_id, sequence_no),
+  CONSTRAINT fk_leg_order    FOREIGN KEY (order_id)        REFERENCES orders (id) ON DELETE CASCADE,
+  CONSTRAINT fk_leg_from     FOREIGN KEY (from_country_id) REFERENCES countries (id),
+  CONSTRAINT fk_leg_to       FOREIGN KEY (to_country_id)   REFERENCES countries (id),
+  CONSTRAINT fk_leg_corridor FOREIGN KEY (corridor_id)     REFERENCES corridors (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE order_cargo (
+  id                      BIGINT       NOT NULL AUTO_INCREMENT,
+  order_id                BIGINT       NOT NULL,
+  cargo_type_id           BIGINT       NOT NULL,
+  weight_kg               INT          NOT NULL,
+  dimensions              VARCHAR(80)  NULL,
+  description             VARCHAR(500) NULL,
+  fragile                 TINYINT(1)   NOT NULL DEFAULT 0,
+  requires_refrigeration  TINYINT(1)   NOT NULL DEFAULT 0,
+  declared_value_minor    BIGINT       NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_cargo_order (order_id),
+  CONSTRAINT fk_cargo_order FOREIGN KEY (order_id)      REFERENCES orders (id) ON DELETE CASCADE,
+  CONSTRAINT fk_cargo_type  FOREIGN KEY (cargo_type_id) REFERENCES cargo_types (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE order_status_history (
+  id           BIGINT       NOT NULL AUTO_INCREMENT,
+  order_id     BIGINT       NOT NULL,
+  from_status  VARCHAR(28)  NULL,
+  to_status    VARCHAR(28)  NOT NULL,
+  actor_type   VARCHAR(12)  NOT NULL COMMENT 'CLIENT, DRIVER, CARRIER, ADMIN, SYSTEM',
+  actor_user_id BIGINT      NULL,
+  label_key    VARCHAR(120) NULL,
+  note         VARCHAR(500) NULL,
+  occurred_at  DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (id),
+  KEY ix_history_order (order_id, occurred_at),
+  CONSTRAINT fk_history_order FOREIGN KEY (order_id)      REFERENCES orders (id) ON DELETE CASCADE,
+  CONSTRAINT fk_history_actor FOREIGN KEY (actor_user_id) REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE order_proofs (
+  id             BIGINT       NOT NULL AUTO_INCREMENT,
+  order_id       BIGINT       NOT NULL,
+  stop_id        BIGINT       NULL,
+  proof_type     VARCHAR(12)  NOT NULL COMMENT 'PICKUP, STOP, DELIVERY, HANDOVER',
+  photo_urls     JSON         NULL,
+  signature_url  VARCHAR(500) NULL,
+  receiver_name  VARCHAR(120) NULL,
+  code_verified  TINYINT(1)   NOT NULL DEFAULT 0,
+  lat            DECIMAL(10,7) NULL,
+  lng            DECIMAL(10,7) NULL,
+  accuracy_m     DECIMAL(8,2) NULL,
+  geofence_ok    TINYINT(1)   NOT NULL DEFAULT 1,
+  mock_location  TINYINT(1)   NOT NULL DEFAULT 0,
+  device_time    DATETIME(3)  NULL,
+  captured_at    DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  captured_by    BIGINT       NULL,
+  PRIMARY KEY (id),
+  KEY ix_proof_order (order_id, proof_type),
+  CONSTRAINT fk_proof_order FOREIGN KEY (order_id)    REFERENCES orders (id) ON DELETE CASCADE,
+  CONSTRAINT fk_proof_stop  FOREIGN KEY (stop_id)     REFERENCES order_stops (id),
+  CONSTRAINT fk_proof_by    FOREIGN KEY (captured_by) REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE order_handovers (
+  id               BIGINT      NOT NULL AUTO_INCREMENT,
+  order_id         BIGINT      NOT NULL,
+  from_driver_id   BIGINT      NULL,
+  to_driver_id     BIGINT      NULL,
+  from_vehicle_id  BIGINT      NULL,
+  to_vehicle_id    BIGINT      NULL,
+  lat              DECIMAL(10,7) NULL,
+  lng              DECIMAL(10,7) NULL,
+  photo_urls       JSON        NULL,
+  reason           VARCHAR(500) NOT NULL,
+  recorded_by      BIGINT      NULL,
+  occurred_at      DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (id),
+  KEY ix_handover_order (order_id, occurred_at),
+  CONSTRAINT fk_ho_order      FOREIGN KEY (order_id)        REFERENCES orders (id) ON DELETE CASCADE,
+  CONSTRAINT fk_ho_from_drv   FOREIGN KEY (from_driver_id)  REFERENCES drivers (id),
+  CONSTRAINT fk_ho_to_drv     FOREIGN KEY (to_driver_id)    REFERENCES drivers (id),
+  CONSTRAINT fk_ho_from_veh   FOREIGN KEY (from_vehicle_id) REFERENCES vehicles (id),
+  CONSTRAINT fk_ho_to_veh     FOREIGN KEY (to_vehicle_id)   REFERENCES vehicles (id),
+  CONSTRAINT fk_ho_by         FOREIGN KEY (recorded_by)     REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE order_tracking_links (
+  id               BIGINT       NOT NULL AUTO_INCREMENT,
+  order_id         BIGINT       NOT NULL,
+  token            VARCHAR(64)  NOT NULL COMMENT '128-bit opaque random token',
+  created_by       BIGINT       NULL,
+  disabled_at      DATETIME(3)  NULL,
+  disabled_reason  VARCHAR(60)  NULL COMMENT 'DELIVERED, REVOKED',
+  view_count       INT          NOT NULL DEFAULT 0,
+  created_at       DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_tracking_token (token),
+  KEY ix_tracking_order (order_id),
+  CONSTRAINT fk_track_order FOREIGN KEY (order_id)   REFERENCES orders (id) ON DELETE CASCADE,
+  CONSTRAINT fk_track_by    FOREIGN KEY (created_by) REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE order_cancellations (
+  id                 BIGINT       NOT NULL AUTO_INCREMENT,
+  order_id           BIGINT       NOT NULL,
+  cancelled_by_type  VARCHAR(12)  NOT NULL COMMENT 'CLIENT, DRIVER, CARRIER, ADMIN, SYSTEM',
+  cancelled_by_user  BIGINT       NULL,
+  reason_code        VARCHAR(60)  NOT NULL,
+  note               VARCHAR(500) NULL,
+  fee_minor          BIGINT       NOT NULL DEFAULT 0,
+  refund_minor       BIGINT       NOT NULL DEFAULT 0,
+  refund_method      VARCHAR(20)  NULL COMMENT 'ORIGINAL_METHOD, WALLET, NONE',
+  created_at         DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_cancel_order (order_id),
+  CONSTRAINT fk_cancel_order FOREIGN KEY (order_id)          REFERENCES orders (id) ON DELETE CASCADE,
+  CONSTRAINT fk_cancel_user  FOREIGN KEY (cancelled_by_user) REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE order_ratings (
+  id           BIGINT       NOT NULL AUTO_INCREMENT,
+  order_id     BIGINT       NOT NULL,
+  from_user_id BIGINT       NOT NULL,
+  to_user_id   BIGINT       NOT NULL,
+  stars        TINYINT      NOT NULL,
+  tag_keys     JSON         NULL,
+  comment      VARCHAR(1000) NULL,
+  is_visible   TINYINT(1)   NOT NULL DEFAULT 0,
+  created_at   DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_rating_order_from (order_id, from_user_id),
+  KEY ix_rating_to (to_user_id, created_at),
+  CONSTRAINT fk_rating_order FOREIGN KEY (order_id)     REFERENCES orders (id) ON DELETE CASCADE,
+  CONSTRAINT fk_rating_from  FOREIGN KEY (from_user_id) REFERENCES users (id),
+  CONSTRAINT fk_rating_to    FOREIGN KEY (to_user_id)   REFERENCES users (id),
+  CONSTRAINT ck_rating_stars CHECK (stars BETWEEN 1 AND 5)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
