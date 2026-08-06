@@ -1,0 +1,1113 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXT Freight · Design Mockups</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--p:#EA5B0C;--pd:#B4470A;--ink:#151210;--bg:#F6F4F1;--line:#EAE6E1;--muted:#6E655D}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,system-ui,sans-serif;color:#0F172A;background:var(--bg);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .topbar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line)}
+  .topbar-in{max-width:1240px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:19px}
+  .logo{width:34px;height:34px;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+  .brand small{display:block;font-weight:600;font-size:12px;color:var(--muted)}
+  nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  nav a{padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px;color:var(--pd);background:#FDECDF}
+  nav a:hover{background:var(--p);color:#fff}
+  .hero{max-width:1240px;margin:0 auto;padding:40px 28px 8px}
+  .hero h1{font-size:34px;letter-spacing:-.02em}
+  .hero p{margin-top:10px;color:var(--muted);font-size:16px;max-width:640px}
+  .hero .stat{margin-top:18px;display:inline-flex;gap:8px;align-items:center;font-weight:700;font-size:14px;color:var(--pd);background:#FDECDF;padding:8px 14px;border-radius:999px}
+  main{max-width:1240px;margin:0 auto;padding:24px 28px 80px}
+  .group{margin-top:40px}
+  .group-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:22px}
+  .group-head h2{font-size:22px;letter-spacing:-.01em}
+  .group-head p{color:var(--muted);font-size:14px;margin-top:3px}
+  .count{color:var(--muted);font-size:13px;font-weight:700;white-space:nowrap}
+  .grid{display:grid;gap:26px}
+  .phone-grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+  .desktop-grid{grid-template-columns:repeat(auto-fill,minmax(440px,1fr))}
+  .card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:transform .15s ease,box-shadow .15s ease}
+  .card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(180,71,10,.14)}
+  .shot{display:block;background:linear-gradient(160deg,#241608,#0b3227)}
+  .card.desktop .shot{background:#0f172a}
+  .shot img{display:block;width:100%;height:auto}
+  figcaption{padding:14px 16px 16px}
+  .cap-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .cap-title{font-weight:800;font-size:15px}
+  .cap-sub{display:block;margin-top:2px;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+  .dl{font-size:12px;font-weight:800;color:var(--pd);background:#FDECDF;padding:6px 10px;border-radius:8px;white-space:nowrap}
+  .dl:hover{background:var(--p);color:#fff}
+  footer{max-width:1240px;margin:0 auto;padding:0 28px 60px;color:var(--muted);font-size:13px}
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:100;background:rgba(6,18,13,.94);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:36px}
+  .lb.open{display:flex}
+  .lb img{max-width:92vw;max-height:90vh;width:auto;height:auto;border-radius:16px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+  .lb-btn{position:absolute;border:0;background:rgba(255,255,255,.14);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+  .lb-btn:hover{background:rgba(255,255,255,.3)}
+  .lb-close{top:22px;right:26px;width:48px;height:48px;border-radius:50%;font-size:22px}
+  .lb-nav{top:50%;transform:translateY(-50%);width:56px;height:56px;border-radius:50%;font-size:30px}
+  .lb-prev{left:26px}.lb-next{right:26px}
+  .lb-cap{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:#fff;font-weight:700;font-size:14.5px;background:rgba(0,0,0,.45);padding:9px 18px;border-radius:999px;font-variant-numeric:tabular-nums}
+  body.lb-lock{overflow:hidden}
+  @media (max-width:640px){.lb-nav{width:46px;height:46px;font-size:24px}.lb-prev{left:10px}.lb-next{right:10px}}
+</style></head>
+<body>
+  <div class="topbar"><div class="topbar-in">
+    <div class="brand"><div class="logo"><img src="data:image/png;base64,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" alt="NEXT" style="height:22px;width:auto;display:block"/></div><div>NEXT Freight<small>Design mockups</small></div></div>
+    <nav><a href="#client">Client App</a><a href="#driver">Driver App</a><a href="#control-panel">Control Panel</a><a href="#fleet-portal">Fleet Portal</a><a href="#broker-portal">Broker Portal</a></nav>
+  </div></div>
+  <div class="hero">
+    <h1>Product design mockups</h1>
+    <p>High-fidelity screen designs for the NEXT Freight platform — client &amp; driver mobile apps and the operations control panel. Click any screen to open full-size, or download the PNG.</p>
+    <span class="stat">● 81 screens · 5 surfaces</span>
+  </div>
+  <main>
+    <section class="group" id="client">
+      <header class="group-head">
+        <div>
+          <h2>Client App</h2>
+          <p>Mobile · iOS / Android</p>
+        </div>
+        <span class="count">23 screens</span>
+      </header>
+      <div class="grid phone-grid">
+      <figure class="card phone">
+        <a class="shot" href="client/01-onboarding.png" data-full="client/01-onboarding.png" data-label="Onboarding · 430×932">
+          <img loading="lazy" src="client/01-onboarding.png" width="430" height="932" alt="Onboarding">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Onboarding</span>
+            <a class="dl" href="client/01-onboarding.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/01a-auth-phone.png" data-full="client/01a-auth-phone.png" data-label="01a Auth Phone · 430×932">
+          <img loading="lazy" src="client/01a-auth-phone.png" width="430" height="932" alt="01a Auth Phone">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">01a Auth Phone</span>
+            <a class="dl" href="client/01a-auth-phone.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/01b-auth-otp.png" data-full="client/01b-auth-otp.png" data-label="01b Auth Otp · 430×932">
+          <img loading="lazy" src="client/01b-auth-otp.png" width="430" height="932" alt="01b Auth Otp">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">01b Auth Otp</span>
+            <a class="dl" href="client/01b-auth-otp.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/01c-auth-account.png" data-full="client/01c-auth-account.png" data-label="01c Auth Account · 430×932">
+          <img loading="lazy" src="client/01c-auth-account.png" width="430" height="932" alt="01c Auth Account">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">01c Auth Account</span>
+            <a class="dl" href="client/01c-auth-account.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/01d-plan.png" data-full="client/01d-plan.png" data-label="01d Plan · 430×932">
+          <img loading="lazy" src="client/01d-plan.png" width="430" height="932" alt="01d Plan">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">01d Plan</span>
+            <a class="dl" href="client/01d-plan.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/01e-company.png" data-full="client/01e-company.png" data-label="01e Company · 430×932">
+          <img loading="lazy" src="client/01e-company.png" width="430" height="932" alt="01e Company">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">01e Company</span>
+            <a class="dl" href="client/01e-company.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/02-home.png" data-full="client/02-home.png" data-label="Home · 430×932">
+          <img loading="lazy" src="client/02-home.png" width="430" height="932" alt="Home">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Home</span>
+            <a class="dl" href="client/02-home.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/03-order-wizard.png" data-full="client/03-order-wizard.png" data-label="Order Wizard · 430×932">
+          <img loading="lazy" src="client/03-order-wizard.png" width="430" height="932" alt="Order Wizard">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Order Wizard</span>
+            <a class="dl" href="client/03-order-wizard.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/03a-documents.png" data-full="client/03a-documents.png" data-label="03a Documents · 430×932">
+          <img loading="lazy" src="client/03a-documents.png" width="430" height="932" alt="03a Documents">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">03a Documents</span>
+            <a class="dl" href="client/03a-documents.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/04-quote.png" data-full="client/04-quote.png" data-label="Quote · 430×932">
+          <img loading="lazy" src="client/04-quote.png" width="430" height="932" alt="Quote">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Quote</span>
+            <a class="dl" href="client/04-quote.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/05-tracking.png" data-full="client/05-tracking.png" data-label="Tracking · 430×932">
+          <img loading="lazy" src="client/05-tracking.png" width="430" height="932" alt="Tracking">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Tracking</span>
+            <a class="dl" href="client/05-tracking.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/05a-tracking-crossborder.png" data-full="client/05a-tracking-crossborder.png" data-label="05a Tracking Crossborder · 430×932">
+          <img loading="lazy" src="client/05a-tracking-crossborder.png" width="430" height="932" alt="05a Tracking Crossborder">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">05a Tracking Crossborder</span>
+            <a class="dl" href="client/05a-tracking-crossborder.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/06-payment.png" data-full="client/06-payment.png" data-label="Payment · 430×932">
+          <img loading="lazy" src="client/06-payment.png" width="430" height="932" alt="Payment">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Payment</span>
+            <a class="dl" href="client/06-payment.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/07-orders.png" data-full="client/07-orders.png" data-label="Orders · 430×932">
+          <img loading="lazy" src="client/07-orders.png" width="430" height="932" alt="Orders">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Orders</span>
+            <a class="dl" href="client/07-orders.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/08-order-detail.png" data-full="client/08-order-detail.png" data-label="Order Detail · 430×932">
+          <img loading="lazy" src="client/08-order-detail.png" width="430" height="932" alt="Order Detail">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Order Detail</span>
+            <a class="dl" href="client/08-order-detail.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/09-chat.png" data-full="client/09-chat.png" data-label="Chat · 430×932">
+          <img loading="lazy" src="client/09-chat.png" width="430" height="932" alt="Chat">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Chat</span>
+            <a class="dl" href="client/09-chat.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/10-wallet.png" data-full="client/10-wallet.png" data-label="Wallet · 430×932">
+          <img loading="lazy" src="client/10-wallet.png" width="430" height="932" alt="Wallet">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Wallet</span>
+            <a class="dl" href="client/10-wallet.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/11-subscription.png" data-full="client/11-subscription.png" data-label="Subscription · 430×932">
+          <img loading="lazy" src="client/11-subscription.png" width="430" height="932" alt="Subscription">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Subscription</span>
+            <a class="dl" href="client/11-subscription.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/12-addresses.png" data-full="client/12-addresses.png" data-label="Addresses · 430×932">
+          <img loading="lazy" src="client/12-addresses.png" width="430" height="932" alt="Addresses">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Addresses</span>
+            <a class="dl" href="client/12-addresses.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/13-profile.png" data-full="client/13-profile.png" data-label="Profile · 430×932">
+          <img loading="lazy" src="client/13-profile.png" width="430" height="932" alt="Profile">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Profile</span>
+            <a class="dl" href="client/13-profile.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/13a-language.png" data-full="client/13a-language.png" data-label="13a Language · 430×932">
+          <img loading="lazy" src="client/13a-language.png" width="430" height="932" alt="13a Language">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">13a Language</span>
+            <a class="dl" href="client/13a-language.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/14-rate.png" data-full="client/14-rate.png" data-label="Rate · 430×932">
+          <img loading="lazy" src="client/14-rate.png" width="430" height="932" alt="Rate">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Rate</span>
+            <a class="dl" href="client/14-rate.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="client/15-notifications.png" data-full="client/15-notifications.png" data-label="Notifications · 430×932">
+          <img loading="lazy" src="client/15-notifications.png" width="430" height="932" alt="Notifications">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Notifications</span>
+            <a class="dl" href="client/15-notifications.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure></div>
+    </section>
+    <section class="group" id="driver">
+      <header class="group-head">
+        <div>
+          <h2>Driver App</h2>
+          <p>Mobile · iOS / Android</p>
+        </div>
+        <span class="count">13 screens</span>
+      </header>
+      <div class="grid phone-grid">
+      <figure class="card phone">
+        <a class="shot" href="driver/00a-auth-phone.png" data-full="driver/00a-auth-phone.png" data-label="00a Auth Phone · 430×932">
+          <img loading="lazy" src="driver/00a-auth-phone.png" width="430" height="932" alt="00a Auth Phone">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">00a Auth Phone</span>
+            <a class="dl" href="driver/00a-auth-phone.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/00b-auth-otp.png" data-full="driver/00b-auth-otp.png" data-label="00b Auth Otp · 430×932">
+          <img loading="lazy" src="driver/00b-auth-otp.png" width="430" height="932" alt="00b Auth Otp">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">00b Auth Otp</span>
+            <a class="dl" href="driver/00b-auth-otp.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/00c-driver-type.png" data-full="driver/00c-driver-type.png" data-label="00c Driver Type · 430×932">
+          <img loading="lazy" src="driver/00c-driver-type.png" width="430" height="932" alt="00c Driver Type">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">00c Driver Type</span>
+            <a class="dl" href="driver/00c-driver-type.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/00d-application.png" data-full="driver/00d-application.png" data-label="00d Application · 430×932">
+          <img loading="lazy" src="driver/00d-application.png" width="430" height="932" alt="00d Application">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">00d Application</span>
+            <a class="dl" href="driver/00d-application.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/00e-review.png" data-full="driver/00e-review.png" data-label="00e Review · 430×932">
+          <img loading="lazy" src="driver/00e-review.png" width="430" height="932" alt="00e Review">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">00e Review</span>
+            <a class="dl" href="driver/00e-review.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/00f-fleet-join.png" data-full="driver/00f-fleet-join.png" data-label="00f Fleet Join · 430×932">
+          <img loading="lazy" src="driver/00f-fleet-join.png" width="430" height="932" alt="00f Fleet Join">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">00f Fleet Join</span>
+            <a class="dl" href="driver/00f-fleet-join.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/01-online.png" data-full="driver/01-online.png" data-label="Online · 430×932">
+          <img loading="lazy" src="driver/01-online.png" width="430" height="932" alt="Online">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Online</span>
+            <a class="dl" href="driver/01-online.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/02-offer.png" data-full="driver/02-offer.png" data-label="Offer · 430×932">
+          <img loading="lazy" src="driver/02-offer.png" width="430" height="932" alt="Offer">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Offer</span>
+            <a class="dl" href="driver/02-offer.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/02b-assigned.png" data-full="driver/02b-assigned.png" data-label="02b Assigned · 430×932">
+          <img loading="lazy" src="driver/02b-assigned.png" width="430" height="932" alt="02b Assigned">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">02b Assigned</span>
+            <a class="dl" href="driver/02b-assigned.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/02c-loading.png" data-full="driver/02c-loading.png" data-label="02c Loading · 430×932">
+          <img loading="lazy" src="driver/02c-loading.png" width="430" height="932" alt="02c Loading">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">02c Loading</span>
+            <a class="dl" href="driver/02c-loading.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/02d-border.png" data-full="driver/02d-border.png" data-label="02d Border · 430×932">
+          <img loading="lazy" src="driver/02d-border.png" width="430" height="932" alt="02d Border">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">02d Border</span>
+            <a class="dl" href="driver/02d-border.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/03-proof.png" data-full="driver/03-proof.png" data-label="Proof · 430×932">
+          <img loading="lazy" src="driver/03-proof.png" width="430" height="932" alt="Proof">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Proof</span>
+            <a class="dl" href="driver/03-proof.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure>
+      <figure class="card phone">
+        <a class="shot" href="driver/04-earnings.png" data-full="driver/04-earnings.png" data-label="Earnings · 430×932">
+          <img loading="lazy" src="driver/04-earnings.png" width="430" height="932" alt="Earnings">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Earnings</span>
+            <a class="dl" href="driver/04-earnings.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">430×932</span>
+        </figcaption>
+      </figure></div>
+    </section>
+    <section class="group" id="control-panel">
+      <header class="group-head">
+        <div>
+          <h2>Control Panel</h2>
+          <p>Web · React + TypeScript</p>
+        </div>
+        <span class="count">24 screens</span>
+      </header>
+      <div class="grid desktop-grid">
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/00-login.png" data-full="control-panel/00-login.png" data-label="Login · 1440×900">
+          <img loading="lazy" src="control-panel/00-login.png" width="1440" height="900" alt="Login">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Login</span>
+            <a class="dl" href="control-panel/00-login.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/01-overview.png" data-full="control-panel/01-overview.png" data-label="Overview · 1440×900">
+          <img loading="lazy" src="control-panel/01-overview.png" width="1440" height="900" alt="Overview">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Overview</span>
+            <a class="dl" href="control-panel/01-overview.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/02-dispatch.png" data-full="control-panel/02-dispatch.png" data-label="Dispatch · 1440×900">
+          <img loading="lazy" src="control-panel/02-dispatch.png" width="1440" height="900" alt="Dispatch">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Dispatch</span>
+            <a class="dl" href="control-panel/02-dispatch.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/02b-force-assign.png" data-full="control-panel/02b-force-assign.png" data-label="02b Force Assign · 1440×900">
+          <img loading="lazy" src="control-panel/02b-force-assign.png" width="1440" height="900" alt="02b Force Assign">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">02b Force Assign</span>
+            <a class="dl" href="control-panel/02b-force-assign.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/03-orders.png" data-full="control-panel/03-orders.png" data-label="Orders · 1440×900">
+          <img loading="lazy" src="control-panel/03-orders.png" width="1440" height="900" alt="Orders">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Orders</span>
+            <a class="dl" href="control-panel/03-orders.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/04-pricing.png" data-full="control-panel/04-pricing.png" data-label="Pricing · 1440×900">
+          <img loading="lazy" src="control-panel/04-pricing.png" width="1440" height="900" alt="Pricing">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Pricing</span>
+            <a class="dl" href="control-panel/04-pricing.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/05-livemap.png" data-full="control-panel/05-livemap.png" data-label="Livemap · 1440×900">
+          <img loading="lazy" src="control-panel/05-livemap.png" width="1440" height="900" alt="Livemap">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Livemap</span>
+            <a class="dl" href="control-panel/05-livemap.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/05b-incident.png" data-full="control-panel/05b-incident.png" data-label="05b Incident · 1440×900">
+          <img loading="lazy" src="control-panel/05b-incident.png" width="1440" height="900" alt="05b Incident">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">05b Incident</span>
+            <a class="dl" href="control-panel/05b-incident.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/06-applications.png" data-full="control-panel/06-applications.png" data-label="Applications · 1440×900">
+          <img loading="lazy" src="control-panel/06-applications.png" width="1440" height="900" alt="Applications">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Applications</span>
+            <a class="dl" href="control-panel/06-applications.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/06b-request-changes.png" data-full="control-panel/06b-request-changes.png" data-label="06b Request Changes · 1440×900">
+          <img loading="lazy" src="control-panel/06b-request-changes.png" width="1440" height="900" alt="06b Request Changes">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">06b Request Changes</span>
+            <a class="dl" href="control-panel/06b-request-changes.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/07-carriers.png" data-full="control-panel/07-carriers.png" data-label="Carriers · 1440×900">
+          <img loading="lazy" src="control-panel/07-carriers.png" width="1440" height="900" alt="Carriers">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Carriers</span>
+            <a class="dl" href="control-panel/07-carriers.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/07b-carrier-detail.png" data-full="control-panel/07b-carrier-detail.png" data-label="07b Carrier Detail · 1440×900">
+          <img loading="lazy" src="control-panel/07b-carrier-detail.png" width="1440" height="900" alt="07b Carrier Detail">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">07b Carrier Detail</span>
+            <a class="dl" href="control-panel/07b-carrier-detail.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/08-finance.png" data-full="control-panel/08-finance.png" data-label="Finance · 1440×900">
+          <img loading="lazy" src="control-panel/08-finance.png" width="1440" height="900" alt="Finance">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Finance</span>
+            <a class="dl" href="control-panel/08-finance.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/09-compliance.png" data-full="control-panel/09-compliance.png" data-label="Compliance · 1440×900">
+          <img loading="lazy" src="control-panel/09-compliance.png" width="1440" height="900" alt="Compliance">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Compliance</span>
+            <a class="dl" href="control-panel/09-compliance.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/09b-suspend-confirm.png" data-full="control-panel/09b-suspend-confirm.png" data-label="09b Suspend Confirm · 1440×900">
+          <img loading="lazy" src="control-panel/09b-suspend-confirm.png" width="1440" height="900" alt="09b Suspend Confirm">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">09b Suspend Confirm</span>
+            <a class="dl" href="control-panel/09b-suspend-confirm.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/09c-rule-builder.png" data-full="control-panel/09c-rule-builder.png" data-label="09c Rule Builder · 1440×900">
+          <img loading="lazy" src="control-panel/09c-rule-builder.png" width="1440" height="900" alt="09c Rule Builder">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">09c Rule Builder</span>
+            <a class="dl" href="control-panel/09c-rule-builder.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/10-catalog.png" data-full="control-panel/10-catalog.png" data-label="Catalog · 1440×900">
+          <img loading="lazy" src="control-panel/10-catalog.png" width="1440" height="900" alt="Catalog">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Catalog</span>
+            <a class="dl" href="control-panel/10-catalog.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/10b-countries.png" data-full="control-panel/10b-countries.png" data-label="10b Countries · 1440×900">
+          <img loading="lazy" src="control-panel/10b-countries.png" width="1440" height="900" alt="10b Countries">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">10b Countries</span>
+            <a class="dl" href="control-panel/10b-countries.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/10c-country-form.png" data-full="control-panel/10c-country-form.png" data-label="10c Country Form · 1440×900">
+          <img loading="lazy" src="control-panel/10c-country-form.png" width="1440" height="900" alt="10c Country Form">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">10c Country Form</span>
+            <a class="dl" href="control-panel/10c-country-form.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/11-plans-tiers.png" data-full="control-panel/11-plans-tiers.png" data-label="Plans Tiers · 1440×900">
+          <img loading="lazy" src="control-panel/11-plans-tiers.png" width="1440" height="900" alt="Plans Tiers">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Plans Tiers</span>
+            <a class="dl" href="control-panel/11-plans-tiers.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/11b-edit-plan.png" data-full="control-panel/11b-edit-plan.png" data-label="11b Edit Plan · 1440×900">
+          <img loading="lazy" src="control-panel/11b-edit-plan.png" width="1440" height="900" alt="11b Edit Plan">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">11b Edit Plan</span>
+            <a class="dl" href="control-panel/11b-edit-plan.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/11c-edit-tier.png" data-full="control-panel/11c-edit-tier.png" data-label="11c Edit Tier · 1440×900">
+          <img loading="lazy" src="control-panel/11c-edit-tier.png" width="1440" height="900" alt="11c Edit Tier">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">11c Edit Tier</span>
+            <a class="dl" href="control-panel/11c-edit-tier.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/12-localization.png" data-full="control-panel/12-localization.png" data-label="Localization · 1440×900">
+          <img loading="lazy" src="control-panel/12-localization.png" width="1440" height="900" alt="Localization">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Localization</span>
+            <a class="dl" href="control-panel/12-localization.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="control-panel/13-reports.png" data-full="control-panel/13-reports.png" data-label="Reports · 1440×900">
+          <img loading="lazy" src="control-panel/13-reports.png" width="1440" height="900" alt="Reports">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Reports</span>
+            <a class="dl" href="control-panel/13-reports.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure></div>
+    </section>
+    <section class="group" id="fleet-portal">
+      <header class="group-head">
+        <div>
+          <h2>Fleet Portal</h2>
+          <p>Web · scoped operator portal</p>
+        </div>
+        <span class="count">15 screens</span>
+      </header>
+      <div class="grid desktop-grid">
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/00-register.png" data-full="fleet-portal/00-register.png" data-label="Register · 1440×900">
+          <img loading="lazy" src="fleet-portal/00-register.png" width="1440" height="900" alt="Register">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Register</span>
+            <a class="dl" href="fleet-portal/00-register.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/00b-documents.png" data-full="fleet-portal/00b-documents.png" data-label="00b Documents · 1440×900">
+          <img loading="lazy" src="fleet-portal/00b-documents.png" width="1440" height="900" alt="00b Documents">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">00b Documents</span>
+            <a class="dl" href="fleet-portal/00b-documents.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/00c-credentials.png" data-full="fleet-portal/00c-credentials.png" data-label="00c Credentials · 1440×900">
+          <img loading="lazy" src="fleet-portal/00c-credentials.png" width="1440" height="900" alt="00c Credentials">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">00c Credentials</span>
+            <a class="dl" href="fleet-portal/00c-credentials.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/00d-pending.png" data-full="fleet-portal/00d-pending.png" data-label="00d Pending · 1440×900">
+          <img loading="lazy" src="fleet-portal/00d-pending.png" width="1440" height="900" alt="00d Pending">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">00d Pending</span>
+            <a class="dl" href="fleet-portal/00d-pending.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/01-overview.png" data-full="fleet-portal/01-overview.png" data-label="Overview · 1440×900">
+          <img loading="lazy" src="fleet-portal/01-overview.png" width="1440" height="900" alt="Overview">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Overview</span>
+            <a class="dl" href="fleet-portal/01-overview.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/02-orders.png" data-full="fleet-portal/02-orders.png" data-label="Orders · 1440×900">
+          <img loading="lazy" src="fleet-portal/02-orders.png" width="1440" height="900" alt="Orders">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Orders</span>
+            <a class="dl" href="fleet-portal/02-orders.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/03-assign-driver.png" data-full="fleet-portal/03-assign-driver.png" data-label="Assign Driver · 1440×900">
+          <img loading="lazy" src="fleet-portal/03-assign-driver.png" width="1440" height="900" alt="Assign Driver">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Assign Driver</span>
+            <a class="dl" href="fleet-portal/03-assign-driver.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/04-drivers.png" data-full="fleet-portal/04-drivers.png" data-label="Drivers · 1440×900">
+          <img loading="lazy" src="fleet-portal/04-drivers.png" width="1440" height="900" alt="Drivers">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Drivers</span>
+            <a class="dl" href="fleet-portal/04-drivers.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/04b-invite-driver.png" data-full="fleet-portal/04b-invite-driver.png" data-label="04b Invite Driver · 1440×900">
+          <img loading="lazy" src="fleet-portal/04b-invite-driver.png" width="1440" height="900" alt="04b Invite Driver">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">04b Invite Driver</span>
+            <a class="dl" href="fleet-portal/04b-invite-driver.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/05-vehicles.png" data-full="fleet-portal/05-vehicles.png" data-label="Vehicles · 1440×900">
+          <img loading="lazy" src="fleet-portal/05-vehicles.png" width="1440" height="900" alt="Vehicles">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Vehicles</span>
+            <a class="dl" href="fleet-portal/05-vehicles.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/05b-add-vehicle.png" data-full="fleet-portal/05b-add-vehicle.png" data-label="05b Add Vehicle · 1440×900">
+          <img loading="lazy" src="fleet-portal/05b-add-vehicle.png" width="1440" height="900" alt="05b Add Vehicle">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">05b Add Vehicle</span>
+            <a class="dl" href="fleet-portal/05b-add-vehicle.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/06-live-map.png" data-full="fleet-portal/06-live-map.png" data-label="Live Map · 1440×900">
+          <img loading="lazy" src="fleet-portal/06-live-map.png" width="1440" height="900" alt="Live Map">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Live Map</span>
+            <a class="dl" href="fleet-portal/06-live-map.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/07-wallet-payouts.png" data-full="fleet-portal/07-wallet-payouts.png" data-label="Wallet Payouts · 1440×900">
+          <img loading="lazy" src="fleet-portal/07-wallet-payouts.png" width="1440" height="900" alt="Wallet Payouts">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Wallet Payouts</span>
+            <a class="dl" href="fleet-portal/07-wallet-payouts.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/07b-request-payout.png" data-full="fleet-portal/07b-request-payout.png" data-label="07b Request Payout · 1440×900">
+          <img loading="lazy" src="fleet-portal/07b-request-payout.png" width="1440" height="900" alt="07b Request Payout">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">07b Request Payout</span>
+            <a class="dl" href="fleet-portal/07b-request-payout.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="fleet-portal/08-violations.png" data-full="fleet-portal/08-violations.png" data-label="Violations · 1440×900">
+          <img loading="lazy" src="fleet-portal/08-violations.png" width="1440" height="900" alt="Violations">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Violations</span>
+            <a class="dl" href="fleet-portal/08-violations.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure></div>
+    </section>
+    <section class="group" id="broker-portal">
+      <header class="group-head">
+        <div>
+          <h2>Broker Portal</h2>
+          <p>Web · scoped broker portal</p>
+        </div>
+        <span class="count">6 screens</span>
+      </header>
+      <div class="grid desktop-grid">
+      <figure class="card desktop">
+        <a class="shot" href="broker-portal/00-overview.png" data-full="broker-portal/00-overview.png" data-label="Overview · 1440×900">
+          <img loading="lazy" src="broker-portal/00-overview.png" width="1440" height="900" alt="Overview">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Overview</span>
+            <a class="dl" href="broker-portal/00-overview.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="broker-portal/01-board.png" data-full="broker-portal/01-board.png" data-label="Board · 1440×900">
+          <img loading="lazy" src="broker-portal/01-board.png" width="1440" height="900" alt="Board">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Board</span>
+            <a class="dl" href="broker-portal/01-board.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="broker-portal/02-assign-carrier.png" data-full="broker-portal/02-assign-carrier.png" data-label="Assign Carrier · 1440×900">
+          <img loading="lazy" src="broker-portal/02-assign-carrier.png" width="1440" height="900" alt="Assign Carrier">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Assign Carrier</span>
+            <a class="dl" href="broker-portal/02-assign-carrier.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="broker-portal/03-carriers.png" data-full="broker-portal/03-carriers.png" data-label="Carriers · 1440×900">
+          <img loading="lazy" src="broker-portal/03-carriers.png" width="1440" height="900" alt="Carriers">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Carriers</span>
+            <a class="dl" href="broker-portal/03-carriers.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="broker-portal/03b-add-carrier.png" data-full="broker-portal/03b-add-carrier.png" data-label="03b Add Carrier · 1440×900">
+          <img loading="lazy" src="broker-portal/03b-add-carrier.png" width="1440" height="900" alt="03b Add Carrier">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">03b Add Carrier</span>
+            <a class="dl" href="broker-portal/03b-add-carrier.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure>
+      <figure class="card desktop">
+        <a class="shot" href="broker-portal/04-wallet-payouts.png" data-full="broker-portal/04-wallet-payouts.png" data-label="Wallet Payouts · 1440×900">
+          <img loading="lazy" src="broker-portal/04-wallet-payouts.png" width="1440" height="900" alt="Wallet Payouts">
+        </a>
+        <figcaption>
+          <div class="cap-row">
+            <span class="cap-title">Wallet Payouts</span>
+            <a class="dl" href="broker-portal/04-wallet-payouts.png" download title="Download PNG">↓ PNG</a>
+          </div>
+          <span class="cap-sub">1440×900</span>
+        </figcaption>
+      </figure></div>
+    </section></main>
+  <footer>Rendered at native device resolution · NEXT Freight · Iraq launch market.</footer>
+  <div class="lb" id="lb" aria-hidden="true">
+    <button class="lb-btn lb-close" id="lbClose" aria-label="Close">✕</button>
+    <button class="lb-btn lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-btn lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+    <div class="lb-cap" id="lbCap"></div>
+  </div>
+  <script>
+  (function(){
+    var shots=[].slice.call(document.querySelectorAll('.shot'));
+    var lb=document.getElementById('lb'),img=document.getElementById('lbImg'),cap=document.getElementById('lbCap'),i=0;
+    function show(n){i=(n+shots.length)%shots.length;var s=shots[i];img.src=s.getAttribute('data-full');cap.textContent=s.getAttribute('data-label');}
+    function open(n){show(n);lb.classList.add('open');document.body.classList.add('lb-lock');}
+    function close(){lb.classList.remove('open');document.body.classList.remove('lb-lock');img.src='';}
+    shots.forEach(function(s,n){s.addEventListener('click',function(e){e.preventDefault();open(n);});});
+    document.getElementById('lbClose').addEventListener('click',close);
+    document.getElementById('lbPrev').addEventListener('click',function(e){e.stopPropagation();show(i-1);});
+    document.getElementById('lbNext').addEventListener('click',function(e){e.stopPropagation();show(i+1);});
+    lb.addEventListener('click',function(e){if(e.target===lb)close();});
+    document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();else if(e.key==='ArrowLeft')show(i-1);else if(e.key==='ArrowRight')show(i+1);});
+  })();
+  </script>
+</body></html>
