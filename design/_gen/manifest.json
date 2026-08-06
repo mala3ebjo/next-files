@@ -1,0 +1,569 @@
+[
+  {
+    "file": "client/01-onboarding.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/01-onboarding.png"
+  },
+  {
+    "file": "client/01a-auth-phone.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/01a-auth-phone.png"
+  },
+  {
+    "file": "client/01b-auth-otp.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/01b-auth-otp.png"
+  },
+  {
+    "file": "client/01c-auth-account.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/01c-auth-account.png"
+  },
+  {
+    "file": "client/01d-plan.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/01d-plan.png"
+  },
+  {
+    "file": "client/01e-company.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/01e-company.png"
+  },
+  {
+    "file": "client/02-home.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/02-home.png"
+  },
+  {
+    "file": "client/03-order-wizard.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/03-order-wizard.png"
+  },
+  {
+    "file": "client/04-quote.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/04-quote.png"
+  },
+  {
+    "file": "client/05-tracking.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/05-tracking.png"
+  },
+  {
+    "file": "client/06-payment.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/06-payment.png"
+  },
+  {
+    "file": "client/07-orders.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/07-orders.png"
+  },
+  {
+    "file": "client/08-order-detail.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/08-order-detail.png"
+  },
+  {
+    "file": "client/09-chat.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/09-chat.png"
+  },
+  {
+    "file": "client/10-wallet.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/10-wallet.png"
+  },
+  {
+    "file": "client/11-subscription.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/11-subscription.png"
+  },
+  {
+    "file": "client/12-addresses.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/12-addresses.png"
+  },
+  {
+    "file": "client/13-profile.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/13-profile.png"
+  },
+  {
+    "file": "client/13a-language.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/13a-language.png"
+  },
+  {
+    "file": "client/14-rate.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/14-rate.png"
+  },
+  {
+    "file": "client/15-notifications.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/15-notifications.png"
+  },
+  {
+    "file": "client/03a-documents.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/03a-documents.png"
+  },
+  {
+    "file": "client/05a-tracking-crossborder.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/05a-tracking-crossborder.png"
+  },
+  {
+    "file": "driver/00a-auth-phone.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/00a-auth-phone.png"
+  },
+  {
+    "file": "driver/00b-auth-otp.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/00b-auth-otp.png"
+  },
+  {
+    "file": "driver/00c-driver-type.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/00c-driver-type.png"
+  },
+  {
+    "file": "driver/00d-application.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/00d-application.png"
+  },
+  {
+    "file": "driver/00e-review.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/00e-review.png"
+  },
+  {
+    "file": "driver/00f-fleet-join.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/00f-fleet-join.png"
+  },
+  {
+    "file": "driver/01-online.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/01-online.png"
+  },
+  {
+    "file": "driver/02-offer.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/02-offer.png"
+  },
+  {
+    "file": "driver/02b-assigned.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/02b-assigned.png"
+  },
+  {
+    "file": "driver/03-proof.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/03-proof.png"
+  },
+  {
+    "file": "driver/04-earnings.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/04-earnings.png"
+  },
+  {
+    "file": "driver/02c-loading.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/02c-loading.png"
+  },
+  {
+    "file": "driver/02d-border.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/02d-border.png"
+  },
+  {
+    "file": "control-panel/01-overview.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/01-overview.png"
+  },
+  {
+    "file": "control-panel/02-dispatch.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/02-dispatch.png"
+  },
+  {
+    "file": "control-panel/03-orders.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/03-orders.png"
+  },
+  {
+    "file": "control-panel/04-pricing.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/04-pricing.png"
+  },
+  {
+    "file": "control-panel/05-livemap.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/05-livemap.png"
+  },
+  {
+    "file": "control-panel/00-login.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/00-login.png"
+  },
+  {
+    "file": "control-panel/06-applications.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/06-applications.png"
+  },
+  {
+    "file": "control-panel/07-carriers.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/07-carriers.png"
+  },
+  {
+    "file": "control-panel/08-finance.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/08-finance.png"
+  },
+  {
+    "file": "control-panel/09-compliance.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/09-compliance.png"
+  },
+  {
+    "file": "control-panel/10-catalog.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/10-catalog.png"
+  },
+  {
+    "file": "control-panel/11-plans-tiers.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/11-plans-tiers.png"
+  },
+  {
+    "file": "control-panel/12-localization.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/12-localization.png"
+  },
+  {
+    "file": "control-panel/13-reports.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/13-reports.png"
+  },
+  {
+    "file": "control-panel/02b-force-assign.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/02b-force-assign.png"
+  },
+  {
+    "file": "control-panel/05b-incident.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/05b-incident.png"
+  },
+  {
+    "file": "control-panel/06b-request-changes.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/06b-request-changes.png"
+  },
+  {
+    "file": "control-panel/07b-carrier-detail.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/07b-carrier-detail.png"
+  },
+  {
+    "file": "control-panel/09b-suspend-confirm.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/09b-suspend-confirm.png"
+  },
+  {
+    "file": "control-panel/09c-rule-builder.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/09c-rule-builder.png"
+  },
+  {
+    "file": "control-panel/10b-countries.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/10b-countries.png"
+  },
+  {
+    "file": "control-panel/10c-country-form.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/10c-country-form.png"
+  },
+  {
+    "file": "control-panel/11b-edit-plan.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/11b-edit-plan.png"
+  },
+  {
+    "file": "control-panel/11c-edit-tier.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/11c-edit-tier.png"
+  },
+  {
+    "file": "fleet-portal/00-register.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/00-register.png"
+  },
+  {
+    "file": "fleet-portal/00b-documents.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/00b-documents.png"
+  },
+  {
+    "file": "fleet-portal/00c-credentials.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/00c-credentials.png"
+  },
+  {
+    "file": "fleet-portal/00d-pending.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/00d-pending.png"
+  },
+  {
+    "file": "fleet-portal/01-overview.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/01-overview.png"
+  },
+  {
+    "file": "fleet-portal/02-orders.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/02-orders.png"
+  },
+  {
+    "file": "fleet-portal/03-assign-driver.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/03-assign-driver.png"
+  },
+  {
+    "file": "fleet-portal/04-drivers.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/04-drivers.png"
+  },
+  {
+    "file": "fleet-portal/04b-invite-driver.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/04b-invite-driver.png"
+  },
+  {
+    "file": "fleet-portal/05-vehicles.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/05-vehicles.png"
+  },
+  {
+    "file": "fleet-portal/05b-add-vehicle.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/05b-add-vehicle.png"
+  },
+  {
+    "file": "fleet-portal/06-live-map.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/06-live-map.png"
+  },
+  {
+    "file": "fleet-portal/07-wallet-payouts.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/07-wallet-payouts.png"
+  },
+  {
+    "file": "fleet-portal/07b-request-payout.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/07b-request-payout.png"
+  },
+  {
+    "file": "fleet-portal/08-violations.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/08-violations.png"
+  },
+  {
+    "file": "broker-portal/01-board.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "broker-portal/01-board.png"
+  },
+  {
+    "file": "broker-portal/02-assign-carrier.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "broker-portal/02-assign-carrier.png"
+  },
+  {
+    "file": "broker-portal/00-overview.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "broker-portal/00-overview.png"
+  },
+  {
+    "file": "broker-portal/03-carriers.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "broker-portal/03-carriers.png"
+  },
+  {
+    "file": "broker-portal/03b-add-carrier.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "broker-portal/03b-add-carrier.png"
+  },
+  {
+    "file": "broker-portal/04-wallet-payouts.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "broker-portal/04-wallet-payouts.png"
+  }
+]
