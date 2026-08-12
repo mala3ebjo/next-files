@@ -670,5 +670,145 @@
     "h": 900,
     "scale": 2,
     "out": "broker-portal/05-auction-bid.png"
+  },
+  {
+    "file": "agent-portal/01-overview.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "agent-portal/01-overview.png"
+  },
+  {
+    "file": "agent-portal/02-orders.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "agent-portal/02-orders.png"
+  },
+  {
+    "file": "agent-portal/03-carriers.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "agent-portal/03-carriers.png"
+  },
+  {
+    "file": "agent-portal/04-settlements.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "agent-portal/04-settlements.png"
+  },
+  {
+    "file": "company-portal/01-overview.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "company-portal/01-overview.png"
+  },
+  {
+    "file": "company-portal/02-employees.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "company-portal/02-employees.png"
+  },
+  {
+    "file": "company-portal/03-approvals.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "company-portal/03-approvals.png"
+  },
+  {
+    "file": "company-portal/04-cost-centers.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "company-portal/04-cost-centers.png"
+  },
+  {
+    "file": "company-portal/05-bulk-upload.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "company-portal/05-bulk-upload.png"
+  },
+  {
+    "file": "control-panel/26-agents.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/26-agents.png"
+  },
+  {
+    "file": "control-panel/27-invoices.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/27-invoices.png"
+  },
+  {
+    "file": "control-panel/28-marketing.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/28-marketing.png"
+  },
+  {
+    "file": "control-panel/29-fraud.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/29-fraud.png"
+  },
+  {
+    "file": "broker-portal/08-contracts.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "broker-portal/08-contracts.png"
+  },
+  {
+    "file": "fleet-portal/17-maintenance.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/17-maintenance.png"
+  },
+  {
+    "file": "client/23-invoice.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/23-invoice.png"
+  },
+  {
+    "file": "client/24-rewards.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/24-rewards.png"
+  },
+  {
+    "file": "client/25-cancel-refund.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/25-cancel-refund.png"
+  },
+  {
+    "file": "driver/21-sos.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/21-sos.png"
+  },
+  {
+    "file": "driver/22-maintenance.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/22-maintenance.png"
   }
 ]
