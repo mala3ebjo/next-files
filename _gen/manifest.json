@@ -161,6 +161,62 @@
     "out": "client/05a-tracking-crossborder.png"
   },
   {
+    "file": "client/03b-vehicle-picker.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/03b-vehicle-picker.png"
+  },
+  {
+    "file": "client/16-set-budget.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/16-set-budget.png"
+  },
+  {
+    "file": "client/17-compare-offers.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/17-compare-offers.png"
+  },
+  {
+    "file": "client/18-secure-pay.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/18-secure-pay.png"
+  },
+  {
+    "file": "client/19-loadplan-start.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/19-loadplan-start.png"
+  },
+  {
+    "file": "client/20-loadplan-cargo.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/20-loadplan-cargo.png"
+  },
+  {
+    "file": "client/21-loadplan-measure.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/21-loadplan-measure.png"
+  },
+  {
+    "file": "client/22-loadplan-result.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/22-loadplan-result.png"
+  },
+  {
     "file": "driver/00a-auth-phone.html",
     "w": 430,
     "h": 932,
@@ -250,6 +306,34 @@
     "h": 932,
     "scale": 3,
     "out": "driver/02d-border.png"
+  },
+  {
+    "file": "driver/05-marketplace.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/05-marketplace.png"
+  },
+  {
+    "file": "driver/06-submit-offer.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/06-submit-offer.png"
+  },
+  {
+    "file": "driver/07-my-offers.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/07-my-offers.png"
+  },
+  {
+    "file": "driver/08-view-loadplan.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/08-view-loadplan.png"
   },
   {
     "file": "control-panel/01-overview.html",
@@ -420,6 +504,13 @@
     "out": "control-panel/11c-edit-tier.png"
   },
   {
+    "file": "control-panel/14-auctions.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/14-auctions.png"
+  },
+  {
     "file": "fleet-portal/00-register.html",
     "w": 1440,
     "h": 900,
@@ -525,6 +616,13 @@
     "out": "fleet-portal/08-violations.png"
   },
   {
+    "file": "fleet-portal/09-marketplace.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/09-marketplace.png"
+  },
+  {
     "file": "broker-portal/01-board.html",
     "w": 1440,
     "h": 900,
@@ -565,5 +663,12 @@
     "h": 900,
     "scale": 2,
     "out": "broker-portal/04-wallet-payouts.png"
+  },
+  {
+    "file": "broker-portal/05-auction-bid.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "broker-portal/05-auction-bid.png"
   }
 ]

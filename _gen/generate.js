@@ -127,6 +127,12 @@ function tabbar(active){
     ${items.map(([k,l])=>{const on=k===active;return `<div style="display:flex;flex-direction:column;align-items:center;gap:5px">${ic(k,on?C.primary:'#9AA6A0',24)}<span style="font-size:11px;font-weight:${on?800:600};color:${on?C.primary:'#9AA6A0'}">${l}</span></div>`;}).join('')}
   </div>`;
 }
+function tabbarDriver(active){
+  const items=[['home','Home'],['filter','Offers'],['box','Trips'],['wallet','Earnings'],['user','Profile']];
+  return `<div style="display:flex;justify-content:space-around;align-items:center;padding:12px 8px 26px;background:#fff;border-top:1px solid ${C.line}">
+    ${items.map(([k,l])=>{const on=k===active||(active==='offers'&&l==='Offers');return `<div style="display:flex;flex-direction:column;align-items:center;gap:5px">${ic(k,on?C.primary:'#9AA6A0',24)}<span style="font-size:11px;font-weight:${on?800:600};color:${on?C.primary:'#9AA6A0'}">${l}</span></div>`;}).join('')}
+  </div>`;
+}
 function add(name,w,h,scale,html){
   const file=path.join(OUT,name+'.html');
   fs.mkdirSync(path.dirname(file),{recursive:true});
@@ -654,6 +660,222 @@ add('client/05a-tracking-crossborder',430,932,3, phone(`
     </div>
   </div>`));
 
+// 03b Two-level vehicle picker (class -> body-type subtype)
+add('client/03b-vehicle-picker',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 8px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="font-weight:800;font-size:19px">Choose a truck</div></div>
+    <div style="padding:6px 22px 14px"><div style="display:flex;gap:6px">${[1,2,3,4,5,6,7].map(i=>`<div style="flex:1;height:6px;border-radius:6px;background:${i<=2?C.primary:C.line}"></div>`).join('')}</div><div style="color:${C.muted};font-size:13px;font-weight:600;margin-top:8px">Step 2 of 7 · Vehicle</div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      <div style="font-weight:800;font-size:15px;margin-bottom:10px">Class</div>
+      <div style="display:flex;gap:9px;overflow:hidden;margin-bottom:20px">
+        ${[['Large','truck',1],['Medium','box',0],['Small','box',0],['Heavy eq.','weight',0],['Crane','route',0]].map(([t,k,on])=>`<div style="flex-shrink:0;min-width:88px;text-align:center;padding:14px 10px;border-radius:15px;background:${on?C.primaryL:'#fff'};border:1.5px solid ${on?C.primary:C.line}">${ic(k,on?C.primaryD:C.muted,24)}<div style="font-weight:800;font-size:13px;margin-top:6px;color:${on?C.primaryD:C.text}">${t}</div></div>`).join('')}
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px"><div style="font-weight:800;font-size:15px">Large · body type</div><span style="color:${C.muted};font-size:12.5px;font-weight:700">18–30 t</span></div>
+      ${[['Flatbed','13.6 m bed · 3 axle','truck',true],['Curtain-side','Enclosed, side-load','box',false],['Refrigerated','Temp-controlled','box',false],['Container carrier','20/40 ft chassis','route',false],['Tanker','Liquids / bulk','weight',false]].map(([t,s,k,on])=>`
+        <div style="display:flex;align-items:center;gap:14px;padding:15px;border-radius:16px;margin-bottom:11px;background:${on?C.primaryL:'#fff'};border:1.5px solid ${on?C.primary:C.line}">
+          <div style="width:46px;height:46px;border-radius:12px;background:#fff;border:1px solid ${C.line};display:flex;align-items:center;justify-content:center">${ic(k,C.primaryD,24)}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:15px">${t}</div><div style="color:${C.muted};font-size:13px;font-weight:600">${s}</div></div>
+          <div style="width:24px;height:24px;border-radius:50%;border:2px solid ${on?C.primary:C.line};display:flex;align-items:center;justify-content:center">${on?`<div style="width:12px;height:12px;border-radius:50%;background:${C.primary}"></div>`:''}</div>
+        </div>`).join('')}
+    </div>
+    <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff">
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:17px;padding:18px;border-radius:15px">Continue</button>
+    </div>
+  </div>`));
+
+// 16 Set budget (auction pricing mode)
+add('client/16-set-budget',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 12px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="font-weight:800;font-size:19px">Set your budget</div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      <div style="display:flex;gap:10px;margin-bottom:20px">
+        <div style="flex:1;text-align:center;padding:14px 0;border-radius:14px;font-weight:800;font-size:14px;background:#fff;color:${C.muted};border:1.5px solid ${C.line}">Fixed price</div>
+        <div style="flex:1;text-align:center;padding:14px 0;border-radius:14px;font-weight:800;font-size:14px;background:${C.primaryL};color:${C.primaryD};border:1.5px solid ${C.primary}">Get offers (auction)</div>
+      </div>
+      ${card(`<div style="padding:20px">
+        <div style="color:${C.muted};font-size:13px;font-weight:700">Platform estimate</div>
+        <div style="font-size:34px;font-weight:800;margin:2px 0 4px">${money(485000)}</div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:600">Carriers bid within your range. You pick the winner.</div>
+      </div>`)}
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <div style="flex:1">${card(`<div style="padding:16px"><div style="color:${C.muted};font-size:12px;font-weight:700">Minimum</div><div style="font-weight:800;font-size:20px;margin-top:3px">440,000</div></div>`)}</div>
+        <div style="flex:1">${card(`<div style="padding:16px"><div style="color:${C.muted};font-size:12px;font-weight:700">Maximum</div><div style="font-weight:800;font-size:20px;margin-top:3px">560,000</div></div>`)}</div>
+      </div>
+      <div style="margin-top:22px;padding:0 4px">
+        <div style="height:8px;border-radius:8px;background:${C.line};position:relative">
+          <div style="position:absolute;left:14%;right:22%;top:0;bottom:0;background:${C.primary};border-radius:8px"></div>
+          <div style="position:absolute;left:14%;top:50%;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid ${C.primary};box-shadow:0 3px 8px rgba(0,0,0,.15)"></div>
+          <div style="position:absolute;left:78%;top:50%;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid ${C.primary};box-shadow:0 3px 8px rgba(0,0,0,.15)"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:${C.muted};font-weight:700;margin-top:10px"><span>Floor 440,000</span><span>Cap 700,000</span></div>
+      </div>
+      <div style="margin-top:20px;padding:16px;border-radius:16px;background:${C.bg};display:flex;gap:12px">
+        <div>${ic('clock',C.primary,22)}</div>
+        <div style="font-size:13px;color:${C.muted};line-height:1.45;font-weight:600">Bidding stays open for 30 minutes. You'll be notified as offers arrive.</div>
+      </div>
+    </div>
+    <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff">
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:18px;padding:18px;border-radius:15px">Publish & collect offers</button>
+    </div>
+  </div>`));
+
+// 17 Compare offers (bids from driver / fleet / broker)
+add('client/17-compare-offers',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 6px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="flex:1"><div style="font-weight:800;font-size:19px">Offers</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">#NF-72-BGW-BSR · 7 offers</div></div>${chip('● 12:40 left',{bg:C.primaryL,c:C.primaryD})}</div>
+    <div style="padding:8px 22px 12px;display:flex;gap:8px">
+      ${['Cheapest','Best rated','Fastest'].map((t,i)=>`<div style="padding:9px 14px;border-radius:999px;font-weight:800;font-size:13px;background:${i==0?C.ink:'#fff'};color:${i==0?'#fff':C.text};border:1px solid ${i==0?C.ink:C.line}">${t}</div>`).join('')}
+    </div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      ${[['Karim A.','Driver','4.9','ETA 4h 40m','452,000',true,true],['Al-Rafidain Fleet','Fleet','4.8','ETA 5h','470,000',false,true],['Basra Broker Co.','Broker','4.7','ETA 5h 10m','488,000',false,false]].map(([n,type,r,eta,amt,best,verified])=>`
+        ${card(`<div style="padding:16px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#C0480A,#F7902E);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px">${n.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
+            <div style="flex:1"><div style="display:flex;align-items:center;gap:7px"><span style="font-weight:800;font-size:15.5px">${n}</span>${verified?`<span style="display:inline-flex;width:17px;height:17px;border-radius:50%;background:${C.primary};align-items:center;justify-content:center">${ic('check','#fff',12)}</span>`:''}</div>
+              <div style="display:flex;align-items:center;gap:8px;color:${C.muted};font-size:12.5px;font-weight:700;margin-top:2px">${chip(type,{bg:C.bg,c:C.muted})} ${ic('star',C.accent,13)} ${r} · ${eta}</div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid ${C.line}">
+            <div><div style="font-weight:800;font-size:22px">${amt} <span style="font-size:13px;color:${C.muted}">IQD</span></div>${best?`<span style="font-size:11.5px;font-weight:800;color:${C.primary}">Lowest offer</span>`:''}</div>
+            <button style="border:0;background:${best?C.accent:C.ink};color:${best?'#20160a':'#fff'};font-weight:800;font-size:14px;padding:12px 22px;border-radius:13px">Select</button>
+          </div>
+        </div>`,'margin-bottom:12px'+(best?';border-color:'+C.primary:''))}
+      `).join('')}
+    </div>
+  </div>`));
+
+// 18 Secure payment after selecting a winning bid (escrow)
+add('client/18-secure-pay',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 14px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="font-weight:800;font-size:19px">Confirm & pay</div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      ${card(`<div style="padding:18px;display:flex;align-items:center;gap:14px">
+        <div style="width:52px;height:52px;border-radius:15px;background:linear-gradient(135deg,#C0480A,#F7902E);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:17px">KA</div>
+        <div style="flex:1"><div style="font-weight:800;font-size:16px">Karim A. · selected</div><div style="display:flex;align-items:center;gap:6px;color:${C.muted};font-size:13px;font-weight:600">${ic('star',C.accent,14)} 4.9 · Volvo FH · ETA 4h 40m</div></div>
+      </div>`)}
+      <div style="margin-top:14px">${card(`<div style="padding:6px 18px">
+        ${[['Winning offer','452,000'],['Platform commission 15%','included'],['Carrier receives','384,200']].map(([a,b],i)=>`<div style="display:flex;justify-content:space-between;padding:13px 0;${i?'border-top:1px solid '+C.line:''}"><span style="color:${i==2?C.primary:C.text};font-size:14.5px;font-weight:${i==2?800:400}">${a}</span><span class="mono" style="font-weight:700;font-size:14.5px;color:${i==2?C.primary:C.text}">${b}</span></div>`).join('')}
+      </div>`)}</div>
+      <div style="margin-top:16px;padding:16px;border-radius:16px;background:#FDECDF;border:1px solid ${C.primaryL};display:flex;gap:12px">
+        <div>${ic('shield',C.primary,26)}</div>
+        <div><div style="font-weight:800;font-size:15px;color:${C.primaryD}">Held in escrow</div><div style="font-size:13px;color:${C.muted};line-height:1.45;margin-top:2px;font-weight:600">We hold your payment and release it to the carrier only after delivery is confirmed with the drop-off code.</div></div>
+      </div>
+    </div>
+    <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px"><span style="color:${C.muted};font-weight:600">Total held</span><span style="font-weight:800;font-size:18px">${money(452000)}</span></div>
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:18px;padding:18px;border-radius:15px">Pay securely & assign</button>
+    </div>
+  </div>`));
+
+// 19 AI loading planner – start
+add('client/19-loadplan-start',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 14px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="font-weight:800;font-size:19px">Smart loading</div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      <div style="padding:26px 20px;border-radius:22px;background:linear-gradient(135deg,#151210,#3A2A18);color:#fff;position:relative;overflow:hidden">
+        <div style="position:absolute;right:-20px;top:-10px;opacity:.14">${ic('box','#fff',150)}</div>
+        <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(234,91,12,.22);color:${C.accent};font-weight:800;font-size:12px;padding:6px 12px;border-radius:999px">✦ AI PLANNER</div>
+        <div style="font-size:23px;font-weight:800;margin:14px 0 6px;line-height:1.25">Pack smarter,<br>pay for one truck</div>
+        <div style="font-size:13.5px;opacity:.8;line-height:1.5">Tell us your cargo and we recommend the right truck, the stacking layout and how full it will be.</div>
+      </div>
+      <div style="margin-top:18px">
+        ${[['box','Add your items','Dimensions & weight, or scan with the camera'],['truck','Get a truck match','Smallest truck that fits, with alternatives'],['grid','See the 3D plan','Utilisation, layers and a safe layout']].map(([k,t,s])=>`
+          <div style="display:flex;gap:14px;align-items:center;padding:15px 0;border-bottom:1px solid ${C.line}">
+            <div style="width:46px;height:46px;border-radius:13px;background:${C.primaryL};display:flex;align-items:center;justify-content:center">${ic(k,C.primaryD,24)}</div>
+            <div style="flex:1"><div style="font-weight:800;font-size:15px">${t}</div><div style="color:${C.muted};font-size:13px;font-weight:600">${s}</div></div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff;display:flex;gap:11px">
+      <button style="flex:1;border:1px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:15px;padding:16px;border-radius:14px">Skip</button>
+      <button style="flex:2;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:16px;padding:16px;border-radius:14px">Plan my load</button>
+    </div>
+  </div>`));
+
+// 20 AI loading planner – cargo data
+add('client/20-loadplan-cargo',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 12px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="font-weight:800;font-size:19px">Your items</div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      ${[['Pallet · electronics','120 × 100 × 145 cm','8 units · 320 kg ea'],['Crate · spare parts','80 × 60 × 90 cm','14 units · 110 kg ea'],['Drum · lubricant','60 × 60 × 90 cm','20 units · 180 kg ea']].map(([t,d,q])=>`
+        ${card(`<div style="padding:15px;display:flex;align-items:center;gap:13px">
+          <div style="width:46px;height:46px;border-radius:12px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('box',C.primaryD,24)}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:14.5px">${t}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600;margin-top:2px">${d} · ${q}</div></div>
+          ${ic('edit',C.muted,20)}
+        </div>`,'margin-bottom:11px')}`).join('')}
+      <div style="display:flex;gap:11px;margin-top:4px">
+        <button style="flex:1;border:1.5px dashed ${C.primary};background:${C.primaryL};color:${C.primaryD};font-weight:800;font-size:14px;padding:15px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px">${ic('plus',C.primaryD,20)} Add item</button>
+        <button style="flex:1;border:1.5px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:14px;padding:15px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px">${ic('camera',C.primary,20)} Scan</button>
+      </div>
+      <div style="margin-top:18px;padding:16px;border-radius:16px;background:${C.bg};display:flex;justify-content:space-between">
+        <div><div style="color:${C.muted};font-size:12px;font-weight:700">Total volume</div><div style="font-weight:800;font-size:18px">28.4 m³</div></div>
+        <div><div style="color:${C.muted};font-size:12px;font-weight:700">Total weight</div><div style="font-weight:800;font-size:18px">7,660 kg</div></div>
+        <div><div style="color:${C.muted};font-size:12px;font-weight:700">Items</div><div style="font-weight:800;font-size:18px">42</div></div>
+      </div>
+    </div>
+    <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff">
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:17px;padding:18px;border-radius:15px">Analyse & recommend →</button>
+    </div>
+  </div>`));
+
+// 21 AI loading planner – camera measure
+add('client/21-loadplan-measure',430,932,3, phone(`
+  <div style="flex:1;position:relative;display:flex;flex-direction:column;background:#0C0906">
+    <div style="position:relative;padding:6px 22px;display:flex;justify-content:space-between;align-items:center;z-index:2">
+      <div style="width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px">‹</div>
+      ${chip('✦ AI measuring',{bg:'rgba(234,91,12,.22)',c:C.accent})}
+      <div style="width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center">${ic('camera','#fff',22)}</div>
+    </div>
+    <div style="flex:1;position:relative;display:flex;align-items:center;justify-content:center">
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,#2A2016 0%,#0C0906 75%)"></div>
+      <svg width="260" height="300" viewBox="0 0 260 300" style="position:relative">
+        <polygon points="60,120 180,90 220,150 100,185" fill="none" stroke="${C.accent}" stroke-width="3"/>
+        <polygon points="60,120 100,185 100,255 60,195" fill="none" stroke="${C.accent}" stroke-width="3"/>
+        <polygon points="180,90 220,150 220,220 180,160" fill="none" stroke="${C.accent}" stroke-width="3"/>
+        ${[[60,120],[180,90],[220,150],[100,185],[100,255],[220,220],[180,160],[60,195]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="5" fill="#fff"/>`).join('')}
+        <rect x="118" y="55" width="86" height="26" rx="8" fill="rgba(234,91,12,.9)"/><text x="161" y="72" fill="#fff" font-size="14" font-weight="700" text-anchor="middle" font-family="Inter">120 cm</text>
+        <rect x="200" y="180" width="86" height="26" rx="8" fill="rgba(234,91,12,.9)" transform="translate(-60,0)"/><text x="223" y="197" fill="#fff" font-size="14" font-weight="700" text-anchor="middle" font-family="Inter">145 cm</text>
+      </svg>
+    </div>
+    <div style="position:relative;background:#fff;border-radius:28px 28px 0 0;padding:18px 22px 28px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:14px">
+        ${[['Length','120 cm'],['Width','100 cm'],['Height','145 cm']].map(([a,b])=>`<div style="flex:1;text-align:center;padding:12px;border-radius:14px;background:${C.bg};margin:0 4px"><div style="color:${C.muted};font-size:12px;font-weight:700">${a}</div><div style="font-weight:800;font-size:17px">${b}</div></div>`).join('')}
+      </div>
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:17px;padding:17px;border-radius:15px">Add this item</button>
+    </div>
+  </div>`,{dark:true}));
+
+// 22 AI loading planner – result (truck match + 3D + utilisation)
+add('client/22-loadplan-result',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 12px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="font-weight:800;font-size:19px">Recommended plan</div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      ${card(`<div style="padding:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:50px;height:50px;border-radius:14px;background:${C.primaryL};display:flex;align-items:center;justify-content:center">${ic('truck',C.primaryD,26)}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:16px">Large · Curtain-side</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">13.6 m · 24 t · best fit</div></div>
+          <span style="display:inline-flex;align-items:center;gap:5px;background:${C.primaryL};color:${C.primaryD};font-weight:800;font-size:12px;padding:6px 11px;border-radius:999px">${ic('check',C.primaryD,14)} Fits</span>
+        </div>
+      </div>`,'border-color:'+C.primary)}
+      <div style="margin-top:14px;padding:14px;border-radius:18px;background:linear-gradient(160deg,#1C1712,#3A2A18)">
+        <svg width="100%" height="150" viewBox="0 0 380 150">
+          <polygon points="30,40 300,20 360,60 90,90" fill="#241C12" stroke="#4A3A24" stroke-width="1.5"/>
+          <polygon points="30,40 90,90 90,140 30,95" fill="#1A140C" stroke="#4A3A24" stroke-width="1.5"/>
+          ${[[0,'#EA5B0C'],[1,'#F7902E'],[2,'#F0B27A']].map(([r,col])=>[0,1,2,3].map(c=>`<g transform="translate(${40+c*62},${52+r*-14+c*8})"><polygon points="0,0 40,-4 52,8 12,12" fill="${col}"/><polygon points="0,0 12,12 12,30 0,18" fill="rgba(0,0,0,.28)"/><polygon points="40,-4 52,8 52,26 40,14" fill="rgba(0,0,0,.14)"/></g>`).join('')).join('')}
+        </svg>
+        <div style="text-align:center;color:rgba(255,255,255,.65);font-size:12px;font-weight:700;margin-top:4px">3 layers · optimised stacking</div>
+      </div>
+      <div style="display:flex;gap:11px;margin-top:14px">
+        <div style="flex:1;padding:15px;border-radius:16px;background:#fff;border:1px solid ${C.line};text-align:center"><div style="color:${C.muted};font-size:12px;font-weight:700">Utilisation</div><div style="font-weight:800;font-size:22px;color:${C.primary}">82%</div></div>
+        <div style="flex:1;padding:15px;border-radius:16px;background:#fff;border:1px solid ${C.line};text-align:center"><div style="color:${C.muted};font-size:12px;font-weight:700">Layers</div><div style="font-weight:800;font-size:22px">3</div></div>
+        <div style="flex:1;padding:15px;border-radius:16px;background:#fff;border:1px solid ${C.line};text-align:center"><div style="color:${C.muted};font-size:12px;font-weight:700">Safety</div><div style="font-weight:800;font-size:22px">+12%</div></div>
+      </div>
+    </div>
+    <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff;display:flex;gap:11px">
+      <button style="flex:1;border:1px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:15px;padding:16px;border-radius:14px">Alternatives</button>
+      <button style="flex:2;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:16px;padding:16px;border-radius:14px">Use this & continue</button>
+    </div>
+  </div>`));
+
 /* ============================================================= DRIVER */
 
 // 00a Auth – phone entry (driver)
@@ -965,9 +1187,119 @@ add('driver/02d-border',430,932,3, phone(`
     </div>
   </div>`));
 
+// 05 Bid marketplace board (auction — carrier browses open shipments)
+add('driver/05-marketplace',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:6px 22px 6px;display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-weight:800;font-size:20px">Marketplace</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">18 open shipments near you</div></div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:${C.primaryL};padding:8px 12px;border-radius:999px"><span style="width:9px;height:9px;border-radius:50%;background:${C.primary}"></span><span style="font-weight:800;font-size:13px;color:${C.primaryD}">Available</span></div>
+    </div>
+    <div style="padding:8px 22px 10px;display:flex;gap:8px;overflow:hidden">
+      ${[['filter','Filters',1],['','Nearby',0],['','Today',0],['','Top price',0]].map(([k,t,on])=>`<div style="flex-shrink:0;display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;font-weight:800;font-size:13px;background:${on?C.ink:'#fff'};color:${on?'#fff':C.text};border:1px solid ${on?C.ink:C.line}">${k?ic(k,'#fff',16):''}${t}</div>`).join('')}
+    </div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      ${[['Amman → Baghdad','355 km','Curtain-side · 12 t','440,000 – 560,000','Intl',true,'urgent'],['Basra → Erbil','520 km','Flatbed · 20 t','610,000 – 720,000','Local',true,''],['Baghdad → Mosul','410 km','Reefer · 8 t','380,000 – 470,000','Local',false,'']].map(([r,d,v,band,scope,verified,tag])=>`
+        ${card(`<div style="padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div style="flex:1"><div style="display:flex;align-items:center;gap:7px"><span style="font-weight:800;font-size:15.5px">${r}</span>${verified?`<span style="display:inline-flex;width:16px;height:16px;border-radius:50%;background:${C.primary};align-items:center;justify-content:center">${ic('check','#fff',11)}</span>`:''}</div>
+              <div style="color:${C.muted};font-size:12.5px;font-weight:600;margin-top:3px">${d} · ${v}</div></div>
+            ${tag?chip('● Urgent',{bg:'#FEECEC',c:'#B42318'}):chip(scope,{bg:C.bg,c:C.muted})}
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:13px;border-top:1px solid ${C.line}">
+            <div><div style="color:${C.muted};font-size:11.5px;font-weight:700">Client budget</div><div style="font-weight:800;font-size:15px">${band} <span style="font-size:11px;color:${C.muted}">IQD</span></div></div>
+            <button style="border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:14px;padding:11px 20px;border-radius:13px">Bid</button>
+          </div>
+        </div>`,'margin-bottom:12px')}`).join('')}
+    </div>
+    ${tabbarDriver('offers')}
+  </div>`));
+
+// 06 Submit offer (carrier bids within client band)
+add('driver/06-submit-offer',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 12px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div><div style="font-weight:800;font-size:19px">Submit your offer</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">Amman → Baghdad · 355 km</div></div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      ${card(`<div style="padding:16px">
+        <div style="display:flex;justify-content:space-between"><div style="color:${C.muted};font-size:12.5px;font-weight:700">Client budget range</div>${chip('Curtain-side · 12 t',{bg:C.bg,c:C.muted})}</div>
+        <div style="font-weight:800;font-size:22px;margin-top:6px">440,000 – 560,000 <span style="font-size:13px;color:${C.muted}">IQD</span></div>
+      </div>`)}
+      <div style="margin-top:18px;text-align:center">
+        <div style="color:${C.muted};font-size:13px;font-weight:700">Your offer</div>
+        <div style="font-size:46px;font-weight:800;margin:4px 0;color:${C.primary}">452,000</div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:600">Within range · competitive</div>
+      </div>
+      <div style="margin:12px 4px 0">
+        <div style="height:8px;border-radius:8px;background:${C.line};position:relative">
+          <div style="position:absolute;left:0;width:20%;top:0;bottom:0;background:${C.primary};border-radius:8px"></div>
+          <div style="position:absolute;left:20%;top:50%;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid ${C.primary};box-shadow:0 3px 8px rgba(0,0,0,.15)"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:${C.muted};font-weight:700;margin-top:9px"><span>440,000</span><span>560,000</span></div>
+      </div>
+      <div style="margin-top:20px">${card(`<div style="padding:6px 18px">
+        ${[['Your offer','452,000'],['Platform commission 15%','−67,800'],['You receive','384,200']].map(([a,b],i)=>`<div style="display:flex;justify-content:space-between;padding:13px 0;${i?'border-top:1px solid '+C.line:''}"><span style="color:${i==2?C.primary:C.text};font-size:14.5px;font-weight:${i==2?800:400}">${a}</span><span class="mono" style="font-weight:700;font-size:14.5px;color:${i==2?C.primary:C.text}">${b}</span></div>`).join('')}
+      </div>`)}</div>
+    </div>
+    <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff">
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:18px;padding:18px;border-radius:15px">Submit offer</button>
+    </div>
+  </div>`));
+
+// 07 My Offers (carrier's submitted bids)
+add('driver/07-my-offers',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:6px 22px 8px"><div style="font-weight:800;font-size:20px">My offers</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">Track your bids</div></div>
+    <div style="padding:0 22px 12px;display:flex;gap:8px">
+      ${['Active','Won','Rejected'].map((t,i)=>`<div style="padding:9px 16px;border-radius:999px;font-weight:800;font-size:13px;background:${i==0?C.ink:'#fff'};color:${i==0?'#fff':C.text};border:1px solid ${i==0?C.ink:C.line}">${t}</div>`).join('')}
+    </div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      ${[['Amman → Baghdad','452,000','Submitted','12:40 left',C.accentD,'#FDECDF'],['Basra → Erbil','655,000','Selected ✓','You won this','#1E7A46','#E7F6EC'],['Baghdad → Mosul','410,000','Outbid','Client chose 395,000',C.muted,C.bg]].map(([r,amt,st,sub,col,bg])=>`
+        ${card(`<div style="padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div><div style="font-weight:800;font-size:15.5px">${r}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600;margin-top:2px">Your bid</div></div>
+            <span style="background:${bg};color:${col};font-weight:800;font-size:12px;padding:6px 12px;border-radius:999px">${st}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid ${C.line}">
+            <div style="font-weight:800;font-size:20px">${amt} <span style="font-size:12px;color:${C.muted}">IQD</span></div>
+            <span style="color:${col};font-size:12.5px;font-weight:700">${sub}</span>
+          </div>
+        </div>`,'margin-bottom:12px')}`).join('')}
+    </div>
+    ${tabbarDriver('offers')}
+  </div>`));
+
+// 08 View loading plan (driver — read-only plan shared by client)
+add('driver/08-view-loadplan',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 12px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div><div style="font-weight:800;font-size:19px">Loading plan</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">#NF-20461 · shared by client</div></div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      <div style="padding:14px;border-radius:18px;background:linear-gradient(160deg,#1C1712,#3A2A18)">
+        <svg width="100%" height="150" viewBox="0 0 380 150">
+          <polygon points="30,40 300,20 360,60 90,90" fill="#241C12" stroke="#4A3A24" stroke-width="1.5"/>
+          <polygon points="30,40 90,90 90,140 30,95" fill="#1A140C" stroke="#4A3A24" stroke-width="1.5"/>
+          ${[[0,'#EA5B0C'],[1,'#F7902E'],[2,'#F0B27A']].map(([r,col])=>[0,1,2,3].map(c=>`<g transform="translate(${40+c*62},${52+r*-14+c*8})"><polygon points="0,0 40,-4 52,8 12,12" fill="${col}"/><polygon points="0,0 12,12 12,30 0,18" fill="rgba(0,0,0,.28)"/><polygon points="40,-4 52,8 52,26 40,14" fill="rgba(0,0,0,.14)"/></g>`).join('')).join('')}
+        </svg>
+        <div style="text-align:center;color:rgba(255,255,255,.65);font-size:12px;font-weight:700;margin-top:4px">Load from the rear · heavy items first</div>
+      </div>
+      <div style="display:flex;gap:11px;margin-top:14px">
+        <div style="flex:1;padding:14px;border-radius:16px;background:#fff;border:1px solid ${C.line};text-align:center"><div style="color:${C.muted};font-size:12px;font-weight:700">Utilisation</div><div style="font-weight:800;font-size:20px;color:${C.primary}">82%</div></div>
+        <div style="flex:1;padding:14px;border-radius:16px;background:#fff;border:1px solid ${C.line};text-align:center"><div style="color:${C.muted};font-size:12px;font-weight:700">Layers</div><div style="font-weight:800;font-size:20px">3</div></div>
+        <div style="flex:1;padding:14px;border-radius:16px;background:#fff;border:1px solid ${C.line};text-align:center"><div style="color:${C.muted};font-size:12px;font-weight:700">Items</div><div style="font-weight:800;font-size:20px">42</div></div>
+      </div>
+      <div style="font-weight:800;font-size:15px;margin:18px 0 10px">Load order</div>
+      ${[['1','Pallet · electronics','8 units · bottom layer'],['2','Crate · spare parts','14 units · middle'],['3','Drum · lubricant','20 units · top, secured']].map(([n,t,s])=>`
+        <div style="display:flex;align-items:center;gap:13px;padding:12px 14px;border-radius:13px;margin-bottom:9px;background:#fff;border:1px solid ${C.line}">
+          <div style="width:30px;height:30px;border-radius:9px;background:${C.primary};color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px">${n}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:14px">${t}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${s}</div></div>
+        </div>`).join('')}
+    </div>
+    <div style="padding:14px 22px 30px;border-top:1px solid ${C.line};background:#fff">
+      <button style="width:100%;border:1px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:15px;padding:16px;border-radius:14px">Got it</button>
+    </div>
+  </div>`));
+
 /* ============================================================= CONTROL PANEL */
 function cpSidebar(active){
-  const items=[['grid','Overview'],['route','Dispatch board'],['box','Orders'],['map','Live map'],['user','Applications'],['truck','Carriers'],['money','Finance'],['shield','Compliance'],['gauge','Pricing'],['doc','Catalog'],['star','Plans & Tiers'],['chat','Localization'],['filter','Reports']];
+  const items=[['grid','Overview'],['route','Dispatch board'],['star','Auctions'],['box','Orders'],['map','Live map'],['user','Applications'],['truck','Carriers'],['money','Finance'],['shield','Compliance'],['gauge','Pricing'],['doc','Catalog'],['star','Plans & Tiers'],['chat','Localization'],['filter','Reports']];
   return `<div style="width:250px;background:${C.ink};color:#fff;display:flex;flex-direction:column;flex-shrink:0;padding:22px 14px">
     <div style="display:flex;align-items:center;gap:11px;padding:6px 10px 22px">
       <div style="width:40px;height:40px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.06)">${brandMark(26)}</div>
@@ -993,8 +1325,8 @@ function portalSidebar(active,{broker=false}={}){
   const sub  = broker?'Broker portal':'Fleet portal';
   const initials = broker?'ZB':'RF';
   const items = broker
-    ? [['grid','Overview'],['route','Claim board'],['box','My Orders'],['truck','Carriers'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']]
-    : [['grid','Overview'],['box','My Orders'],['user','My Drivers'],['truck','My Vehicles'],['map','Live map'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']];
+    ? [['grid','Overview'],['route','Claim board'],['star','Auctions'],['box','My Orders'],['truck','Carriers'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']]
+    : [['grid','Overview'],['box','My Orders'],['star','Marketplace'],['user','My Drivers'],['truck','My Vehicles'],['map','Live map'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']];
   return `<div style="width:250px;background:${C.ink};color:#fff;display:flex;flex-direction:column;flex-shrink:0;padding:22px 14px">
     <div style="display:flex;align-items:center;gap:11px;padding:6px 10px 10px">
       <div style="width:40px;height:40px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.06)">${brandMark(26)}</div>
@@ -1307,8 +1639,12 @@ add('control-panel/10-catalog',1440,900,2, desktop(`
       </div>
       <div style="display:flex;flex-direction:column;gap:18px">
         <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:20px">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div style="font-weight:800;font-size:15px">Vehicle types</div><span style="color:${C.primary};font-weight:800;font-size:13px">+ Add</span></div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">${['Box truck','Flatbed','Trailer','Refrigerated','Tanker','Dump truck','Container chassis','Lowbed'].map(t=>`<span style="padding:8px 13px;border-radius:999px;font-weight:700;font-size:12.5px;background:${C.bg};color:${C.text};border:1px solid ${C.line}">${t}</span>`).join('')}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div style="font-weight:800;font-size:15px">Vehicle catalog · classes & subtypes</div><span style="color:${C.primary};font-weight:800;font-size:13px">+ Add</span></div>
+          ${[['Large','18–30 t','Flatbed · Curtain-side · Reefer · Container · Tanker'],['Medium','3–10 t','Flatbed · Box · Reefer · Dump'],['Small','0.5–3 t','Pickup · Van · Box'],['Heavy equipment','permit · auto-lowbed','Excavator · Bulldozer · Loader'],['Crane / tow','5–120 t','Mobile crane · Winch']].map(([cls,cap,subs],i)=>`
+            <div style="padding:11px 0;${i?'border-top:1px solid '+C.line:''}">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:13.5px">${ic('truck',C.primaryD,16)} ${cls}</span><span style="font-weight:700;font-size:12px;color:${C.muted}">${cap}</span></div>
+              <div style="color:${C.muted};font-size:12px;font-weight:600;margin-top:4px;padding-left:24px">${subs}</div>
+            </div>`).join('')}
         </div>
         <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:20px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div style="font-weight:800;font-size:15px">Cargo types</div><span style="color:${C.primary};font-weight:800;font-size:13px">+ Add</span></div>
@@ -1627,6 +1963,50 @@ add('control-panel/11c-edit-tier',1440,900,2, cpModal('Plans & Tiers','Plans & T
     <div style="flex:1"></div>
     <button style="border:1.5px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:15px;padding:14px 24px;border-radius:12px">Cancel</button>
     <button style="border:0;background:${C.primary};color:#fff;font-weight:800;font-size:15px;padding:14px 28px;border-radius:12px">Save tier</button>
+  </div>`));
+
+// CP 14 — Auction monitor (live budget-range auctions + submitted bids)
+add('control-panel/14-auctions',1440,900,2, desktop(`
+  ${cpSidebar('Auctions')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${cpTopbar('Auctions','Live budget-range auctions · monitor & intervene')}
+    <div style="flex:1;padding:22px 30px;overflow:hidden;display:grid;grid-template-columns:1.15fr 1fr;gap:18px">
+      <div style="display:flex;flex-direction:column;overflow:hidden">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px">
+          ${[['Open auctions','24','star',C.primary],['Bids / hour','86','gauge',C.primary],['No-bid, expiring','3','clock',C.warn]].map(([a,b,k,c])=>`
+            <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:16px"><div style="width:38px;height:38px;border-radius:11px;background:${c===C.warn?'#FFF6E0':C.primaryL};display:flex;align-items:center;justify-content:center">${ic(k,c===C.warn?C.accentD:C.primaryD,20)}</div><div style="font-weight:800;font-size:24px;margin-top:10px">${b}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${a}</div></div>`).join('')}
+        </div>
+        <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden;flex:1">
+          <div style="display:grid;grid-template-columns:110px 1.3fr 1fr 90px 130px;padding:13px 18px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>ORDER</div><div>ROUTE</div><div>BUDGET (IQD)</div><div>BIDS</div><div>CLOSES</div></div>
+          ${[['#NF-72-01','Amman → Baghdad','440k – 560k','7','12:40',true],
+             ['#NF-72-02','Basra → Erbil','610k – 720k','4','21:05',false],
+             ['#NF-72-03','Baghdad → Mosul','380k – 470k','0','02:11','warn'],
+             ['#NF-72-04','Najaf → Kirkuk','290k – 360k','5','18:22',false],
+             ['#NF-72-05','Erbil → Habur','520k – 640k','3','25:44',false]].map((r,i)=>`
+            <div style="display:grid;grid-template-columns:110px 1.3fr 1fr 90px 130px;padding:14px 18px;align-items:center;font-size:13px;${i?'border-top:1px solid '+C.line:''};${r[5]===true?'background:'+C.primaryL:''}">
+              <div style="font-weight:800">${r[0]}</div><div style="display:flex;align-items:center;gap:7px;font-weight:600">${ic('route',C.primary,15)} ${r[1]}</div>
+              <div class="mono" style="font-weight:700">${r[2]}</div>
+              <div><span style="font-weight:800;font-size:12px;padding:4px 11px;border-radius:999px;background:${r[3]==='0'?'#FEECEC':C.bg};color:${r[3]==='0'?'#B42318':C.text}">${r[3]}</span></div>
+              <div class="mono" style="font-weight:800;color:${r[5]==='warn'?'#B42318':C.text}">${r[4]}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:20px;display:flex;flex-direction:column;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div style="font-weight:800;font-size:16px">#NF-72-01 · offers</div>${chip('● 12:40 left',{bg:C.primaryL,c:C.primaryD})}</div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:600;margin-bottom:14px">Amman → Baghdad · Curtain-side 12t · budget 440k–560k</div>
+        ${[['Karim A.','Driver','4.9','452,000',true],['Al-Rafidain Fleet','Fleet','4.8','470,000',false],['Basra Broker Co.','Broker','4.7','488,000 (+ 26k margin)',false],['Tigris Transport','Fleet','4.6','505,000',false]].map(([n,t,r,amt,best],i)=>`
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 0;${i?'border-top:1px solid '+C.line:''}">
+            <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#C0480A,#F7902E);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px">${n.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
+            <div style="flex:1"><div style="font-weight:800;font-size:13.5px">${n}</div><div style="color:${C.muted};font-size:12px;font-weight:600">${t} · ${ic('star',C.accent,12)} ${r}</div></div>
+            <div style="text-align:right"><div class="mono" style="font-weight:800;font-size:14px">${amt}</div>${best?`<div style="font-size:11px;font-weight:800;color:${C.primary}">Lowest</div>`:''}</div>
+          </div>`).join('')}
+        <div style="flex:1"></div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <button style="flex:1;border:1.5px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:13.5px;padding:12px;border-radius:11px">Extend window</button>
+          <button style="flex:1;border:0;background:${C.ink};color:#fff;font-weight:800;font-size:13.5px;padding:12px;border-radius:11px">Force to manual</button>
+        </div>
+      </div>
+    </div>
   </div>`));
 
 /* ============================================================= FLEET PORTAL */
@@ -2026,6 +2406,46 @@ add('fleet-portal/08-violations',1440,900,2, desktop(`
     </div>
   </div>`));
 
+// Fleet 09 — Marketplace: bid on an auction order (company bid + name a driver)
+add('fleet-portal/09-marketplace',1440,900,2, desktop(`
+  ${portalSidebar('Marketplace')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${portalTop('Marketplace','Open auction shipments · bid at company level, then assign a driver')}
+    <div style="flex:1;padding:22px 30px;overflow:hidden;display:grid;grid-template-columns:1.25fr 1fr;gap:18px">
+      <div style="display:flex;flex-direction:column;overflow:hidden">
+        <div style="display:flex;gap:10px;margin-bottom:14px">${['All','Nearby','Today','Highest price','Local','International'].map((t,i)=>`<span style="font-weight:700;font-size:13px;padding:8px 14px;border-radius:10px;background:${i==0?C.ink:'#fff'};color:${i==0?'#fff':C.muted};border:1px solid ${i==0?C.ink:C.line}">${t}</span>`).join('')}</div>
+        <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden;flex:1">
+          <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 90px;padding:13px 18px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>ROUTE</div><div>VEHICLE</div><div>BUDGET (IQD)</div><div>BIDS</div></div>
+          ${[['Amman → Baghdad · 355km','Curtain-side 12t','440k – 560k','7',true],
+             ['Basra → Erbil · 520km','Flatbed 20t','610k – 720k','4',false],
+             ['Baghdad → Mosul · 410km','Reefer 8t','380k – 470k','2',false],
+             ['Najaf → Kirkuk · 280km','Box 3.5t','290k – 360k','5',false]].map((r,i)=>`
+            <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 90px;padding:15px 18px;align-items:center;font-size:13px;${i?'border-top:1px solid '+C.line:''};${r[4]?'background:'+C.primaryL:''}">
+              <div style="display:flex;align-items:center;gap:8px;font-weight:700">${ic('route',C.primary,16)} ${r[0]}</div><div style="color:${C.muted};font-weight:600">${r[1]}</div><div class="mono" style="font-weight:800">${r[2]}</div><div><span style="font-weight:800;font-size:12px;padding:4px 11px;border-radius:999px;background:${C.bg}">${r[3]}</span></div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:22px;display:flex;flex-direction:column">
+        <div style="font-weight:800;font-size:16px;margin-bottom:2px">Submit fleet offer</div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:600;margin-bottom:16px">Amman → Baghdad · Curtain-side 12t</div>
+        <div style="padding:14px;border-radius:12px;background:${C.bg};margin-bottom:16px"><div style="color:${C.muted};font-size:12px;font-weight:700">Client budget range</div><div style="font-weight:800;font-size:18px;margin-top:3px">440,000 – 560,000 IQD</div></div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:700;margin-bottom:6px">Your offer</div>
+        <div style="display:flex;align-items:center;border:1.5px solid ${C.primary};border-radius:12px;padding:13px 16px;margin-bottom:16px"><span style="font-weight:800;font-size:24px;color:${C.primary};flex:1">462,000</span><span style="color:${C.muted};font-weight:700;font-size:13px">IQD</span></div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:700;margin-bottom:6px">Assign driver</div>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px">
+          ${[['Ali M.','Online · Volvo FH · Curtain 12t',true],['Zaid H.','Online · MAN TGX · Curtain 12t',false]].map(([n,s,on])=>`
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:11px;background:${on?C.primaryL:'#fff'};border:1.5px solid ${on?C.primary:C.line}">
+              <div style="width:34px;height:34px;border-radius:50%;background:${C.primaryL};color:${C.primaryD};font-weight:800;display:flex;align-items:center;justify-content:center">${n[0]}</div>
+              <div style="flex:1"><div style="font-weight:800;font-size:13.5px">${n}</div><div style="color:${C.muted};font-size:12px;font-weight:600">${s}</div></div>
+              <div style="width:20px;height:20px;border-radius:50%;border:2px solid ${on?C.primary:C.line};display:flex;align-items:center;justify-content:center">${on?`<div style="width:10px;height:10px;border-radius:50%;background:${C.primary}"></div>`:''}</div>
+            </div>`).join('')}
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:${C.muted};font-weight:600;margin-bottom:14px"><span>After 15% commission</span><span class="mono" style="font-weight:800;color:${C.text}">392,700 IQD</span></div>
+        <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:15px;padding:15px;border-radius:12px">Submit offer & nominate driver</button>
+      </div>
+    </div>
+  </div>`));
+
 /* ============================================================= BROKER PORTAL */
 
 // Broker 01 Claim board
@@ -2204,28 +2624,261 @@ add('broker-portal/04-wallet-payouts',1440,900,2, desktop(`
     </div>
   </div>`));
 
+// Broker 05 — Auction: submit a priced bid with margin (client-facing competition)
+add('broker-portal/05-auction-bid',1440,900,2, desktop(`
+  ${portalSidebar('Auctions',{broker:true})}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${portalTop('Auctions','Open shipments · bid a client price that includes your margin')}
+    <div style="flex:1;padding:22px 30px;overflow:hidden;display:grid;grid-template-columns:1.25fr 1fr;gap:18px">
+      <div style="display:flex;flex-direction:column;overflow:hidden">
+        <div style="display:flex;gap:10px;margin-bottom:14px">${['All','Nearby','Highest price','Local','International'].map((t,i)=>`<span style="font-weight:700;font-size:13px;padding:8px 14px;border-radius:10px;background:${i==0?C.ink:'#fff'};color:${i==0?'#fff':C.muted};border:1px solid ${i==0?C.ink:C.line}">${t}</span>`).join('')}</div>
+        <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden;flex:1">
+          <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 90px;padding:13px 18px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>ROUTE</div><div>VEHICLE</div><div>BUDGET (IQD)</div><div>BIDS</div></div>
+          ${[['Amman → Baghdad · 355km','Curtain-side 12t','440k – 560k','7',true],
+             ['Basra → Erbil · 520km','Flatbed 20t','610k – 720k','4',false],
+             ['Baghdad → Mosul · 410km','Reefer 8t','380k – 470k','2',false],
+             ['Kirkuk → Habur · 470km','Container 24t','700k – 880k','3',false]].map((r,i)=>`
+            <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 90px;padding:15px 18px;align-items:center;font-size:13px;${i?'border-top:1px solid '+C.line:''};${r[4]?'background:'+C.primaryL:''}">
+              <div style="display:flex;align-items:center;gap:8px;font-weight:700">${ic('route',C.primary,16)} ${r[0]}</div><div style="color:${C.muted};font-weight:600">${r[1]}</div><div class="mono" style="font-weight:800">${r[2]}</div><div><span style="font-weight:800;font-size:12px;padding:4px 11px;border-radius:999px;background:${C.bg}">${r[3]}</span></div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:22px;display:flex;flex-direction:column">
+        <div style="font-weight:800;font-size:16px;margin-bottom:2px">Submit broker offer</div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:600;margin-bottom:16px">Amman → Baghdad · Curtain-side 12t</div>
+        <div style="padding:14px;border-radius:12px;background:${C.bg};margin-bottom:16px"><div style="color:${C.muted};font-size:12px;font-weight:700">Client budget range</div><div style="font-weight:800;font-size:18px;margin-top:3px">440,000 – 560,000 IQD</div></div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:700;margin-bottom:6px">Carrier cost (contracted)</div>
+        <div style="display:flex;align-items:center;border:1.5px solid ${C.line};border-radius:12px;padding:12px 16px;margin-bottom:12px"><span style="font-weight:800;font-size:18px;flex:1">430,000</span><span style="color:${C.muted};font-weight:700;font-size:12px">IQD</span></div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:700;margin-bottom:6px">Your margin <span style="color:${C.primary}">(cap 12%)</span></div>
+        <div style="display:flex;align-items:center;border:1.5px solid ${C.line};border-radius:12px;padding:12px 16px;margin-bottom:16px"><span style="font-weight:800;font-size:18px;flex:1">+ 42,000</span><span style="color:${C.muted};font-weight:700;font-size:12px">9.8%</span></div>
+        <div style="padding:14px;border-radius:12px;background:${C.primaryL};margin-bottom:8px">
+          ${[['Client-facing offer','472,000',true],['Platform commission 15%','shown separately',false],['Carrier receives','430,000',false],['Your margin','42,000',false]].map(([a,b,hl],i)=>`<div style="display:flex;justify-content:space-between;padding:7px 0;${i?'border-top:1px solid rgba(180,71,10,.15)':''}"><span style="font-size:13px;color:${hl?C.primaryD:C.muted};font-weight:${hl?800:600}">${a}</span><span class="mono" style="font-weight:800;font-size:13px;color:${hl?C.primaryD:C.text}">${b}</span></div>`).join('')}
+        </div>
+        <div style="flex:1"></div>
+        <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:15px;padding:15px;border-radius:12px">Submit offer</button>
+      </div>
+    </div>
+  </div>`));
+
 /* write manifest */
 fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,null,2));
 
 /* ---------- browsable index.html ---------- */
 (function writeIndex(){
   const groups = {
-    client:        { title:'Client App',    tag:'Mobile · iOS / Android', kind:'phone' },
-    driver:        { title:'Driver App',     tag:'Mobile · iOS / Android', kind:'phone' },
+    client:         { title:'Client App',    tag:'Mobile · iOS / Android', kind:'phone' },
+    driver:         { title:'Driver App',     tag:'Mobile · iOS / Android', kind:'phone' },
+    'control-panel':{ title:'Control Panel',  tag:'Web · React + TypeScript', kind:'desktop' },
     'fleet-portal': { title:'Fleet Portal',   tag:'Web · scoped operator portal', kind:'desktop' },
     'broker-portal':{ title:'Broker Portal',  tag:'Web · scoped broker portal', kind:'desktop' },
-    'control-panel':{ title:'Control Panel', tag:'Web · React + TypeScript', kind:'desktop' },
   };
-  const titleize = s => s.replace(/^\d+-/,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  const order = ['client','driver','control-panel','fleet-portal','broker-portal'];
+  const titleize = s => s.replace(/^\d+[a-z]?-/,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
   const byGroup = {};
+  const bySlug  = {};
   manifest.forEach(m=>{
-    const [g,name] = m.out.replace('.png','').split('/');
-    (byGroup[g] ||= []).push({ ...m, g, label:titleize(name) });
+    const slug = m.out.replace('.png','');
+    const [g,name] = slug.split('/');
+    const rec = { ...m, g, slug, label:titleize(name) };
+    (byGroup[g] ||= []).push(rec);
+    bySlug[slug] = rec;
   });
-  // Order screens within each group by filename (code-point) so numbered
-  // screens and their sub-screens/modals (e.g. 02 → 02b) read logically.
   Object.keys(byGroup).forEach(g=>byGroup[g].sort((a,b)=>a.out<b.out?-1:a.out>b.out?1:0));
   const total = manifest.length;
+
+  /* ============================================================
+     JOURNEYS — ordered user flows (Figma-style story boards).
+     Each step = [screen-slug, step label]. Screens may repeat
+     across flows; that is expected (they are entry/return points).
+     ============================================================ */
+  const JOURNEYS = [
+    { surface:'Client App', kind:'phone', color:'#EA5B0C', flows:[
+      { title:'Onboarding & sign-up', steps:[
+        ['client/01-onboarding','Welcome / splash'],
+        ['client/01a-auth-phone','Enter phone'],
+        ['client/01b-auth-otp','Verify OTP'],
+        ['client/01c-auth-account','Create account'],
+        ['client/01e-company','Company details'],
+        ['client/01d-plan','Choose a plan'],
+        ['client/02-home','Home'],
+      ]},
+      { title:'Book a truck · fixed price', steps:[
+        ['client/02-home','Home'],
+        ['client/03-order-wizard','Pickup & drop-off'],
+        ['client/03b-vehicle-picker','Pick vehicle type'],
+        ['client/04-quote','Instant quote'],
+        ['client/06-payment','Pay'],
+        ['client/05-tracking','Live tracking'],
+        ['client/14-rate','Rate the trip'],
+      ]},
+      { title:'Book with offers · auction', steps:[
+        ['client/03-order-wizard','Pickup & drop-off'],
+        ['client/03b-vehicle-picker','Pick vehicle type'],
+        ['client/16-set-budget','Set your budget'],
+        ['client/17-compare-offers','Compare carrier offers'],
+        ['client/18-secure-pay','Accept & secure pay'],
+        ['client/05-tracking','Live tracking'],
+      ]},
+      { title:'Smart loading planner', steps:[
+        ['client/19-loadplan-start','Start a load plan'],
+        ['client/20-loadplan-cargo','Add cargo items'],
+        ['client/21-loadplan-measure','Measure & weigh'],
+        ['client/22-loadplan-result','Recommended truck'],
+        ['client/03b-vehicle-picker','Confirm vehicle'],
+      ]},
+      { title:'Cross-border shipment', steps:[
+        ['client/03-order-wizard','Pickup & drop-off'],
+        ['client/03a-documents','Customs documents'],
+        ['client/06-payment','Pay'],
+        ['client/05a-tracking-crossborder','Border tracking'],
+      ]},
+      { title:'Manage orders & account', steps:[
+        ['client/07-orders','My orders'],
+        ['client/08-order-detail','Order detail'],
+        ['client/09-chat','Chat with driver'],
+        ['client/10-wallet','Wallet'],
+        ['client/11-subscription','Subscription'],
+        ['client/12-addresses','Saved addresses'],
+        ['client/15-notifications','Notifications'],
+        ['client/13-profile','Profile'],
+        ['client/13a-language','Language'],
+      ]},
+    ]},
+    { surface:'Driver App', kind:'phone', color:'#0EA5A0', flows:[
+      { title:'Carrier onboarding', steps:[
+        ['driver/00a-auth-phone','Enter phone'],
+        ['driver/00b-auth-otp','Verify OTP'],
+        ['driver/00c-driver-type','Owner or fleet driver'],
+        ['driver/00d-application','Submit application'],
+        ['driver/00f-fleet-join','Join a fleet'],
+        ['driver/00e-review','Under review'],
+      ]},
+      { title:'Fixed job · owner-operator', steps:[
+        ['driver/01-online','Go online'],
+        ['driver/02-offer','Incoming offer'],
+        ['driver/02c-loading','Loading & POD-in'],
+        ['driver/03-proof','Proof of delivery'],
+        ['driver/04-earnings','Earnings'],
+      ]},
+      { title:'Bid on marketplace · auction', steps:[
+        ['driver/05-marketplace','Open marketplace'],
+        ['driver/06-submit-offer','Submit an offer'],
+        ['driver/07-my-offers','My offers'],
+        ['driver/02b-assigned','Assigned job'],
+        ['driver/08-view-loadplan','View load plan'],
+        ['driver/03-proof','Proof of delivery'],
+      ]},
+      { title:'Cross-border leg', steps:[
+        ['driver/02b-assigned','Assigned job'],
+        ['driver/02d-border','Border crossing'],
+        ['driver/03-proof','Proof of delivery'],
+      ]},
+    ]},
+    { surface:'Control Panel', kind:'desktop', color:'#6366F1', flows:[
+      { title:'Sign in & monitor operations', steps:[
+        ['control-panel/00-login','Sign in'],
+        ['control-panel/01-overview','Overview'],
+        ['control-panel/02-dispatch','Dispatch board'],
+        ['control-panel/02b-force-assign','Force assign'],
+        ['control-panel/05-livemap','Live map'],
+        ['control-panel/05b-incident','Incident'],
+      ]},
+      { title:'Auctions oversight', steps:[
+        ['control-panel/14-auctions','Auction monitor'],
+        ['control-panel/03-orders','Orders'],
+      ]},
+      { title:'Onboard carriers', steps:[
+        ['control-panel/06-applications','Applications'],
+        ['control-panel/06b-request-changes','Request changes'],
+        ['control-panel/07-carriers','Carriers'],
+        ['control-panel/07b-carrier-detail','Carrier detail'],
+      ]},
+      { title:'Money & compliance', steps:[
+        ['control-panel/08-finance','Finance'],
+        ['control-panel/09-compliance','Compliance'],
+        ['control-panel/09b-suspend-confirm','Suspend'],
+        ['control-panel/09c-rule-builder','Rule builder'],
+      ]},
+      { title:'Configure catalog & pricing', steps:[
+        ['control-panel/10-catalog','Vehicle catalog'],
+        ['control-panel/10b-countries','Countries'],
+        ['control-panel/10c-country-form','Country form'],
+        ['control-panel/04-pricing','Pricing rules'],
+        ['control-panel/11-plans-tiers','Plans & tiers'],
+        ['control-panel/11b-edit-plan','Edit plan'],
+        ['control-panel/11c-edit-tier','Edit tier'],
+        ['control-panel/12-localization','Localization'],
+        ['control-panel/13-reports','Reports'],
+      ]},
+    ]},
+    { surface:'Fleet Portal', kind:'desktop', color:'#B4470A', flows:[
+      { title:'Fleet setup', steps:[
+        ['fleet-portal/00-register','Register'],
+        ['fleet-portal/00b-documents','Upload documents'],
+        ['fleet-portal/00c-credentials','Credentials'],
+        ['fleet-portal/00d-pending','Pending approval'],
+      ]},
+      { title:'Operate & bid', steps:[
+        ['fleet-portal/01-overview','Overview'],
+        ['fleet-portal/02-orders','Orders'],
+        ['fleet-portal/09-marketplace','Bid on marketplace'],
+        ['fleet-portal/03-assign-driver','Assign a driver'],
+        ['fleet-portal/06-live-map','Live map'],
+      ]},
+      { title:'Manage fleet & money', steps:[
+        ['fleet-portal/04-drivers','Drivers'],
+        ['fleet-portal/04b-invite-driver','Invite driver'],
+        ['fleet-portal/05-vehicles','Vehicles'],
+        ['fleet-portal/05b-add-vehicle','Add vehicle'],
+        ['fleet-portal/07-wallet-payouts','Wallet & payouts'],
+        ['fleet-portal/07b-request-payout','Request payout'],
+        ['fleet-portal/08-violations','Violations'],
+      ]},
+    ]},
+    { surface:'Broker Portal', kind:'desktop', color:'#0F766E', flows:[
+      { title:'Operate & bid', steps:[
+        ['broker-portal/00-overview','Overview'],
+        ['broker-portal/01-board','Job board'],
+        ['broker-portal/05-auction-bid','Bid on auction'],
+        ['broker-portal/02-assign-carrier','Assign carrier'],
+      ]},
+      { title:'Manage carriers & money', steps:[
+        ['broker-portal/03-carriers','Carriers'],
+        ['broker-portal/03b-add-carrier','Add carrier'],
+        ['broker-portal/04-wallet-payouts','Wallet & payouts'],
+      ]},
+    ]},
+  ];
+
+  /* -------- render: journeys view -------- */
+  const renderStep = (kind)=>(st,idx)=>{
+    const m = bySlug[st[0]];
+    if(!m){ return ''; }
+    return `<figure class="step ${kind}">
+      <a class="shot" href="${m.out}" data-full="${m.out}" data-label="${st[1]} · ${m.label}">
+        <span class="step-no">${idx+1}</span>
+        <img loading="lazy" src="${m.out}" width="${m.w}" height="${m.h}" alt="${st[1]}">
+      </a>
+      <figcaption>${st[1]}<span class="sub">${m.label}</span></figcaption>
+    </figure>`;
+  };
+  const journeysHtml = JOURNEYS.map(sf=>{
+    const gslug = sf.surface.toLowerCase().replace(/[^a-z]+/g,'-');
+    const lanes = sf.flows.map(fl=>{
+      const steps = fl.steps.map(renderStep(sf.kind)).filter(Boolean);
+      const track = steps.join('<div class="arrow">→</div>');
+      return `<div class="lane">
+        <div class="lane-title"><span class="dot" style="background:${sf.color}"></span>${fl.title}<span class="pill">${steps.length} steps</span></div>
+        <div class="lane-track" data-shots>${track}</div>
+      </div>`;
+    }).join('');
+    return `<section class="surface" id="j-${gslug}">
+      <div class="surface-head"><span class="dot big" style="background:${sf.color}"></span><h2>${sf.surface}</h2><span class="count">${sf.flows.length} flows</span></div>
+      ${lanes}
+    </section>`;
+  }).join('');
+
+  /* -------- render: gallery view -------- */
   const section = (g)=>{
     const meta = groups[g] || { title:titleize(g), tag:'', kind:'phone' };
     const items = (byGroup[g]||[]).map(m=>`
@@ -2244,19 +2897,18 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
     return `
     <section class="group" id="${g}">
       <header class="group-head">
-        <div>
-          <h2>${meta.title}</h2>
-          <p>${meta.tag}</p>
-        </div>
+        <div><h2>${meta.title}</h2><p>${meta.tag}</p></div>
         <span class="count">${(byGroup[g]||[]).length} screens</span>
       </header>
-      <div class="grid ${meta.kind}-grid">${items}</div>
+      <div class="grid ${meta.kind}-grid" data-shots>${items}</div>
     </section>`;
   };
-  const nav = Object.keys(byGroup).map(g=>{
-    const meta = groups[g]||{title:titleize(g)};
-    return `<a href="#${g}">${meta.title}</a>`;
+
+  const nav = JOURNEYS.map(sf=>{
+    const gslug = sf.surface.toLowerCase().replace(/[^a-z]+/g,'-');
+    return `<a href="#j-${gslug}" data-goto="${gslug}">${sf.surface}</a>`;
   }).join('');
+
   const html = `<!doctype html><html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -2268,18 +2920,45 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
   body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,system-ui,sans-serif;color:#0F172A;background:var(--bg);-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
   .topbar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line)}
-  .topbar-in{max-width:1240px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .topbar-in{max-width:1240px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
   .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:19px}
   .logo{width:34px;height:34px;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
   .brand small{display:block;font-weight:600;font-size:12px;color:var(--muted)}
+  .views{display:flex;gap:4px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px}
+  .views button{border:0;background:transparent;font-weight:800;font-size:13px;padding:8px 16px;border-radius:999px;cursor:pointer;color:var(--muted)}
+  .views button.on{background:var(--ink);color:#fff}
   nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-  nav a{padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px;color:var(--pd);background:${C.primaryL}}
+  nav a{padding:8px 14px;border-radius:999px;font-weight:700;font-size:13.5px;color:var(--pd);background:${C.primaryL}}
   nav a:hover{background:var(--p);color:#fff}
-  .hero{max-width:1240px;margin:0 auto;padding:40px 28px 8px}
-  .hero h1{font-size:34px;letter-spacing:-.02em}
-  .hero p{margin-top:10px;color:var(--muted);font-size:16px;max-width:640px}
-  .hero .stat{margin-top:18px;display:inline-flex;gap:8px;align-items:center;font-weight:700;font-size:14px;color:var(--pd);background:${C.primaryL};padding:8px 14px;border-radius:999px}
-  main{max-width:1240px;margin:0 auto;padding:24px 28px 80px}
+  .hero{max-width:1240px;margin:0 auto;padding:34px 28px 4px}
+  .hero h1{font-size:32px;letter-spacing:-.02em}
+  .hero p{margin-top:10px;color:var(--muted);font-size:15.5px;max-width:680px}
+  .hero .stat{margin-top:16px;display:inline-flex;gap:8px;align-items:center;font-weight:700;font-size:13.5px;color:var(--pd);background:${C.primaryL};padding:8px 14px;border-radius:999px}
+  main{max-width:1240px;margin:0 auto;padding:18px 28px 80px}
+  /* journeys */
+  #gallery{display:none}
+  body.gallery #gallery{display:block}
+  body.gallery #journeys{display:none}
+  .surface{margin-top:44px}
+  .surface-head{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .surface-head h2{font-size:23px;letter-spacing:-.01em}
+  .dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+  .dot.big{width:14px;height:14px}
+  .lane{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px 16px 4px}
+  .lane-title{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;margin:0 2px 10px;color:#0F172A}
+  .lane-title .pill{font-weight:700;font-size:11.5px;color:var(--muted);background:var(--bg);padding:4px 10px;border-radius:999px}
+  .lane-track{display:flex;align-items:flex-start;gap:8px;overflow-x:auto;padding:2px 2px 16px;scroll-snap-type:x proximity}
+  .step{flex:0 0 auto;text-align:center;scroll-snap-align:start}
+  .step .shot{display:block;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0f172a;cursor:zoom-in;transition:transform .15s,box-shadow .15s}
+  .step .shot:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(180,71,10,.18)}
+  .step.phone .shot img{width:150px;height:auto;display:block}
+  .step.desktop .shot img{width:330px;height:auto;display:block}
+  .step-no{position:absolute;top:7px;left:7px;z-index:2;width:22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+  .step figcaption{margin-top:8px;font-weight:700;font-size:12.5px;max-width:150px;line-height:1.3}
+  .step.desktop figcaption{max-width:330px}
+  .step .sub{display:block;color:var(--muted);font-size:11px;font-weight:600;margin-top:2px}
+  .arrow{flex:0 0 auto;align-self:center;color:var(--p);font-size:24px;font-weight:800;padding:0 2px;margin-top:-16px}
+  /* gallery */
   .group{margin-top:40px}
   .group-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:22px}
   .group-head h2{font-size:22px;letter-spacing:-.01em}
@@ -2294,6 +2973,7 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
   .card.desktop .shot{background:#0f172a}
   .shot img{display:block;width:100%;height:auto}
   figcaption{padding:14px 16px 16px}
+  .step figcaption{padding:0}
   .cap-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
   .cap-title{font-weight:800;font-size:15px}
   .cap-sub{display:block;margin-top:2px;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
@@ -2316,14 +2996,18 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
 <body>
   <div class="topbar"><div class="topbar-in">
     <div class="brand"><div class="logo">${brandMark(24)}</div><div>NEXT Freight<small>Design mockups</small></div></div>
+    <div class="views"><button id="vJourneys" class="on">Journeys</button><button id="vGallery">Gallery</button></div>
     <nav>${nav}</nav>
   </div></div>
   <div class="hero">
-    <h1>Product design mockups</h1>
-    <p>High-fidelity screen designs for the NEXT Freight platform — client &amp; driver mobile apps and the operations control panel. Click any screen to open full-size, or download the PNG.</p>
-    <span class="stat">● ${total} screens · ${Object.keys(byGroup).length} surfaces</span>
+    <h1 id="heroTitle">User journeys</h1>
+    <p id="heroText">Every screen connected into the real flows a user walks through — sign-up, booking, auctions, the loading planner, dispatch and back-office. Click any screen to open it full-size. Switch to <b>Gallery</b> for the full screen index.</p>
+    <span class="stat">● ${total} screens · ${JOURNEYS.reduce((n,s)=>n+s.flows.length,0)} flows · ${order.length} surfaces</span>
   </div>
-  <main>${Object.keys(byGroup).map(section).join('')}</main>
+  <main>
+    <div id="journeys">${journeysHtml}</div>
+    <div id="gallery">${order.map(section).join('')}</div>
+  </main>
   <footer>Rendered at native device resolution · NEXT Freight · Iraq launch market.</footer>
   <div class="lb" id="lb" aria-hidden="true">
     <button class="lb-btn lb-close" id="lbClose" aria-label="Close">✕</button>
@@ -2334,12 +3018,26 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
   </div>
   <script>
   (function(){
-    var shots=[].slice.call(document.querySelectorAll('.shot'));
-    var lb=document.getElementById('lb'),img=document.getElementById('lbImg'),cap=document.getElementById('lbCap'),i=0;
+    /* view toggle */
+    var bJ=document.getElementById('vJourneys'),bG=document.getElementById('vGallery');
+    var hT=document.getElementById('heroTitle'),hX=document.getElementById('heroText');
+    function setView(v){
+      if(v==='gallery'){document.body.classList.add('gallery');bG.classList.add('on');bJ.classList.remove('on');hT.textContent='Screen gallery';hX.textContent='The full index of every mockup, grouped by surface. Click any screen to open it full-size, or download the PNG. Switch to Journeys to see them connected into flows.';}
+      else{document.body.classList.remove('gallery');bJ.classList.add('on');bG.classList.remove('on');hT.textContent='User journeys';hX.textContent='Every screen connected into the real flows a user walks through. Click any screen to open it full-size. Switch to Gallery for the full screen index.';}
+    }
+    bJ.addEventListener('click',function(){setView('journeys');});
+    bG.addEventListener('click',function(){setView('gallery');});
+    /* nav: always show journeys then scroll */
+    [].forEach.call(document.querySelectorAll('nav a'),function(a){
+      a.addEventListener('click',function(){setView('journeys');});
+    });
+    /* lightbox scoped to the clicked container */
+    var lb=document.getElementById('lb'),img=document.getElementById('lbImg'),cap=document.getElementById('lbCap');
+    var shots=[],i=0;
     function show(n){i=(n+shots.length)%shots.length;var s=shots[i];img.src=s.getAttribute('data-full');cap.textContent=s.getAttribute('data-label');}
-    function open(n){show(n);lb.classList.add('open');document.body.classList.add('lb-lock');}
+    function open(s){var box=s.closest('[data-shots]');shots=box?[].slice.call(box.querySelectorAll('.shot')):[s];show(shots.indexOf(s));lb.classList.add('open');document.body.classList.add('lb-lock');}
     function close(){lb.classList.remove('open');document.body.classList.remove('lb-lock');img.src='';}
-    shots.forEach(function(s,n){s.addEventListener('click',function(e){e.preventDefault();open(n);});});
+    [].forEach.call(document.querySelectorAll('.shot'),function(s){s.addEventListener('click',function(e){e.preventDefault();open(s);});});
     document.getElementById('lbClose').addEventListener('click',close);
     document.getElementById('lbPrev').addEventListener('click',function(e){e.stopPropagation();show(i-1);});
     document.getElementById('lbNext').addEventListener('click',function(e){e.stopPropagation();show(i+1);});
