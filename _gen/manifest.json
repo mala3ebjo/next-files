@@ -91,6 +91,13 @@
     "out": "client/08-order-detail.png"
   },
   {
+    "file": "client/08a-order-active.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/08a-order-active.png"
+  },
+  {
     "file": "client/09-chat.html",
     "w": 430,
     "h": 932,
@@ -103,6 +110,13 @@
     "h": 932,
     "scale": 3,
     "out": "client/10-wallet.png"
+  },
+  {
+    "file": "client/10a-topup.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/10a-topup.png"
   },
   {
     "file": "client/11-subscription.html",
@@ -166,6 +180,20 @@
     "h": 932,
     "scale": 3,
     "out": "client/03b-vehicle-picker.png"
+  },
+  {
+    "file": "client/03c-pricing-method.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/03c-pricing-method.png"
+  },
+  {
+    "file": "client/03d-schedule.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/03d-schedule.png"
   },
   {
     "file": "client/16-set-budget.html",
@@ -810,5 +838,68 @@
     "h": 932,
     "scale": 3,
     "out": "driver/22-maintenance.png"
+  },
+  {
+    "file": "control-panel/30-clients.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/30-clients.png"
+  },
+  {
+    "file": "control-panel/31-disputes.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/31-disputes.png"
+  },
+  {
+    "file": "control-panel/32-support.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/32-support.png"
+  },
+  {
+    "file": "control-panel/33-audit.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/33-audit.png"
+  },
+  {
+    "file": "control-panel/34-security.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/34-security.png"
+  },
+  {
+    "file": "broker-portal/09-messages.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "broker-portal/09-messages.png"
+  },
+  {
+    "file": "fleet-portal/18-profitability.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/18-profitability.png"
+  },
+  {
+    "file": "client/26-dispute.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/26-dispute.png"
+  },
+  {
+    "file": "driver/23-offline.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/23-offline.png"
   }
 ]

@@ -82,6 +82,9 @@ function ic(name,color=C.text,size=24){
     building:`<rect x="5" y="3" width="14" height="18" rx="1.6"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h6"/>`,
     edit:`<path d="M4 20h4L18.5 9.5l-4-4L4 16z"/><path d="M13 5.5l4 4"/>`,
     globe:`<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.6 2.6 14.4 0 17M12 3.5c-2.6 2.6-2.6 14.4 0 17"/>`,
+    lock:`<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>`,
+    headset:`<path d="M5 13a7 7 0 0114 0"/><rect x="3.5" y="13" width="3.6" height="6.5" rx="1.6"/><rect x="16.9" y="13" width="3.6" height="6.5" rx="1.6"/><path d="M20.5 19.5a3 3 0 01-3 3h-2.5"/>`,
+    scale:`<path d="M12 4v16M7.5 20h9M5 7h14l-2 0"/><path d="M5 7l-2.4 4.8a2.4 2.4 0 004.8 0zM19 7l-2.4 4.8a2.4 2.4 0 004.8 0z"/>`,
   };
   return `<svg ${s}>${P[name]||''}</svg>`;
 }
@@ -406,7 +409,8 @@ add('client/06-payment',430,932,3, phone(`
         <div>${ic('shield',C.primary,24)}</div>
         <div style="font-size:13px;color:${C.muted};line-height:1.45;font-weight:600">Your payment is held in escrow and released to the carrier only after delivery is confirmed.</div>
       </div>
-      <label style="display:flex;gap:12px;margin-top:16px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:7px;background:${C.primary};display:flex;align-items:center;justify-content:center;flex-shrink:0">${ic('check','#fff',16)}</div><span style="font-size:13.5px;color:${C.text};line-height:1.45">I agree to the cancellation policy. A fee may apply after a driver is assigned.</span></label>
+      <label style="display:flex;gap:12px;margin-top:16px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:7px;background:${C.primary};display:flex;align-items:center;justify-content:center;flex-shrink:0">${ic('check','#fff',16)}</div><span style="font-size:13.5px;color:${C.text};line-height:1.45">I have read and accept the <b style="color:${C.primary}">Terms &amp; Conditions</b> and Privacy Policy.</span></label>
+      <label style="display:flex;gap:12px;margin-top:12px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:7px;background:${C.primary};display:flex;align-items:center;justify-content:center;flex-shrink:0">${ic('check','#fff',16)}</div><span style="font-size:13.5px;color:${C.text};line-height:1.45">I agree to the cancellation policy. A fee may apply after a driver is assigned.</span></label>
     </div>
     <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff">
       <div style="display:flex;justify-content:space-between;margin-bottom:12px"><span style="color:${C.muted};font-weight:600">Total</span><span style="font-weight:800;font-size:18px">${money(485000)}</span></div>
@@ -458,6 +462,33 @@ add('client/08-order-detail',430,932,3, phone(`
     </div>
   </div>`));
 
+// 08a Active order detail — cancellable before pickup
+add('client/08a-order-active',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 12px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="font-weight:800;font-size:18px">Order #NF-20390</div></div>
+    <div style="flex:1;overflow:hidden;padding:0 22px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">${chip('● Driver assigned',{bg:'#E6F7F0',c:C.primaryD})}<span style="color:${C.muted};font-size:13px;font-weight:600">Pickup tomorrow · 08:00</span></div>
+      ${card(`<div style="padding:16px">
+        ${[['Order placed','07:41',true],['Driver assigned · Sami R.','07:58',true],['Pickup · Basra','Scheduled 08:00',false],['Delivery · Baghdad','Est. 13:30',false]].map(([a,b,done],i,arr)=>`
+          <div style="display:flex;gap:12px">
+            <div style="display:flex;flex-direction:column;align-items:center"><div style="width:12px;height:12px;border-radius:50%;background:${done?C.primary:'#fff'};border:2px solid ${done?C.primary:C.line}"></div>${i<arr.length-1?`<div style="width:2px;flex:1;background:${done?C.primary:C.line}"></div>`:''}</div>
+            <div style="padding-bottom:${i<arr.length-1?'16px':'0'}"><div style="font-weight:700;font-size:14.5px;color:${done?C.text:C.muted}">${a}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${b}</div></div>
+          </div>`).join('')}
+      </div>`)}
+      <div style="display:flex;gap:10px;margin:16px 0">
+        <button style="flex:1;border:1.5px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:14.5px;padding:14px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px">${ic('chat',C.primary,20)} Message</button>
+        <button style="flex:1;border:1.5px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:14.5px;padding:14px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px">${ic('phone',C.primary,20)} Call</button>
+      </div>
+      <div style="padding:16px;border-radius:16px;background:${C.bg};display:flex;gap:12px">
+        <div>${ic('clock',C.primary,22)}</div>
+        <div style="font-size:13px;color:${C.muted};line-height:1.45;font-weight:600">Free cancellation until the driver starts pickup. A fee may apply once a driver is assigned.</div>
+      </div>
+    </div>
+    <div style="padding:14px 22px 30px;border-top:1px solid ${C.line};background:#fff">
+      <button style="width:100%;border:1.5px solid ${C.danger};background:#fff;color:${C.danger};font-weight:800;font-size:16px;padding:16px;border-radius:15px">Cancel order</button>
+    </div>
+  </div>`));
+
 // 09 Chat
 add('client/09-chat',430,932,3, phone(`
   <div style="flex:1;display:flex;flex-direction:column">
@@ -505,6 +536,32 @@ add('client/10-wallet',430,932,3, phone(`
         </div>`).join('')}
     </div>
     ${tabbar('wallet')}
+  </div>`));
+
+// 10a Wallet top-up — amount + method
+add('client/10a-topup',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 12px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="font-weight:800;font-size:19px">Top up wallet</div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      ${card(`<div style="padding:22px;text-align:center">
+        <div style="color:${C.muted};font-size:13px;font-weight:700">Amount to add</div>
+        <div style="font-size:44px;font-weight:800;margin:6px 0 2px">200,000 <span style="font-size:20px;color:${C.muted}">IQD</span></div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:600">New balance 820,000 IQD</div>
+      </div>`)}
+      <div style="display:flex;gap:9px;margin-top:16px">
+        ${[['50,000',false],['100,000',false],['200,000',true],['500,000',false]].map(([a,on])=>`<div style="flex:1;text-align:center;padding:13px 0;border-radius:13px;font-weight:800;font-size:13.5px;background:${on?C.primaryL:'#fff'};color:${on?C.primaryD:C.text};border:1.5px solid ${on?C.primary:C.line}">${a}</div>`).join('')}
+      </div>
+      <div style="font-weight:800;font-size:15px;margin:22px 0 12px">Pay with</div>
+      ${[['money','Credit / debit card','HyperPay secure checkout',true],['wallet','ZainCash','Mobile wallet',false],['building','Bank transfer','Manual · 1–2 business days',false]].map(([k,t,s,on])=>`
+        <div style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;margin-bottom:12px;background:${on?C.primaryL:'#fff'};border:1.5px solid ${on?C.primary:C.line}">
+          <div style="width:46px;height:46px;border-radius:12px;background:#fff;border:1px solid ${C.line};display:flex;align-items:center;justify-content:center">${ic(k,C.primaryD,24)}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:15px">${t}</div><div style="color:${C.muted};font-size:13px;font-weight:600">${s}</div></div>
+          <div style="width:24px;height:24px;border-radius:50%;border:2px solid ${on?C.primary:C.line};display:flex;align-items:center;justify-content:center">${on?`<div style="width:12px;height:12px;border-radius:50%;background:${C.primary}"></div>`:''}</div>
+        </div>`).join('')}
+    </div>
+    <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff">
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:18px;padding:18px;border-radius:15px">Top up 200,000 IQD</button>
+    </div>
   </div>`));
 
 // 11 Subscription
@@ -683,6 +740,65 @@ add('client/03b-vehicle-picker',430,932,3, phone(`
     </div>
   </div>`));
 
+// 03c Pricing method fork — fixed price vs auction
+add('client/03c-pricing-method',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 8px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="font-weight:800;font-size:19px">How to price it</div></div>
+    <div style="padding:6px 22px 14px"><div style="display:flex;gap:6px">${[1,2,3,4,5,6,7].map(i=>`<div style="flex:1;height:6px;border-radius:6px;background:${i<=3?C.primary:C.line}"></div>`).join('')}</div><div style="color:${C.muted};font-size:13px;font-weight:600;margin-top:8px">Step 3 of 7 · Pricing</div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      <div style="color:${C.muted};font-size:14px;font-weight:600;line-height:1.5;margin-bottom:18px">Pick how you want to set the price for this shipment. You can change nothing once carriers are notified.</div>
+      <div style="padding:20px;border-radius:20px;margin-bottom:14px;background:${C.primaryL};border:2px solid ${C.primary}">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:52px;height:52px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center">${ic('money',C.primaryD,26)}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:17px;color:${C.primaryD}">Fixed price</div><div style="color:${C.muted};font-size:13px;font-weight:600;margin-top:2px">Instant platform quote. Pay and we find a truck now.</div></div>
+          <div style="width:26px;height:26px;border-radius:50%;border:2px solid ${C.primary};display:flex;align-items:center;justify-content:center"><div style="width:13px;height:13px;border-radius:50%;background:${C.primary}"></div></div>
+        </div>
+      </div>
+      <div style="padding:20px;border-radius:20px;background:#fff;border:1.5px solid ${C.line}">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:52px;height:52px;border-radius:14px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('gauge',C.muted,26)}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:17px">Get offers <span style="color:${C.muted};font-weight:700;font-size:13px">· auction</span></div><div style="color:${C.muted};font-size:13px;font-weight:600;margin-top:2px">Set a budget range. Carriers bid — you pick the winner.</div></div>
+          <div style="width:26px;height:26px;border-radius:50%;border:2px solid ${C.line}"></div>
+        </div>
+      </div>
+      <div style="margin-top:18px;padding:16px;border-radius:16px;background:${C.bg};display:flex;gap:12px">
+        <div>${ic('shield',C.primary,22)}</div>
+        <div style="font-size:13px;color:${C.muted};line-height:1.45;font-weight:600">Both options are escrow-protected. Auction usually takes up to 30 minutes to collect offers.</div>
+      </div>
+    </div>
+    <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff">
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:17px;padding:18px;border-radius:15px">Continue</button>
+    </div>
+  </div>`));
+
+// 03d Schedule pickup — now or later
+add('client/03d-schedule',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:4px 22px 8px;display:flex;align-items:center;gap:14px"><div style="font-size:26px">‹</div><div style="font-weight:800;font-size:19px">When do you need it?</div></div>
+    <div style="padding:6px 22px 14px"><div style="display:flex;gap:6px">${[1,2,3,4,5,6,7].map(i=>`<div style="flex:1;height:6px;border-radius:6px;background:${i<=1?C.primary:C.line}"></div>`).join('')}</div><div style="color:${C.muted};font-size:13px;font-weight:600;margin-top:8px">Step 1 of 7 · Timing</div></div>
+    <div style="padding:0 22px;flex:1;overflow:hidden">
+      <div style="display:flex;gap:12px;margin-bottom:20px">
+        <div style="flex:1;text-align:center;padding:16px 0;border-radius:16px;font-weight:800;font-size:14.5px;background:#fff;color:${C.muted};border:1.5px solid ${C.line}">As soon as possible</div>
+        <div style="flex:1;text-align:center;padding:16px 0;border-radius:16px;font-weight:800;font-size:14.5px;background:${C.primaryL};color:${C.primaryD};border:1.5px solid ${C.primary}">Schedule for later</div>
+      </div>
+      ${card(`<div style="padding:18px">
+        <div style="color:${C.muted};font-size:12px;font-weight:700;margin-bottom:6px">Pickup date</div>
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:${C.bg};border:1.5px solid ${C.line}">${ic('clock',C.primary,22)}<div style="flex:1;font-weight:800;font-size:16px">Mon · 17 Aug 2026</div><div style="color:${C.muted};font-size:20px">▾</div></div>
+        <div style="color:${C.muted};font-size:12px;font-weight:700;margin:16px 0 6px">Pickup time</div>
+        <div style="display:flex;gap:9px;flex-wrap:wrap">
+          ${['06:00','08:00','10:00','13:00','16:00','19:00'].map((t,i)=>`<div style="padding:11px 15px;border-radius:12px;font-weight:800;font-size:14px;background:${i==1?C.primary:'#fff'};color:${i==1?'#fff':C.text};border:1.5px solid ${i==1?C.primary:C.line}">${t}</div>`).join('')}
+        </div>
+      </div>`)}
+      <div style="margin-top:18px;padding:16px;border-radius:16px;background:${C.bg};display:flex;gap:12px">
+        <div>${ic('truck',C.primary,22)}</div>
+        <div style="font-size:13px;color:${C.muted};line-height:1.45;font-weight:600">We dispatch a driver ahead of your pickup time so the truck arrives on schedule. You can cancel free until a driver is assigned.</div>
+      </div>
+    </div>
+    <div style="padding:16px 22px 30px;border-top:1px solid ${C.line};background:#fff">
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:17px;padding:18px;border-radius:15px">Continue</button>
+    </div>
+  </div>`));
+
 // 16 Set budget (auction pricing mode)
 add('client/16-set-budget',430,932,3, phone(`
   <div style="flex:1;display:flex;flex-direction:column">
@@ -839,6 +955,10 @@ add('client/21-loadplan-measure',430,932,3, phone(`
     <div style="position:relative;background:#fff;border-radius:28px 28px 0 0;padding:18px 22px 28px">
       <div style="display:flex;justify-content:space-between;margin-bottom:14px">
         ${[['Length','120 cm'],['Width','100 cm'],['Height','145 cm']].map(([a,b])=>`<div style="flex:1;text-align:center;padding:12px;border-radius:14px;background:${C.bg};margin:0 4px"><div style="color:${C.muted};font-size:12px;font-weight:700">${a}</div><div style="font-weight:800;font-size:17px">${b}</div></div>`).join('')}
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:${C.bg};border:1.5px solid ${C.line};margin-bottom:14px">
+        <div>${ic('weight',C.primary,22)}</div>
+        <div style="flex:1"><div style="color:${C.muted};font-size:12px;font-weight:700">Weight per unit · AI can't weigh — enter it</div><div style="font-weight:800;font-size:19px;margin-top:2px">320 <span style="font-size:13px;color:${C.muted};font-weight:700">kg</span><span style="margin-left:6px;color:${C.primary};font-size:13px;font-weight:800">tap to edit</span></div></div>
       </div>
       <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:17px;padding:17px;border-radius:15px">Add this item</button>
     </div>
@@ -1299,15 +1419,15 @@ add('driver/08-view-loadplan',430,932,3, phone(`
 
 /* ============================================================= CONTROL PANEL */
 function cpSidebar(active){
-  const items=[['grid','Overview'],['route','Dispatch board'],['star','Auctions'],['box','Orders'],['map','Live map'],['user','Applications'],['truck','Carriers'],['building','Agents'],['money','Finance'],['doc','Invoices'],['star','Marketing'],['shield','Compliance'],['shield','Fraud'],['gauge','Pricing'],['doc','Catalog'],['star','Plans & Tiers'],['chat','Localization'],['filter','Reports']];
-  return `<div style="width:250px;background:${C.ink};color:#fff;display:flex;flex-direction:column;flex-shrink:0;padding:18px 14px">
-    <div style="display:flex;align-items:center;gap:11px;padding:6px 10px 16px">
-      <div style="width:38px;height:38px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.06)">${brandMark(24)}</div>
-      <div style="font-weight:800;font-size:16px">NEXT <span style="color:${C.accent}">Freight</span></div>
+  const items=[['grid','Overview'],['route','Dispatch board'],['star','Auctions'],['box','Orders'],['map','Live map'],['user','Applications'],['truck','Carriers'],['building','Agents'],['user','Clients'],['money','Finance'],['doc','Invoices'],['star','Marketing'],['shield','Compliance'],['scale','Disputes'],['shield','Fraud'],['headset','Support'],['gauge','Pricing'],['doc','Catalog'],['star','Plans & Tiers'],['chat','Localization'],['lock','Security'],['doc','Audit log'],['filter','Reports']];
+  return `<div style="width:242px;background:${C.ink};color:#fff;display:flex;flex-direction:column;flex-shrink:0;padding:14px 12px">
+    <div style="display:flex;align-items:center;gap:10px;padding:5px 9px 12px">
+      <div style="width:34px;height:34px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.06)">${brandMark(22)}</div>
+      <div style="font-weight:800;font-size:15px">NEXT <span style="color:${C.accent}">Freight</span></div>
     </div>
-    ${items.map(([k,l])=>{const on=l===active;return `<div style="display:flex;align-items:center;gap:11px;padding:8.5px 11px;border-radius:10px;margin-bottom:1px;background:${on?'rgba(234,91,12,.16)':'transparent'};color:${on?'#fff':'rgba(255,255,255,.62)'};font-weight:${on?800:600};font-size:13.5px;${on?'box-shadow:inset 3px 0 0 '+C.accent:''}">${ic(k,on?C.accent:'rgba(255,255,255,.6)',18)} ${l}</div>`;}).join('')}
+    ${items.map(([k,l])=>{const on=l===active;return `<div style="display:flex;align-items:center;gap:10px;padding:6.5px 10px;border-radius:9px;margin-bottom:0.5px;background:${on?'rgba(234,91,12,.16)':'transparent'};color:${on?'#fff':'rgba(255,255,255,.62)'};font-weight:${on?800:600};font-size:12.8px;${on?'box-shadow:inset 3px 0 0 '+C.accent:''}">${ic(k,on?C.accent:'rgba(255,255,255,.6)',16)} ${l}</div>`;}).join('')}
     <div style="flex:1"></div>
-    <div style="display:flex;align-items:center;gap:11px;padding:12px;border-radius:12px;background:rgba(255,255,255,.06)"><div style="width:36px;height:36px;border-radius:50%;background:${C.accent};color:#20160a;font-weight:800;display:flex;align-items:center;justify-content:center">A</div><div><div style="font-weight:700;font-size:13.5px">Admin</div><div style="font-size:12px;color:rgba(255,255,255,.5)">Baghdad ops</div></div></div>
+    <div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:11px;background:rgba(255,255,255,.06)"><div style="width:32px;height:32px;border-radius:50%;background:${C.accent};color:#20160a;font-weight:800;display:flex;align-items:center;justify-content:center">A</div><div><div style="font-weight:700;font-size:12.8px">Admin</div><div style="font-size:11px;color:rgba(255,255,255,.5)">Baghdad ops</div></div></div>
   </div>`;
 }
 function cpTopbar(title,sub){
@@ -1325,8 +1445,8 @@ function portalSidebar(active,{broker=false}={}){
   const sub  = broker?'Broker portal':'Fleet portal';
   const initials = broker?'ZB':'RF';
   const items = broker
-    ? [['grid','Overview'],['route','Claim board'],['star','Auctions'],['box','My Orders'],['truck','Carriers'],['doc','Contracts'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']]
-    : [['grid','Overview'],['box','My Orders'],['star','Marketplace'],['user','My Drivers'],['truck','My Vehicles'],['weight','Maintenance'],['map','Live map'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']];
+    ? [['grid','Overview'],['route','Claim board'],['star','Auctions'],['box','My Orders'],['truck','Carriers'],['doc','Contracts'],['chat','Messages'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']]
+    : [['grid','Overview'],['box','My Orders'],['star','Marketplace'],['user','My Drivers'],['truck','My Vehicles'],['weight','Maintenance'],['money','Profitability'],['map','Live map'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']];
   return `<div style="width:250px;background:${C.ink};color:#fff;display:flex;flex-direction:column;flex-shrink:0;padding:22px 14px">
     <div style="display:flex;align-items:center;gap:11px;padding:6px 10px 10px">
       <div style="width:40px;height:40px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.06)">${brandMark(26)}</div>
@@ -3321,6 +3441,305 @@ add('driver/22-maintenance',430,932,3, phone(`
     ${tabbarDriver('profile')}
   </div>`));
 
+/* ============================================================================
+   MANAGEMENT UPDATE (final batch) — support, disputes, clients, audit, security,
+   broker masked chats, fleet profitability, driver offline.
+   ============================================================================ */
+
+/* CP — Client accounts */
+add('control-panel/30-clients',1440,900,2, desktop(`
+  ${cpSidebar('Clients')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${cpTopbar('Client accounts','Individuals & companies · freeze, documents and credit')}
+    <div style="flex:1;padding:22px 30px;overflow:hidden;display:grid;grid-template-columns:1fr 360px;gap:18px">
+      <div style="display:flex;flex-direction:column;gap:16px;overflow:hidden">
+        <div style="display:flex;gap:12px">
+          ${[['Active clients','1,284',C.text],['Frozen','7',C.danger],['Companies','96',C.primary],['Credit exposure','1.42B',C.warn]].map(([a,b,col])=>`<div style="flex:1;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:15px 17px"><div style="font-weight:800;font-size:22px;color:${col}">${b}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${a}</div></div>`).join('')}
+        </div>
+        <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+          <div style="display:grid;grid-template-columns:1.4fr 110px 1fr 130px 110px;padding:13px 20px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>CLIENT</div><div>TYPE</div><div>CREDIT USED</div><div>COUNTRY</div><div>STATUS</div></div>
+          ${[['Mesopotamia Retail','Company','120M / 200M','Iraq','Active','#16A34A'],
+             ['Noor Salim','Individual','—','Iraq','Active','#16A34A'],
+             ['Baghdad Foods Co.','Company','48M / 60M','Iraq','Active','#16A34A'],
+             ['Zaid Kareem','Individual','—','Iraq','Frozen',C.danger],
+             ['Erbil Traders','Company','9M / 25M','Iraq','Active','#16A34A'],
+             ['Huda Nasser','Individual','—','Iraq','Active','#16A34A']].map((r,i)=>`
+            <div style="display:grid;grid-template-columns:1.4fr 110px 1fr 130px 110px;padding:14px 20px;align-items:center;font-size:13px;${i?'border-top:1px solid '+C.line:''};${i==0?'background:'+C.primaryL:''}">
+              <div style="display:flex;align-items:center;gap:9px;font-weight:700">${ic(r[1]==='Company'?'building':'user',C.primary,17)} ${r[0]}</div>
+              <div style="color:${C.muted};font-weight:700">${r[1]}</div>
+              <div class="mono" style="font-weight:700;color:${C.muted}">${r[2]}</div>
+              <div style="color:${C.muted};font-weight:700">${r[3]}</div>
+              <div><span style="font-weight:800;font-size:11.5px;padding:3px 10px;border-radius:999px;color:${r[5]};background:${r[5]}1a">${r[4]}</span></div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:22px;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:4px">${ic('building',C.primary,22)}<div style="font-weight:800;font-size:17px">Mesopotamia Retail</div></div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:600;margin-bottom:16px">Client company · CC linked · since Mar 2026</div>
+        ${[['Account type','Company'],['Status','Active'],['Credit limit','200,000,000 IQD'],['Credit used','120,000,000 IQD'],['Payment terms','Net 30 days'],['Open orders','14']].map(([a,b],i)=>`<div style="display:flex;justify-content:space-between;padding:10px 0;${i?'border-top:1px solid '+C.line:''}"><span style="font-size:12.5px;color:${C.muted};font-weight:600">${a}</span><span style="font-weight:800;font-size:12.5px;text-align:right">${b}</span></div>`).join('')}
+        <div style="margin-top:14px;padding:12px 14px;border-radius:12px;background:${C.bg};font-size:12px;color:${C.muted};font-weight:700;display:flex;gap:8px;align-items:center">${ic('doc',C.muted,16)} 4 documents verified</div>
+        <div style="flex:1"></div>
+        <div style="display:flex;gap:10px;margin-top:16px"><button style="flex:1;border:1.5px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:13px;padding:12px;border-radius:11px">Edit credit</button><button style="flex:1;border:1.5px solid ${C.danger};background:#fff;color:${C.danger};font-weight:800;font-size:13px;padding:12px;border-radius:11px">Freeze account</button></div>
+      </div>
+    </div>
+  </div>`));
+
+/* CP — Disputes & claims */
+add('control-panel/31-disputes',1440,900,2, desktop(`
+  ${cpSidebar('Disputes')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${cpTopbar('Disputes & claims','Evidence · liability · compensation · objection')}
+    <div style="flex:1;padding:22px 30px;overflow:hidden;display:grid;grid-template-columns:1fr 380px;gap:18px">
+      <div style="display:flex;flex-direction:column;gap:16px;overflow:hidden">
+        <div style="display:flex;gap:12px">
+          ${[['Open','9',C.danger],['Awaiting response','4',C.warn],['Resolved (30d)','37',C.text],['Comp. paid (30d)','18.4M',C.primary]].map(([a,b,col])=>`<div style="flex:1;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:15px 17px"><div style="font-weight:800;font-size:22px;color:${col}">${b}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${a}</div></div>`).join('')}
+        </div>
+        <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 130px 120px;padding:13px 20px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>ORDER</div><div>RAISED BY</div><div>REASON</div><div>CLAIM</div><div>STATUS</div></div>
+          ${[['NF-30455','Client · Mesopotamia','Cargo arrived damaged','1,200,000','Reviewing',C.warn],
+             ['NF-30402','Driver · Karim Z.','Wrong pieces loaded','—','Awaiting resp.',C.warn],
+             ['NF-30388','Client · Noor S.','Order not delivered','2,400,000','Open',C.danger],
+             ['NF-30351','Carrier · Dijla','Detention charge','450,000','Resolved','#16A34A'],
+             ['NF-30310','Client · Erbil Traders','Shortage on delivery','800,000','Open',C.danger]].map((r,i)=>`
+            <div style="display:grid;grid-template-columns:120px 1fr 1fr 130px 120px;padding:14px 20px;align-items:center;font-size:12.5px;${i?'border-top:1px solid '+C.line:''};${i==0?'background:'+C.primaryL:''}">
+              <div style="font-weight:800">${r[0]}</div>
+              <div style="color:${C.muted};font-weight:700">${r[1]}</div>
+              <div style="font-weight:600">${r[2]}</div>
+              <div class="mono" style="font-weight:800">${r[3]}</div>
+              <div><span style="font-weight:800;font-size:11px;padding:3px 9px;border-radius:999px;color:${r[5]};background:${r[5]}1a">${r[4]}</span></div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:22px;display:flex;flex-direction:column">
+        <div style="font-weight:800;font-size:16px">Claim · NF-30455</div>
+        <div style="color:${C.muted};font-size:12.5px;font-weight:600;margin-bottom:14px">Raised by client · cargo damaged</div>
+        <div style="display:flex;gap:8px;margin-bottom:14px">${[1,2,3].map(()=>`<div style="flex:1;height:64px;border-radius:10px;background:${C.bg};border:1px solid ${C.line};display:flex;align-items:center;justify-content:center">${ic('camera',C.muted,20)}</div>`).join('')}</div>
+        <div style="font-weight:800;font-size:12.5px;margin-bottom:8px;color:${C.muted}">ASSIGN LIABILITY</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px">${['Carrier','Client','Driver','Platform','Shared','None'].map((t,i)=>`<span style="font-weight:800;font-size:12px;padding:7px 12px;border-radius:999px;border:1.5px solid ${i==0?C.primary:C.line};color:${i==0?C.primary:C.muted};background:${i==0?C.primaryL:'#fff'}">${t}</span>`).join('')}</div>
+        <div style="background:${C.bg};border-radius:12px;padding:14px 15px;margin-bottom:8px">
+          ${[['Claimed','1,200,000'],['Approved compensation','900,000'],['Refund to','Client wallet']].map(([a,b],i)=>`<div style="display:flex;justify-content:space-between;padding:7px 0;${i?'border-top:1px solid '+C.line:''}"><span style="font-size:12.5px;color:${C.muted};font-weight:600">${a}</span><span class="mono" style="font-weight:800;font-size:12.5px">${b}</span></div>`).join('')}
+        </div>
+        <div style="font-size:11.5px;color:${C.muted};font-weight:600;display:flex;gap:7px;align-items:center;margin-bottom:12px">${ic('shield',C.muted,15)} Ledger-backed refund · idempotency key required</div>
+        <div style="flex:1"></div>
+        <div style="display:flex;gap:10px"><button style="flex:1;border:1.5px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:13px;padding:12px;border-radius:11px">Reject</button><button style="flex:1.2;border:0;background:${C.ink};color:#fff;font-weight:800;font-size:13px;padding:12px;border-radius:11px">Resolve & pay</button></div>
+      </div>
+    </div>
+  </div>`));
+
+/* CP — Support tickets */
+add('control-panel/32-support',1440,900,2, desktop(`
+  ${cpSidebar('Support')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${cpTopbar('Support tickets','Triage, assign and resolve · linked orders & SOS')}
+    <div style="flex:1;padding:22px 30px;overflow:hidden;display:grid;grid-template-columns:1fr 380px;gap:18px">
+      <div style="display:flex;flex-direction:column;gap:16px;overflow:hidden">
+        <div style="display:flex;gap:12px">
+          ${[['Open','23',C.danger],['In progress','11',C.warn],['Urgent','3',C.danger],['Resolved today','18','#16A34A']].map(([a,b,col])=>`<div style="flex:1;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:15px 17px"><div style="font-weight:800;font-size:22px;color:${col}">${b}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${a}</div></div>`).join('')}
+        </div>
+        <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+          <div style="display:grid;grid-template-columns:90px 1.4fr 110px 100px 130px;padding:13px 20px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>TICKET</div><div>SUBJECT</div><div>PRIORITY</div><div>STATUS</div><div>ASSIGNEE</div></div>
+          ${[['#4821','Payment not reflected in wallet','URGENT',C.danger,'Open',C.danger,'Unassigned'],
+             ['#4815','Driver late to pickup — NF-30440','HIGH',C.warn,'In progress',C.warn,'Layla'],
+             ['#4809','How do I change my plan?','NORMAL',C.muted,'In progress',C.warn,'Omar'],
+             ['#4801','SOS follow-up — NF-30388','HIGH',C.warn,'Open',C.danger,'Safety'],
+             ['#4788','Invoice PDF missing','NORMAL',C.muted,'Resolved','#16A34A','Huda']].map((r,i)=>`
+            <div style="display:grid;grid-template-columns:90px 1.4fr 110px 100px 130px;padding:14px 20px;align-items:center;font-size:12.5px;${i?'border-top:1px solid '+C.line:''};${i==0?'background:'+C.primaryL:''}">
+              <div style="font-weight:800">${r[0]}</div>
+              <div style="font-weight:600">${r[1]}</div>
+              <div><span style="font-weight:800;font-size:11px;padding:3px 9px;border-radius:999px;color:${r[3]};background:${r[3]}1a">${r[2]}</span></div>
+              <div><span style="font-weight:800;font-size:11px;color:${r[5]}">${r[4]}</span></div>
+              <div style="color:${C.muted};font-weight:700">${r[6]}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:20px;display:flex;flex-direction:column">
+        <div style="font-weight:800;font-size:15px">#4821 · Payment not reflected</div>
+        <div style="color:${C.muted};font-size:12px;font-weight:600;margin-bottom:14px">Opened by Noor S. · linked NF-30455</div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:10px;overflow:hidden">
+          <div style="align-self:flex-start;max-width:85%;background:${C.bg};border-radius:12px 12px 12px 3px;padding:10px 13px;font-size:12.5px;font-weight:600">I paid but my wallet still shows the old balance.</div>
+          <div style="align-self:flex-end;max-width:85%;background:${C.primary};color:#fff;border-radius:12px 12px 3px 12px;padding:10px 13px;font-size:12.5px;font-weight:600">Checking the payment reference now — one moment.</div>
+          <div style="align-self:center;font-size:11px;color:${C.muted};font-weight:700;background:#FFF7ED;border:1px solid #FdBA74;padding:5px 11px;border-radius:999px">Internal note: gateway webhook delayed</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px"><div style="flex:1;background:${C.bg};border:1px solid ${C.line};border-radius:11px;padding:11px 13px;color:${C.muted};font-size:12.5px;font-weight:600">Write a reply…</div><button style="border:0;background:${C.ink};color:#fff;font-weight:800;font-size:12.5px;padding:11px 16px;border-radius:11px">Send</button></div>
+      </div>
+    </div>
+  </div>`));
+
+/* CP — Audit log */
+add('control-panel/33-audit',1440,900,2, desktop(`
+  ${cpSidebar('Audit log')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${cpTopbar('Audit log','Append-only trail of every sensitive change')}
+    <div style="flex:1;padding:22px 30px;overflow:hidden;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:center;gap:11px;background:#EEF2FF;border:1px solid #C7D2FE;border-radius:12px;padding:12px 16px">${ic('lock','#4F46E5',20)}<div style="font-size:12.5px;color:#3730A3;font-weight:700">Read-only. Entries can never be edited or deleted — before/after values are preserved for every change.</div></div>
+      <div style="display:flex;gap:10px">
+        ${['All entities','All actors','Last 7 days'].map((t,i)=>`<div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid ${C.line};border-radius:11px;padding:10px 14px;font-size:13px;font-weight:700;color:${C.muted}">${ic('filter',C.muted,16)} ${t}</div>`).join('')}
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:150px 150px 1fr 1.4fr;padding:13px 20px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>WHEN (UTC)</div><div>ACTOR</div><div>ACTION</div><div>BEFORE → AFTER</div></div>
+        ${[['16 Aug 08:42','Admin · Layla','PRICING_FACTOR_UPDATED','fuel 1.10 → 1.15'],
+           ['16 Aug 08:15','Admin · Omar','CLIENT_FROZEN','Zaid K. active → suspended'],
+           ['15 Aug 22:03','System','PAYOUT_RELEASED','batch #PB-882 pending → paid'],
+           ['15 Aug 19:47','Admin · Huda','DISPUTE_RESOLVED','NF-30351 open → resolved'],
+           ['15 Aug 17:20','Admin · Layla','ROLE_PERMISSION_GRANTED','DISPATCHER +order.cancel'],
+           ['15 Aug 14:05','Admin · Omar','COUNTRY_CONFIG_UPDATED','IQ tax 0% → 0%']].map((r,i)=>`
+          <div style="display:grid;grid-template-columns:150px 150px 1fr 1.4fr;padding:14px 20px;align-items:center;font-size:12.5px;${i?'border-top:1px solid '+C.line:''}">
+            <div class="mono" style="color:${C.muted};font-weight:700">${r[0]}</div>
+            <div style="font-weight:700">${r[1]}</div>
+            <div style="font-weight:800;color:${C.primary}">${r[2]}</div>
+            <div class="mono" style="color:${C.muted};font-weight:600">${r[3]}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+  </div>`));
+
+/* CP — Panel security / 2FA */
+add('control-panel/34-security',1440,900,2, desktop(`
+  ${cpSidebar('Security')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${cpTopbar('Panel security','Two-factor authentication & trusted devices')}
+    <div style="flex:1;padding:24px 30px;overflow:hidden;display:grid;grid-template-columns:400px 1fr;gap:20px">
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:24px;display:flex;flex-direction:column;align-items:center">
+        <div style="align-self:flex-start;font-weight:800;font-size:16px;margin-bottom:4px">Two-factor authentication</div>
+        <div style="align-self:flex-start;color:${C.muted};font-size:12.5px;font-weight:600;margin-bottom:18px">Scan the QR with your authenticator app</div>
+        <div style="width:180px;height:180px;border-radius:14px;background:#fff;border:2px solid ${C.ink};display:grid;grid-template-columns:repeat(9,1fr);grid-template-rows:repeat(9,1fr);padding:10px;gap:2px;margin-bottom:16px">
+          ${Array.from({length:81}).map((_,i)=>`<div style="background:${(i*7+((i*i)%5))%3?C.ink:'#fff'};border-radius:1px"></div>`).join('')}
+        </div>
+        <div style="width:100%;background:${C.bg};border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><span style="font-size:12px;color:${C.muted};font-weight:700">SECRET</span><span class="mono" style="font-weight:800;font-size:13px;letter-spacing:1px">JBSW Y3DP EHPK 3PXP</span></div>
+        <div style="display:flex;gap:9px;width:100%">${[2,4,8,1,5,6].map(n=>`<div style="flex:1;height:52px;border:1.5px solid ${C.line};border-radius:11px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px">${n}</div>`).join('')}</div>
+        <button style="width:100%;margin-top:16px;border:0;background:${C.ink};color:#fff;font-weight:800;font-size:14px;padding:14px;border-radius:12px">Verify & enable</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:22px">
+          <div style="font-weight:800;font-size:16px;margin-bottom:14px">Trusted devices</div>
+          ${[['MacBook Pro · Baghdad ops','web','Trusted · 2FA 2h ago','#16A34A'],['iPhone 15 · Layla','ios','Trusted · 2FA 1d ago','#16A34A'],['Windows PC · Erbil desk','web','Challenge required',C.warn]].map((r,i)=>`
+            <div style="display:flex;align-items:center;gap:13px;padding:13px 0;${i?'border-top:1px solid '+C.line:''}">
+              <div style="width:40px;height:40px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic(r[1]==='ios'?'phone':'grid',C.text,20)}</div>
+              <div style="flex:1"><div style="font-weight:700;font-size:14px">${r[0]}</div><div style="font-size:12px;color:${r[3]};font-weight:700">${r[2]}</div></div>
+              <button style="border:1.5px solid ${C.line};background:#fff;color:${C.danger};font-weight:800;font-size:12px;padding:8px 14px;border-radius:10px">Revoke</button>
+            </div>`).join('')}
+        </div>
+        <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:22px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-weight:800;font-size:16px">Backup codes</div><span style="font-size:12px;color:${C.muted};font-weight:700">Store these safely — shown once</span></div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">${['4F2A-9C','7K1D-3P','QW8M-2Z','1LP0-6R','8H3N-5T','ZC4V-9B','3RE7-1K','M0X2-8D'].map(c=>`<div class="mono" style="background:${C.bg};border:1px solid ${C.line};border-radius:9px;padding:10px;text-align:center;font-weight:800;font-size:13px;letter-spacing:.5px">${c}</div>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+  </div>`));
+
+/* BROKER — masked chats */
+add('broker-portal/09-messages',1440,900,2, desktop(`
+  ${portalSidebar('Messages',{broker:true})}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${portalTop('Messages','Broker orders keep the client and carrier apart — two masked channels')}
+    <div style="flex:1;padding:0;overflow:hidden;display:grid;grid-template-columns:320px 1fr">
+      <div style="border-right:1px solid ${C.line};background:#fff;overflow:hidden">
+        <div style="padding:14px 18px;border-bottom:1px solid ${C.line};font-weight:800;font-size:14px">Order NF-30455 · Baghdad → Erbil</div>
+        ${[['Client channel','Client · identity hidden',true,C.primary],['Carrier channel','Carrier · identity hidden',false,'#4F46E5']].map(r=>`
+          <div style="display:flex;align-items:center;gap:12px;padding:15px 18px;border-bottom:1px solid ${C.line};background:${r[2]?C.primaryL:'#fff'}">
+            <div style="width:42px;height:42px;border-radius:11px;background:${r[3]}1a;display:flex;align-items:center;justify-content:center">${ic('user',r[3],21)}</div>
+            <div style="flex:1"><div style="font-weight:800;font-size:14px">${r[0]}</div><div style="font-size:12px;color:${C.muted};font-weight:600">${r[1]}</div></div>
+            ${ic('lock',C.muted,16)}
+          </div>`).join('')}
+        <div style="padding:16px 18px;color:${C.muted};font-size:12px;font-weight:600;line-height:1.5">The two sides never see each other's number or name. You relay between them; direct orders instead use a single open channel.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;overflow:hidden;background:${C.bg}">
+        <div style="padding:14px 22px;background:#fff;border-bottom:1px solid ${C.line};display:flex;align-items:center;gap:11px"><div style="width:38px;height:38px;border-radius:10px;background:${C.primary}1a;display:flex;align-items:center;justify-content:center">${ic('user',C.primary,20)}</div><div><div style="font-weight:800;font-size:14.5px">Client channel</div><div style="font-size:12px;color:${C.muted};font-weight:600">Masked · Mesopotamia Retail (hidden)</div></div><div style="flex:1"></div><span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:${C.muted};background:${C.bg};padding:6px 12px;border-radius:999px">${ic('lock',C.muted,15)} Contact hidden</span></div>
+        <div style="flex:1;padding:22px 26px;overflow:hidden;display:flex;flex-direction:column;gap:12px">
+          <div style="align-self:flex-start;max-width:60%;background:#fff;border:1px solid ${C.line};border-radius:14px 14px 14px 4px;padding:12px 15px;font-size:13.5px;font-weight:600">When will the truck reach the pickup point?</div>
+          <div style="align-self:flex-end;max-width:60%;background:${C.primary};color:#fff;border-radius:14px 14px 4px 14px;padding:12px 15px;font-size:13.5px;font-weight:600">The carrier is 20 minutes away. I'll keep you posted.</div>
+          <div style="align-self:flex-start;max-width:60%;background:#fff;border:1px solid ${C.line};border-radius:14px 14px 14px 4px;padding:12px 15px;font-size:13.5px;font-weight:600">Great, thank you.</div>
+          <div style="align-self:center;font-size:11px;color:${C.muted};font-weight:700;background:#fff;border:1px solid ${C.line};padding:5px 12px;border-radius:999px">Phone numbers are removed automatically from messages</div>
+        </div>
+        <div style="padding:14px 22px;background:#fff;border-top:1px solid ${C.line};display:flex;gap:10px"><div style="flex:1;background:${C.bg};border:1px solid ${C.line};border-radius:12px;padding:12px 15px;color:${C.muted};font-size:13.5px;font-weight:600">Message the client…</div><button style="border:0;background:${C.ink};color:#fff;font-weight:800;font-size:13.5px;padding:12px 20px;border-radius:12px">Send</button></div>
+      </div>
+    </div>
+  </div>`));
+
+/* FLEET — profitability per truck */
+add('fleet-portal/18-profitability',1440,900,2, desktop(`
+  ${portalSidebar('Profitability')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${portalTop('Profitability','Revenue, costs and net profit per truck · this month')}
+    <div style="flex:1;padding:22px 30px;overflow:hidden;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;gap:12px">
+        ${[['Revenue','86,400,000',C.text],['Costs','31,900,000',C.warn],['Net profit','54,500,000','#16A34A'],['Trips','214',C.primary]].map(([a,b,col])=>`<div style="flex:1;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:16px 18px"><div class="mono" style="font-weight:800;font-size:21px;color:${col}">${b}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${a}</div></div>`).join('')}
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:1.2fr 130px 1fr 1fr 1fr 90px;padding:13px 22px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>TRUCK</div><div>TYPE</div><div>REVENUE</div><div>COSTS</div><div>NET PROFIT</div><div>TRIPS</div></div>
+        ${[['IQ-2841','Box 12t','18,200,000','5,900,000','12,300,000','44','#16A34A'],
+           ['IQ-3390','Reefer 10t','21,600,000','9,400,000','12,200,000','38','#16A34A'],
+           ['IQ-1177','Flatbed 24t','24,100,000','8,200,000','15,900,000','51','#16A34A'],
+           ['IQ-5502','Curtain 12t','12,300,000','4,800,000','7,500,000','40','#16A34A'],
+           ['IQ-8830','Tipper 18t','10,200,000','3,600,000','6,600,000','41','#16A34A']].map((r,i)=>`
+          <div style="display:grid;grid-template-columns:1.2fr 130px 1fr 1fr 1fr 90px;padding:15px 22px;align-items:center;font-size:13px;${i?'border-top:1px solid '+C.line:''}">
+            <div style="display:flex;align-items:center;gap:9px;font-weight:800">${ic('truck',C.primary,18)} ${r[0]}</div>
+            <div style="color:${C.muted};font-weight:700">${r[1]}</div>
+            <div class="mono" style="font-weight:700">${r[2]}</div>
+            <div class="mono" style="font-weight:700;color:${C.warn}">${r[3]}</div>
+            <div class="mono" style="font-weight:800;color:${r[6]}">${r[4]}</div>
+            <div style="font-weight:700;color:${C.muted}">${r[5]}</div>
+          </div>`).join('')}
+      </div>
+      <div style="font-size:12px;color:${C.muted};font-weight:600;display:flex;align-items:center;gap:8px">${ic('money',C.muted,16)} Revenue from delivered orders · costs from maintenance logs and expenses · all amounts in IQD minor units.</div>
+    </div>
+  </div>`));
+
+/* CLIENT — raise a claim / dispute */
+add('client/26-dispute',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div><div style="font-weight:800;font-size:17px">Open a claim</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">NF-30455 · delivered 12 Aug</div></div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:16px 18px">
+      <div style="display:flex;align-items:center;gap:12px;background:#FFF7ED;border-radius:14px;padding:13px 15px;margin-bottom:16px">${ic('scale',C.warn,22)}<div style="font-size:12px;color:#9A5B00;font-weight:700;line-height:1.4">Tell us what went wrong. Add photos as evidence — our team reviews within 48h.</div></div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:10px">What happened?</div>
+      ${[['Cargo arrived damaged',true],['Missing pieces / shortage',false],['Order not delivered',false],['Other issue',false]].map(([t,sel])=>`
+        <label style="display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid ${sel?C.primary:C.line};border-radius:14px;padding:14px 15px;margin-bottom:9px">
+          <div style="width:22px;height:22px;border-radius:50%;border:2px solid ${sel?C.primary:C.line};display:flex;align-items:center;justify-content:center">${sel?`<div style="width:11px;height:11px;border-radius:50%;background:${C.primary}"></div>`:''}</div>
+          <span style="font-weight:${sel?800:600};font-size:14px;color:${C.text}">${t}</span>
+        </label>`).join('')}
+      <div style="font-weight:800;font-size:14px;margin:14px 0 10px">Evidence</div>
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        <div style="width:76px;height:76px;border-radius:13px;background:#fff;border:1.5px dashed ${C.line};display:flex;align-items:center;justify-content:center">${ic('plus',C.muted,22)}</div>
+        ${[1,2].map(()=>`<div style="width:76px;height:76px;border-radius:13px;background:#EDE9E3;display:flex;align-items:center;justify-content:center">${ic('camera',C.muted,22)}</div>`).join('')}
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;color:${C.muted};font-weight:700">Compensation requested</span></div>
+        <div class="mono" style="font-weight:800;font-size:20px;margin-top:6px">1,200,000 <span style="font-size:13px;color:${C.muted};font-weight:700">IQD</span></div>
+      </div>
+    </div>
+    <div style="padding:14px 18px;background:#fff;border-top:1px solid ${C.line}">
+      <button style="width:100%;border:0;background:${C.ink};color:#fff;font-weight:800;font-size:15px;padding:16px;border-radius:14px">Submit claim</button>
+    </div>
+    ${tabbar('box')}
+  </div>`));
+
+/* DRIVER — offline / pending sync */
+add('driver/23-offline',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="background:#33270F;padding:11px 18px;display:flex;align-items:center;gap:10px">${ic('power',C.accent,18)}<div style="flex:1;color:#FCE9CF;font-size:12.5px;font-weight:700">No internet — changes will sync automatically</div><span style="width:9px;height:9px;border-radius:50%;background:${C.warn}"></span></div>
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div><div style="font-weight:800;font-size:17px">Active trip</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">NF-30460 · Baghdad → Najaf</div></div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:16px 18px">
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:16px;margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><span style="font-weight:800;font-size:15px">Waiting to sync</span><span style="font-weight:800;font-size:12px;color:${C.warn};background:${C.warn}1a;padding:4px 11px;border-radius:999px">3 pending</span></div>
+        <div style="color:${C.muted};font-size:12px;font-weight:600">Saved on your phone · will upload when back online</div>
+      </div>
+      ${[['check','Status → Arrived at pickup','2 min ago','queued',C.warn],['camera','Proof photo (1)','5 min ago','queued',C.warn],['nav','GPS batch · 42 points','live','retrying',C.warn],['check','Status → Loading started','12 min ago','synced','#16A34A']].map(r=>`
+        <div style="display:flex;align-items:center;gap:13px;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:14px 15px;margin-bottom:10px">
+          <div style="width:40px;height:40px;border-radius:11px;background:${r[4]}1a;display:flex;align-items:center;justify-content:center">${ic(r[0],r[4],20)}</div>
+          <div style="flex:1"><div style="font-weight:700;font-size:14px">${r[1]}</div><div style="font-size:12px;color:${C.muted};font-weight:600">${r[2]}</div></div>
+          <span style="font-weight:800;font-size:11px;color:${r[4]};background:${r[4]}1a;padding:4px 10px;border-radius:999px">${r[3]}</span>
+        </div>`).join('')}
+      <div style="margin-top:6px;display:flex;align-items:center;gap:8px;font-size:12px;color:${C.muted};font-weight:600">${ic('clock',C.muted,15)} Retrying with backoff · your work is safe offline.</div>
+    </div>
+    ${tabbarDriver('trips')}
+  </div>`));
+
 /* write manifest */
 fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,null,2));
 
@@ -3367,8 +3786,10 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
       ]},
       { title:'Book a truck · fixed price', steps:[
         ['client/02-home','Home'],
+        ['client/03d-schedule','Now or scheduled'],
         ['client/03-order-wizard','Pickup & drop-off'],
         ['client/03b-vehicle-picker','Pick vehicle type'],
+        ['client/03c-pricing-method','Fixed price or offers'],
         ['client/04-quote','Instant quote'],
         ['client/06-payment','Pay'],
         ['client/05-tracking','Live tracking'],
@@ -3377,6 +3798,7 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
       { title:'Book with offers · auction', steps:[
         ['client/03-order-wizard','Pickup & drop-off'],
         ['client/03b-vehicle-picker','Pick vehicle type'],
+        ['client/03c-pricing-method','Choose get offers'],
         ['client/16-set-budget','Set your budget'],
         ['client/17-compare-offers','Compare carrier offers'],
         ['client/18-secure-pay','Accept & secure pay'],
@@ -3400,6 +3822,7 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
         ['client/08-order-detail','Order detail'],
         ['client/09-chat','Chat with driver'],
         ['client/10-wallet','Wallet'],
+        ['client/10a-topup','Top up wallet'],
         ['client/11-subscription','Subscription'],
         ['client/12-addresses','Saved addresses'],
         ['client/15-notifications','Notifications'],
@@ -3413,9 +3836,14 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
       ]},
       { title:'Cancel & refund', steps:[
         ['client/07-orders','My orders'],
-        ['client/08-order-detail','Order detail'],
+        ['client/08a-order-active','Active order · pre-pickup'],
         ['client/25-cancel-refund','Cancel & refund'],
         ['client/10-wallet','Refund in wallet'],
+      ]},
+      { title:'Raise a claim', steps:[
+        ['client/08-order-detail','Delivered order'],
+        ['client/26-dispute','Open a claim'],
+        ['client/15-notifications','Claim updates'],
       ]},
     ]},
     { surface:'Driver App', kind:'phone', color:'#0EA5A0', flows:[
@@ -3438,6 +3866,11 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
         ['driver/22-maintenance','My vehicle & duty'],
         ['driver/21-sos','Emergency / SOS'],
         ['driver/03-proof','Back to delivery'],
+      ]},
+      { title:'Working offline', steps:[
+        ['driver/01-online','Go online'],
+        ['driver/23-offline','Offline · pending sync'],
+        ['driver/03-proof','Proof of delivery'],
       ]},
       { title:'Bid on marketplace · auction', steps:[
         ['driver/05-marketplace','Open marketplace'],
@@ -3476,9 +3909,17 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
         ['control-panel/08-finance','Finance'],
         ['control-panel/27-invoices','Invoices'],
         ['control-panel/09-compliance','Compliance'],
+        ['control-panel/31-disputes','Disputes & claims'],
         ['control-panel/09b-suspend-confirm','Suspend'],
         ['control-panel/09c-rule-builder','Rule builder'],
         ['control-panel/29-fraud','Fraud queue'],
+      ]},
+      { title:'Clients, support & trust', steps:[
+        ['control-panel/30-clients','Client accounts'],
+        ['control-panel/32-support','Support tickets'],
+        ['control-panel/31-disputes','Disputes & claims'],
+        ['control-panel/33-audit','Audit log'],
+        ['control-panel/34-security','Panel security'],
       ]},
       { title:'Agents, marketing & growth', steps:[
         ['control-panel/26-agents','Country agents'],
@@ -3517,6 +3958,7 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
         ['fleet-portal/05-vehicles','Vehicles'],
         ['fleet-portal/05b-add-vehicle','Add vehicle'],
         ['fleet-portal/17-maintenance','Maintenance'],
+        ['fleet-portal/18-profitability','Profit per truck'],
         ['fleet-portal/07-wallet-payouts','Wallet & payouts'],
         ['fleet-portal/07b-request-payout','Request payout'],
         ['fleet-portal/08-violations','Violations'],
@@ -3533,6 +3975,7 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
         ['broker-portal/03-carriers','Carriers'],
         ['broker-portal/03b-add-carrier','Add carrier'],
         ['broker-portal/08-contracts','Carrier contracts'],
+        ['broker-portal/09-messages','Masked chats'],
         ['broker-portal/04-wallet-payouts','Wallet & payouts'],
       ]},
     ]},
