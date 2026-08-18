@@ -85,6 +85,10 @@ function ic(name,color=C.text,size=24){
     lock:`<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>`,
     headset:`<path d="M5 13a7 7 0 0114 0"/><rect x="3.5" y="13" width="3.6" height="6.5" rx="1.6"/><rect x="16.9" y="13" width="3.6" height="6.5" rx="1.6"/><path d="M20.5 19.5a3 3 0 01-3 3h-2.5"/>`,
     scale:`<path d="M12 4v16M7.5 20h9M5 7h14l-2 0"/><path d="M5 7l-2.4 4.8a2.4 2.4 0 004.8 0zM19 7l-2.4 4.8a2.4 2.4 0 004.8 0z"/>`,
+    gift:`<rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M3 9h18M12 9v11M12 9c-1.5-4-6-3-6-.5C6 9 9 9 12 9zM12 9c1.5-4 6-3 6-.5C18 9 15 9 12 9z"/>`,
+    qr:`<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h3v3M20 14v6M14 20h3"/>`,
+    fuel:`<path d="M5 21V5a2 2 0 012-2h5a2 2 0 012 2v16M4 21h11"/><path d="M14 8h2.5L18 9.5V16a2 2 0 004 0V7l-2.5-2.5"/><path d="M7 8h5"/>`,
+    trophy:`<path d="M7 4h10v4a5 5 0 01-10 0zM7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3M9 15h6l-1 5H10z"/>`,
   };
   return `<svg ${s}>${P[name]||''}</svg>`;
 }
@@ -131,9 +135,9 @@ function tabbar(active){
   </div>`;
 }
 function tabbarDriver(active){
-  const items=[['home','Home'],['filter','Offers'],['box','Trips'],['wallet','Earnings'],['user','Profile']];
+  const items=[['home','Home','home'],['filter','Offers','offers'],['box','Trips','trips'],['wallet','Earnings','earnings'],['user','Profile','profile']];
   return `<div style="display:flex;justify-content:space-around;align-items:center;padding:12px 8px 26px;background:#fff;border-top:1px solid ${C.line}">
-    ${items.map(([k,l])=>{const on=k===active||(active==='offers'&&l==='Offers');return `<div style="display:flex;flex-direction:column;align-items:center;gap:5px">${ic(k,on?C.primary:'#9AA6A0',24)}<span style="font-size:11px;font-weight:${on?800:600};color:${on?C.primary:'#9AA6A0'}">${l}</span></div>`;}).join('')}
+    ${items.map(([k,l,id])=>{const on=id===active;return `<div style="display:flex;flex-direction:column;align-items:center;gap:5px">${ic(k,on?C.primary:'#9AA6A0',24)}<span style="font-size:11px;font-weight:${on?800:600};color:${on?C.primary:'#9AA6A0'}">${l}</span></div>`;}).join('')}
   </div>`;
 }
 function add(name,w,h,scale,html){
@@ -526,6 +530,13 @@ add('client/10-wallet',430,932,3, phone(`
         <div style="display:flex;gap:10px"><div style="flex:1;background:${C.accent};color:#20160a;text-align:center;font-weight:800;padding:13px;border-radius:12px;font-size:14.5px">Top up</div><div style="flex:1;background:rgba(255,255,255,.18);color:#fff;text-align:center;font-weight:800;padding:13px;border-radius:12px;font-size:14.5px">Withdraw</div></div>
       </div>`,'overflow:hidden')}
     </div>
+    <div style="padding:0 22px 14px">
+      <div style="display:flex;align-items:center;gap:13px;border-radius:16px;padding:15px 16px;background:linear-gradient(135deg,#1C1712 0%,#B4470A 130%);color:#fff">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center">${ic('gift','#fff',22)}</div>
+        <div style="flex:1"><div style="font-weight:800;font-size:15px">NEXT Rewards</div><div style="font-size:12.5px;font-weight:700;opacity:.8">12,450 pts · ≈ 124,500 IQD</div></div>
+        <span style="font-size:22px;opacity:.8">›</span>
+      </div>
+    </div>
     <div style="padding:0 22px 10px;font-weight:800;font-size:16px">Transactions</div>
     <div style="flex:1;overflow:hidden;padding:0 22px">
       ${[['Top-up · ZainCash','+200,000',C.primary,'2 Aug'],['Order #NF-20418','-485,000',C.text,'2 Aug'],['Refund · #NF-20301','+35,000',C.primary,'28 Jul'],['Order #NF-20290','-198,000',C.text,'27 Jul']].map(([a,b,c,d])=>`
@@ -608,7 +619,7 @@ add('client/13-profile',430,932,3, phone(`
       ${chip('Plus',{bg:C.primaryL,c:C.primaryD})}
     </div>
     <div style="flex:1;overflow:hidden;padding:6px 22px">
-      ${[['user','Personal & company info'],['wallet','Display currency · IQD'],['chat','Language · العربية'],['bell','Notification preferences'],['shield','Active sessions'],['clock','Support & help'],['doc','Legal & privacy']].map(([k,t],i,arr)=>`
+      ${[['gift','NEXT Rewards · 12,450 pts'],['user','Personal & company info'],['wallet','Display currency · IQD'],['chat','Language · العربية'],['bell','Notification preferences'],['shield','Active sessions'],['clock','Support & help'],['doc','Legal & privacy']].map(([k,t],i,arr)=>`
         <div style="display:flex;align-items:center;gap:14px;padding:15px 0;${i<arr.length-1?'border-bottom:1px solid '+C.line:''}">${ic(k,C.primary,22)}<span style="flex:1;font-weight:700;font-size:15px">${t}</span><span style="color:${C.muted};font-size:22px">›</span></div>`).join('')}
       <div style="margin-top:14px;text-align:center;color:${C.danger};font-weight:800;font-size:15px">Sign out</div>
     </div>
@@ -1152,7 +1163,7 @@ add('driver/01-online',430,932,3, phone(`
       ${[['star','Rating','4.9 / 5.0'],['gauge','On-time rate','98%'],['shield','Violations','0 active']].map(([k,a,b],i)=>`<div style="display:flex;align-items:center;gap:12px;padding:14px 0;${i?'border-top:1px solid '+C.line:''}">${ic(k,C.primary,22)}<span style="flex:1;font-weight:600;font-size:15px">${a}</span><span style="font-weight:800;font-size:15px">${b}</span></div>`).join('')}
     </div>`)}</div>
     <div style="flex:1"></div>
-    ${tabbar('home')}
+    ${tabbarDriver('home')}
   </div>`));
 
 // 02 Job offer w/ timer
@@ -1249,7 +1260,7 @@ add('driver/04-earnings',430,932,3, phone(`
       ${[['#NF-20418','Baghdad → Erbil','+412,000'],['#NF-20390','Baghdad → Basra','+528,000'],['#NF-20361','Karbala → Najaf','+96,000']].map(([a,b,c],i)=>`<div style="display:flex;align-items:center;gap:12px;padding:14px 0;${i?'border-top:1px solid '+C.line:''}"><div style="width:40px;height:40px;border-radius:12px;background:${C.primaryL};display:flex;align-items:center;justify-content:center">${ic('truck',C.primaryD,20)}</div><div style="flex:1"><div style="font-weight:800;font-size:14px">${a}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${b}</div></div><div style="font-weight:800;color:${C.primary};font-size:15px" class="mono">${c}</div></div>`).join('')}
     </div>`)}</div>
     <div style="flex:1"></div>
-    ${tabbar('wallet')}
+    ${tabbarDriver('earnings')}
   </div>`));
 
 // 02c Loading proof (pickup checklist + before/after + client signature)
@@ -1419,7 +1430,7 @@ add('driver/08-view-loadplan',430,932,3, phone(`
 
 /* ============================================================= CONTROL PANEL */
 function cpSidebar(active){
-  const items=[['grid','Overview'],['route','Dispatch board'],['star','Auctions'],['box','Orders'],['map','Live map'],['user','Applications'],['truck','Carriers'],['building','Agents'],['user','Clients'],['money','Finance'],['doc','Invoices'],['star','Marketing'],['shield','Compliance'],['scale','Disputes'],['shield','Fraud'],['headset','Support'],['gauge','Pricing'],['doc','Catalog'],['star','Plans & Tiers'],['chat','Localization'],['lock','Security'],['doc','Audit log'],['filter','Reports']];
+  const items=[['grid','Overview'],['route','Dispatch board'],['star','Auctions'],['box','Orders'],['map','Live map'],['user','Applications'],['truck','Carriers'],['building','Agents'],['user','Clients'],['money','Finance'],['doc','Invoices'],['star','Marketing'],['gift','Rewards'],['fuel','Fuel partners'],['shield','Compliance'],['scale','Disputes'],['shield','Fraud'],['headset','Support'],['gauge','Pricing'],['doc','Catalog'],['star','Plans & Tiers'],['chat','Localization'],['lock','Security'],['doc','Audit log'],['filter','Reports']];
   return `<div style="width:242px;background:${C.ink};color:#fff;display:flex;flex-direction:column;flex-shrink:0;padding:14px 12px">
     <div style="display:flex;align-items:center;gap:10px;padding:5px 9px 12px">
       <div style="width:34px;height:34px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.06)">${brandMark(22)}</div>
@@ -1446,7 +1457,7 @@ function portalSidebar(active,{broker=false}={}){
   const initials = broker?'ZB':'RF';
   const items = broker
     ? [['grid','Overview'],['route','Claim board'],['star','Auctions'],['box','My Orders'],['truck','Carriers'],['doc','Contracts'],['chat','Messages'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']]
-    : [['grid','Overview'],['box','My Orders'],['star','Marketplace'],['user','My Drivers'],['truck','My Vehicles'],['weight','Maintenance'],['money','Profitability'],['map','Live map'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']];
+    : [['grid','Overview'],['box','My Orders'],['star','Marketplace'],['user','My Drivers'],['truck','My Vehicles'],['weight','Maintenance'],['money','Profitability'],['gift','Rewards'],['map','Live map'],['money','Wallet & Payouts'],['shield','Violations'],['filter','Reports'],['gauge','Settings']];
   return `<div style="width:250px;background:${C.ink};color:#fff;display:flex;flex-direction:column;flex-shrink:0;padding:22px 14px">
     <div style="display:flex;align-items:center;gap:11px;padding:6px 10px 10px">
       <div style="width:40px;height:40px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.06)">${brandMark(26)}</div>
@@ -3336,27 +3347,262 @@ add('client/24-rewards',430,932,3, phone(`
   <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
     <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
       <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
-      <div style="font-weight:800;font-size:17px">Rewards</div>
+      <div style="font-weight:800;font-size:17px">NEXT Rewards</div>
     </div>
     <div style="flex:1;overflow:hidden;padding:16px 18px">
-      <div style="border-radius:20px;padding:22px;background:linear-gradient(135deg,#1C1712 0%,#B4470A 120%);color:#fff;margin-bottom:16px">
-        <div style="font-size:13px;font-weight:700;opacity:.8">Points balance</div>
-        <div style="font-weight:800;font-size:38px;margin:4px 0">12,450 <span style="font-size:15px;opacity:.7">pts</span></div>
-        <div style="font-size:12.5px;font-weight:700;opacity:.8">≈ 124,500 IQD off your next order</div>
+      <div style="border-radius:20px;padding:22px;background:linear-gradient(135deg,#1C1712 0%,#B4470A 120%);color:#fff;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div><div style="font-size:13px;font-weight:700;opacity:.8">Points balance</div>
+          <div style="font-weight:800;font-size:38px;margin:4px 0">12,450 <span style="font-size:15px;opacity:.7">pts</span></div>
+          <div style="font-size:12.5px;font-weight:700;opacity:.8">≈ 124,500 IQD off your next order</div></div>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.16);padding:6px 11px;border-radius:999px;font-weight:800;font-size:12px">${ic('trophy','#F5B301',15)} Gold</span>
+        </div>
+        <div style="margin-top:14px;display:flex;justify-content:space-between;font-size:11.5px;font-weight:700;opacity:.85"><span>1,200 pending</span><span>2,050 pts to Platinum</span></div>
+        <div style="margin-top:6px;height:7px;border-radius:5px;background:rgba(255,255,255,.2)"><div style="width:72%;height:100%;border-radius:5px;background:${C.accent}"></div></div>
       </div>
-      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:15px;padding:15px;border-radius:14px;margin-bottom:18px">Redeem at checkout</button>
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        ${[['gift','Redeem'],['clock','History'],['user','Invite']].map(([k,l])=>`<div style="flex:1;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:13px 8px;text-align:center">${ic(k,C.primary,22)}<div style="font-weight:800;font-size:12.5px;margin-top:5px">${l}</div></div>`).join('')}
+      </div>
       <div style="font-weight:800;font-size:14px;margin-bottom:10px">Recent activity</div>
-      ${[['EARN','Order NF-30455','+240','#16A34A'],['REDEEM','Order NF-30447','-1,000',C.danger],['EARN','Ramadan bonus 2×','+800','#16A34A'],['EARN','Order NF-30432','+180','#16A34A'],['EXPIRE','Points expired','-120',C.muted]].map((r,i)=>`
+      ${[['Order NF-30455','Earned','+240','#16A34A'],['Order NF-30510','Pending','+180',C.warn],['Order NF-30447','Redeemed','-1,000',C.danger],['Ramadan bonus 2×','Earned','+800','#16A34A'],['Points expired','Cancelled','-120',C.muted]].map((r,i)=>`
         <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:13px 15px;margin-bottom:9px">
-          <div style="width:34px;height:34px;border-radius:10px;background:${r[3]}1a;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:10px;color:${r[3]}">${r[0].slice(0,4)}</div>
-          <div style="flex:1"><div style="font-weight:700;font-size:13.5px">${r[1]}</div><div style="color:${C.muted};font-size:11.5px;font-weight:600">${r[0]}</div></div>
+          <div style="width:34px;height:34px;border-radius:10px;background:${r[3]}1a;display:flex;align-items:center;justify-content:center">${ic(r[2][0]==='+'?'plus':'gift',r[3],17)}</div>
+          <div style="flex:1"><div style="font-weight:700;font-size:13.5px">${r[0]}</div><div style="color:${r[3]};font-size:11.5px;font-weight:800">${r[1]}</div></div>
           <div class="mono" style="font-weight:800;font-size:15px;color:${r[3]}">${r[2]}</div>
         </div>`).join('')}
     </div>
     ${tabbar('wallet')}
   </div>`));
 
-// Client 25 Cancel & refund
+// 24a Rewards — points history with status tabs
+add('client/24a-rewards-history',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div style="font-weight:800;font-size:17px">Points history</div>
+    </div>
+    <div style="display:flex;gap:8px;padding:14px 18px 6px;background:#fff">
+      ${[['Earned',true],['Pending',false],['Cancelled',false]].map(([t,on])=>`<div style="flex:1;text-align:center;padding:10px 0;border-radius:999px;font-weight:800;font-size:13px;background:${on?C.ink:'#fff'};color:${on?'#fff':C.muted};border:1px solid ${on?C.ink:C.line}">${t}</div>`).join('')}
+    </div>
+    <div style="flex:1;overflow:hidden;padding:12px 18px">
+      ${[['Order NF-30455','12 Aug 2026','+240'],['Order NF-30432','8 Aug 2026','+180'],['Ramadan bonus 2×','3 Aug 2026','+800'],['Referral · Ahmed','1 Aug 2026','+5,000'],['Order NF-30401','28 Jul 2026','+210']].map(([a,b,c])=>`
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:13px 15px;margin-bottom:9px">
+          <div style="width:34px;height:34px;border-radius:10px;background:#16A34A1a;display:flex;align-items:center;justify-content:center">${ic('check','#16A34A',18)}</div>
+          <div style="flex:1"><div style="font-weight:700;font-size:13.5px">${a}</div><div style="color:${C.muted};font-size:11.5px;font-weight:600">${b} · expires in 12 months</div></div>
+          <div class="mono" style="font-weight:800;font-size:15px;color:#16A34A">${c}</div>
+        </div>`).join('')}
+    </div>
+    ${tabbar('wallet')}
+  </div>`));
+
+// 24b Rewards — client redemption catalog (no fuel)
+add('client/24b-rewards-catalog',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div><div style="font-weight:800;font-size:17px">Redeem points</div><div style="color:${C.muted};font-size:12px;font-weight:600">Balance 12,450 pts</div></div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:16px 18px">
+      ${[['money','5,000 shipment discount','Apply on your next order','500 pts',true],['gift','1 month subscription','Upgrade your plan for a month','2,000 pts',true],['gauge','Delivery priority','Faster dispatch next order','300 pts',true]].map(([k,t,s,pts,ok])=>`
+        <div style="display:flex;align-items:center;gap:13px;background:#fff;border:1px solid ${C.line};border-radius:16px;padding:16px;margin-bottom:12px">
+          <div style="width:46px;height:46px;border-radius:12px;background:${C.primaryL};display:flex;align-items:center;justify-content:center">${ic(k,C.primaryD,24)}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:14.5px">${t}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${s}</div></div>
+          <div style="text-align:right"><div style="font-weight:800;font-size:13px;color:${C.primary}">${pts}</div><div style="margin-top:6px;background:${C.primary};color:#fff;font-weight:800;font-size:12px;padding:7px 13px;border-radius:10px">Redeem</div></div>
+        </div>`).join('')}
+      <div style="display:flex;align-items:center;gap:10px;background:#FFF4E0;border-radius:14px;padding:14px 16px;margin-top:4px">${ic('shield',C.accentD,20)}<div style="font-size:12px;color:${C.accentD};font-weight:700;line-height:1.4">Fuel vouchers are for drivers only — clients redeem shipment benefits.</div></div>
+    </div>
+    ${tabbar('wallet')}
+  </div>`));
+
+// 24c Rewards — referrals + weekly challenges
+add('client/24c-referrals',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div style="font-weight:800;font-size:17px">Invite & challenges</div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:16px 18px">
+      <div style="border-radius:18px;padding:20px;background:#fff;border:1px solid ${C.line};margin-bottom:16px;text-align:center">
+        <div style="color:${C.muted};font-size:12.5px;font-weight:700">Your referral code</div>
+        <div style="font-weight:800;font-size:30px;letter-spacing:3px;margin:6px 0;color:${C.primary}">YUSF-2K4</div>
+        <div style="color:${C.muted};font-size:12px;font-weight:600;margin-bottom:12px">Earn 5,000 pts after your friend's first paid order</div>
+        <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:15px;padding:14px;border-radius:13px">Share invite link</button>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:14px">
+        <div style="flex:1;text-align:center"><div style="font-weight:800;font-size:22px">3</div><div style="color:${C.muted};font-size:12px;font-weight:700">Invited</div></div>
+        <div style="flex:1;text-align:center"><div style="font-weight:800;font-size:22px">1</div><div style="color:${C.muted};font-size:12px;font-weight:700">Rewarded</div></div>
+        <div style="flex:1;text-align:center"><div style="font-weight:800;font-size:22px;color:${C.primary}">5,000</div><div style="color:${C.muted};font-size:12px;font-weight:700">Points earned</div></div>
+      </div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:10px">This week's challenge</div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div style="font-weight:800;font-size:14px">Order 5 shipments</div><span style="color:${C.primary};font-weight:800;font-size:13px">+1,000 pts</span></div>
+        <div style="height:8px;border-radius:5px;background:${C.bg}"><div style="width:60%;height:100%;border-radius:5px;background:${C.primary}"></div></div>
+        <div style="color:${C.muted};font-size:12px;font-weight:700;margin-top:8px">3 of 5 · ends in 3 days</div>
+      </div>
+    </div>
+    ${tabbar('wallet')}
+  </div>`));
+
+/* ---------- DRIVER: profile hub + NEXT Rewards ---------- */
+// 20 Driver profile hub (gives the Profile tab a real home + rewards entry)
+add('driver/20-profile',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="padding:6px 22px 8px"><div style="font-size:22px;font-weight:800">Profile</div></div>
+    <div style="padding:14px 22px;display:flex;align-items:center;gap:14px">
+      <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#F7902E,#C0480A);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:24px">KA</div>
+      <div style="flex:1"><div style="font-weight:800;font-size:19px">Karim A.</div><div style="color:${C.muted};font-size:14px;font-weight:600">Volvo FH · +964 780 ••• 1122</div></div>
+      <span style="display:inline-flex;align-items:center;gap:6px;background:${C.primaryL};color:${C.primaryD};padding:6px 11px;border-radius:999px;font-weight:800;font-size:12px">${ic('trophy',C.primaryD,15)} Platinum</span>
+    </div>
+    <div style="padding:0 22px 12px">
+      <div style="display:flex;align-items:center;gap:13px;border-radius:16px;padding:15px 16px;background:linear-gradient(135deg,#1C1712 0%,#B4470A 130%);color:#fff">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center">${ic('gift','#fff',22)}</div>
+        <div style="flex:1"><div style="font-weight:800;font-size:15px">NEXT Rewards</div><div style="font-size:12.5px;font-weight:700;opacity:.8">8,900 pts · 2 fuel vouchers</div></div>
+        <span style="font-size:22px;opacity:.8">›</span>
+      </div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:2px 22px">
+      ${[['wallet','Earnings & payouts'],['truck','My vehicle & documents'],['weight','Maintenance log'],['shield','Violations & appeals'],['bell','Notification preferences'],['power','Emergency / SOS'],['clock','Support & help']].map(([k,t],i,arr)=>`
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 0;${i<arr.length-1?'border-bottom:1px solid '+C.line:''}">${ic(k,C.primary,22)}<span style="flex:1;font-weight:700;font-size:15px">${t}</span><span style="color:${C.muted};font-size:22px">›</span></div>`).join('')}
+    </div>
+    ${tabbarDriver('profile')}
+  </div>`));
+
+// 24 Driver rewards hub
+add('driver/24-rewards',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div style="font-weight:800;font-size:17px">NEXT Rewards</div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:16px 18px">
+      <div style="border-radius:20px;padding:22px;background:linear-gradient(135deg,#1C1712 0%,#B4470A 120%);color:#fff;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div><div style="font-size:13px;font-weight:700;opacity:.8">Points balance</div>
+          <div style="font-weight:800;font-size:38px;margin:4px 0">8,900 <span style="font-size:15px;opacity:.7">pts</span></div>
+          <div style="font-size:12.5px;font-weight:700;opacity:.8">Redeem for fuel, lower commission or quick pay</div></div>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.16);padding:6px 11px;border-radius:999px;font-weight:800;font-size:12px">${ic('trophy','#E5E4E2',15)} Platinum</span>
+        </div>
+        <div style="margin-top:14px;display:flex;justify-content:space-between;font-size:11.5px;font-weight:700;opacity:.85"><span>900 pending (after POD)</span><span>Top tier reached</span></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        ${[['fuel','Vouchers'],['money','Quick pay'],['user','Invite']].map(([k,l])=>`<div style="flex:1;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:13px 8px;text-align:center">${ic(k,C.primary,22)}<div style="font-weight:800;font-size:12.5px;margin-top:5px">${l}</div></div>`).join('')}
+      </div>
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:15px;padding:15px;border-radius:14px;margin-bottom:16px">Redeem points</button>
+      <div style="font-weight:800;font-size:14px;margin-bottom:10px">Ways to earn</div>
+      ${[['truck','Complete trips','2 pts / 1,000 IQD'],['star','5-star ratings','Bonus per week'],['user','Invite a driver','5,000 pts']].map(([k,a,b])=>`
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:13px 15px;margin-bottom:9px"><div style="width:34px;height:34px;border-radius:10px;background:${C.primaryL};display:flex;align-items:center;justify-content:center">${ic(k,C.primaryD,18)}</div><div style="flex:1;font-weight:700;font-size:13.5px">${a}</div><div style="font-weight:800;font-size:13px;color:${C.primary}">${b}</div></div>`).join('')}
+    </div>
+    ${tabbarDriver('profile')}
+  </div>`));
+
+// 24a Driver points history (status tabs)
+add('driver/24a-rewards-history',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div style="font-weight:800;font-size:17px">Points history</div>
+    </div>
+    <div style="display:flex;gap:8px;padding:14px 18px 6px;background:#fff">
+      ${[['Earned',true],['Pending',false],['Cancelled',false]].map(([t,on])=>`<div style="flex:1;text-align:center;padding:10px 0;border-radius:999px;font-weight:800;font-size:13px;background:${on?C.ink:'#fff'};color:${on?'#fff':C.muted};border:1px solid ${on?C.ink:C.line}">${t}</div>`).join('')}
+    </div>
+    <div style="flex:1;overflow:hidden;padding:12px 18px">
+      ${[['Trip NF-20418','Baghdad → Erbil','+824'],['Trip NF-20390','Baghdad → Basra','+1,056'],['Weekly challenge','10 trips done','+3,000'],['Referral · Mustafa','First paid trip','+5,000'],['Trip NF-20361','Karbala → Najaf','+192']].map(([a,b,c])=>`
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:13px 15px;margin-bottom:9px">
+          <div style="width:34px;height:34px;border-radius:10px;background:#16A34A1a;display:flex;align-items:center;justify-content:center">${ic('check','#16A34A',18)}</div>
+          <div style="flex:1"><div style="font-weight:700;font-size:13.5px">${a}</div><div style="color:${C.muted};font-size:11.5px;font-weight:600">${b}</div></div>
+          <div class="mono" style="font-weight:800;font-size:15px;color:#16A34A">${c}</div>
+        </div>`).join('')}
+    </div>
+    ${tabbarDriver('profile')}
+  </div>`));
+
+// 24b Driver redeem catalog (fuel / commission / quick pay)
+add('driver/24b-redeem',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div><div style="font-weight:800;font-size:17px">Redeem points</div><div style="color:${C.muted};font-size:12px;font-weight:600">Balance 8,900 pts</div></div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:16px 18px">
+      ${[['fuel','10,000 fuel voucher','Redeem at a partner station','1,000 pts'],['fuel','25,000 fuel voucher','Redeem at a partner station','2,400 pts'],['money','2% commission cut','Lower commission next trip','1,500 pts'],['wallet','Quick pay','Get paid early after delivery','200 pts']].map(([k,t,s,pts])=>`
+        <div style="display:flex;align-items:center;gap:13px;background:#fff;border:1px solid ${C.line};border-radius:16px;padding:16px;margin-bottom:12px">
+          <div style="width:46px;height:46px;border-radius:12px;background:${C.primaryL};display:flex;align-items:center;justify-content:center">${ic(k,C.primaryD,24)}</div>
+          <div style="flex:1"><div style="font-weight:800;font-size:14.5px">${t}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${s}</div></div>
+          <div style="text-align:right"><div style="font-weight:800;font-size:13px;color:${C.primary}">${pts}</div><div style="margin-top:6px;background:${C.primary};color:#fff;font-weight:800;font-size:12px;padding:7px 13px;border-radius:10px">Redeem</div></div>
+        </div>`).join('')}
+    </div>
+    ${tabbarDriver('profile')}
+  </div>`));
+
+// 24c Fuel voucher wallet + QR
+add('driver/24c-vouchers',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div style="font-weight:800;font-size:17px">Fuel vouchers</div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:16px 18px">
+      <div style="border-radius:20px;padding:20px;background:#fff;border:1px solid ${C.line};text-align:center;margin-bottom:16px">
+        <span style="display:inline-flex;align-items:center;gap:6px;background:#16A34A1a;color:#16A34A;padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px">Available</span>
+        <div style="font-weight:800;font-size:26px;margin:12px 0 2px">25,000 <span style="font-size:14px;color:${C.muted}">IQD</span></div>
+        <div style="color:${C.muted};font-size:12px;font-weight:600;margin-bottom:14px">Show this QR at a NEXT partner station</div>
+        <div style="width:190px;height:190px;margin:0 auto;border-radius:16px;background:#fff;border:2px solid ${C.line};display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(7,1fr);gap:3px;padding:14px">
+          ${Array.from({length:49}).map((_,i)=>`<div style="background:${[0,1,5,6,7,13,14,20,28,34,35,41,42,43,47,48,9,11,24,26,37,39,17,31].includes(i)?C.ink:'transparent'};border-radius:2px"></div>`).join('')}
+        </div>
+        <div style="margin-top:12px;font-weight:800;font-size:14px;letter-spacing:2px">FV-8QK-25K</div>
+        <div style="color:${C.muted};font-size:11.5px;font-weight:600">Expires 30 Sep 2026 · single use</div>
+      </div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:10px">My vouchers</div>
+      ${[['10,000 IQD','Used · Al-Noor Station','#6E655D'],['25,000 IQD','Available','#16A34A'],['10,000 IQD','Expired','#EF4444']].map(([a,b,c])=>`
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:13px 15px;margin-bottom:9px"><div style="width:34px;height:34px;border-radius:10px;background:${c}1a;display:flex;align-items:center;justify-content:center">${ic('fuel',c,18)}</div><div style="flex:1"><div style="font-weight:800;font-size:13.5px">${a}</div><div style="color:${c};font-size:11.5px;font-weight:800">${b}</div></div></div>`).join('')}
+    </div>
+    ${tabbarDriver('profile')}
+  </div>`));
+
+// 24d Quick pay (early payout redemption)
+add('driver/24d-quick-pay',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div style="font-weight:800;font-size:17px">Quick pay</div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:16px 18px">
+      <div style="display:flex;align-items:center;gap:10px;background:#16A34A1a;border-radius:14px;padding:14px 16px;margin-bottom:16px">${ic('check','#16A34A',20)}<div style="font-size:12.5px;color:#15803D;font-weight:700;line-height:1.4">POD approved and no open dispute — this trip is eligible for early payout.</div></div>
+      <div style="border-radius:18px;padding:20px;background:#fff;border:1px solid ${C.line};margin-bottom:16px">
+        <div style="font-weight:800;font-size:14px;margin-bottom:12px">Trip NF-20418 · Baghdad → Erbil</div>
+        ${[['Trip earnings','412,000',false],['Quick pay fee','-4,000',true],['Points cost','200 pts',false],['You receive now','408,000',false]].map(([a,b,fee],i)=>`<div style="display:flex;justify-content:space-between;padding:9px 0;${i?'border-top:1px solid '+C.line:''}"><span style="font-size:13px;color:${fee?C.danger:C.muted};font-weight:${fee?700:600}">${a}</span><span class="mono" style="font-weight:800;font-size:13.5px;color:${fee?C.danger:C.text}">${b}</span></div>`).join('')}
+        <div style="margin-top:10px;display:flex;align-items:center;gap:8px;font-size:12px;color:${C.muted};font-weight:600">${ic('clock',C.muted,15)} Instead of the standard 24-hour payout hold.</div>
+      </div>
+    </div>
+    <div style="padding:14px 18px 30px;background:#fff;border-top:1px solid ${C.line}">
+      <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:17px;padding:17px;border-radius:14px">Release 408,000 IQD now</button>
+    </div>
+  </div>`));
+
+// 24e Driver referrals + challenges
+add('driver/24e-referrals-challenges',430,932,3, phone(`
+  <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.bg};display:flex;align-items:center;justify-content:center">${ic('arrow',C.text,20)}</div>
+      <div style="font-weight:800;font-size:17px">Invite & challenges</div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:16px 18px">
+      <div style="border-radius:18px;padding:20px;background:#fff;border:1px solid ${C.line};margin-bottom:16px;text-align:center">
+        <div style="color:${C.muted};font-size:12.5px;font-weight:700">Your driver referral code</div>
+        <div style="font-weight:800;font-size:30px;letter-spacing:3px;margin:6px 0;color:${C.primary}">KRM-DRV</div>
+        <div style="color:${C.muted};font-size:12px;font-weight:600;margin-bottom:12px">Earn 5,000 pts after their first paid trip</div>
+        <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:15px;padding:14px;border-radius:13px">Share invite link</button>
+      </div>
+      <div style="font-weight:800;font-size:14px;margin-bottom:10px">Weekly challenges</div>
+      ${[['Complete 10 trips','+3,000 pts','7 of 10 · ends in 2 days',70],['Keep 4.9★ rating','+1,500 pts','4.9 now · on track',85]].map(([t,pts,sub,pc])=>`
+        <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:16px;margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div style="font-weight:800;font-size:14px">${t}</div><span style="color:${C.primary};font-weight:800;font-size:13px">${pts}</span></div>
+          <div style="height:8px;border-radius:5px;background:${C.bg}"><div style="width:${pc}%;height:100%;border-radius:5px;background:${C.primary}"></div></div>
+          <div style="color:${C.muted};font-size:12px;font-weight:700;margin-top:8px">${sub}</div>
+        </div>`).join('')}
+    </div>
+    ${tabbarDriver('profile')}
+  </div>`));
 add('client/25-cancel-refund',430,932,3, phone(`
   <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;background:${C.bg}">
     <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
@@ -3740,6 +3986,231 @@ add('driver/23-offline',430,932,3, phone(`
     ${tabbarDriver('trips')}
   </div>`));
 
+/* ============================================================= CP: NEXT Rewards admin */
+// 35 Reward factors (per country × role)
+add('control-panel/35-rewards',1440,900,2, desktop(`
+  ${cpSidebar('Rewards')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${cpTopbar('Rewards','Points engine · earn factors per country and role (client vs driver)')}
+    <div style="flex:1;padding:24px 30px;overflow:hidden;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;gap:12px">
+        ${[['Points issued (30d)','4.2M',C.primary],['Points redeemed (30d)','2.9M',C.text],['Redemption cost','29,400,000',C.warn],['Active vouchers','318','#16A34A']].map(([a,b,col])=>`<div style="flex:1;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:16px 18px"><div class="mono" style="font-weight:800;font-size:21px;color:${col}">${b}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${a}</div></div>`).join('')}
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+        <div style="padding:16px 20px;border-bottom:1px solid ${C.line};display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:16px">Earn & redeem factors</span><span style="color:${C.muted};font-size:12.5px;font-weight:700">Editable — dummy defaults shown</span></div>
+        <div style="display:grid;grid-template-columns:1fr .8fr 1.1fr 1fr .9fr .9fr 80px;padding:12px 20px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>COUNTRY</div><div>ROLE</div><div>EARN RATE</div><div>POINT VALUE</div><div>EXPIRY</div><div>REFERRAL</div><div></div></div>
+        ${[['Iraq','Client','1 pt / 1,000 IQD','1 pt = 10 IQD','12 mo','5,000'],
+           ['Iraq','Driver','2 pts / 1,000 IQD','1 pt = 10 IQD','12 mo','5,000'],
+           ['Jordan','Client','1 pt / 1 JOD','1 pt = 0.01 JOD','12 mo','50'],
+           ['Jordan','Driver','2 pts / 1 JOD','1 pt = 0.01 JOD','12 mo','50']].map((r,i)=>`
+          <div style="display:grid;grid-template-columns:1fr .8fr 1.1fr 1fr .9fr .9fr 80px;padding:14px 20px;align-items:center;font-size:13px;${i?'border-top:1px solid '+C.line:''}">
+            <div style="font-weight:800">${r[0]}</div>
+            <div><span style="font-weight:800;font-size:11.5px;padding:3px 10px;border-radius:999px;color:${r[1]==='Driver'?C.primaryD:'#4F46E5'};background:${r[1]==='Driver'?C.primaryL:'#EEF0FF'}">${r[1]}</span></div>
+            <div class="mono" style="font-weight:700">${r[2]}</div><div class="mono" style="font-weight:700">${r[3]}</div>
+            <div style="font-weight:700;color:${C.muted}">${r[4]}</div><div class="mono" style="font-weight:700">${r[5]}</div>
+            <div>${ic('edit',C.primary,18)}</div>
+          </div>`).join('')}
+      </div>
+      <div style="font-size:12px;color:${C.muted};font-weight:600;display:flex;align-items:center;gap:8px">${ic('shield',C.muted,16)} Client and driver balances are separate; changing a row affects new earnings only.</div>
+    </div>
+  </div>`));
+
+// 36 Reward catalog + challenges
+add('control-panel/36-reward-catalog',1440,900,2, desktop(`
+  ${cpSidebar('Rewards')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${cpTopbar('Reward catalog','Redemption items and weekly challenges per country and audience')}
+    <div style="flex:1;padding:24px 30px;overflow:hidden;display:grid;grid-template-columns:1fr 360px;gap:18px">
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+        <div style="padding:16px 20px;border-bottom:1px solid ${C.line};display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:16px">Catalog items · Iraq</span><button style="border:0;background:${C.ink};color:#fff;font-weight:800;font-size:12.5px;padding:9px 16px;border-radius:10px;display:flex;align-items:center;gap:7px">${ic('plus','#fff',16)} New item</button></div>
+        <div style="display:grid;grid-template-columns:.8fr 1.4fr 1fr .8fr 80px;padding:12px 20px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>AUDIENCE</div><div>REWARD</div><div>TYPE</div><div>COST</div><div>STATUS</div></div>
+        ${[['Client','5,000 shipment discount','Discount','500','On','#16A34A'],
+           ['Client','1 month subscription','Sub upgrade','2,000','On','#16A34A'],
+           ['Client','Delivery priority','Priority','300','On','#16A34A'],
+           ['Driver','10,000 fuel voucher','Fuel','1,000','On','#16A34A'],
+           ['Driver','2% commission cut','Commission','1,500','On','#16A34A'],
+           ['Driver','Quick pay','Quick pay','200','On','#16A34A']].map((r,i)=>`
+          <div style="display:grid;grid-template-columns:.8fr 1.4fr 1fr .8fr 80px;padding:13px 20px;align-items:center;font-size:12.5px;${i?'border-top:1px solid '+C.line:''}">
+            <div><span style="font-weight:800;font-size:11px;padding:3px 9px;border-radius:999px;color:${r[0]==='Driver'?C.primaryD:'#4F46E5'};background:${r[0]==='Driver'?C.primaryL:'#EEF0FF'}">${r[0]}</span></div>
+            <div style="font-weight:800">${r[1]}</div><div style="color:${C.muted};font-weight:700">${r[2]}</div>
+            <div class="mono" style="font-weight:800;color:${C.primaryD}">${r[3]} pts</div>
+            <div><span style="font-weight:800;font-size:11px;padding:3px 9px;border-radius:999px;color:${r[5]};background:${r[5]}1a">${r[4]}</span></div>
+          </div>`).join('')}
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;padding:22px;display:flex;flex-direction:column">
+        <div style="font-weight:800;font-size:16px;margin-bottom:14px">Weekly challenges</div>
+        ${[['Complete 10 trips','Driver','+3,000 pts'],['Order 5 shipments','Client','+1,000 pts'],['Keep 4.9★ rating','Driver','+1,500 pts']].map(([t,aud,pts])=>`
+          <div style="border:1px solid ${C.line};border-radius:13px;padding:13px 14px;margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:13.5px">${t}</span><span style="color:${C.primary};font-weight:800;font-size:12.5px">${pts}</span></div><div style="color:${C.muted};font-size:11.5px;font-weight:700;margin-top:3px">${aud} · weekly</div></div>`).join('')}
+        <div style="flex:1"></div>
+        <button style="width:100%;margin-top:8px;border:1.5px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:13.5px;padding:12px;border-radius:11px">+ Add challenge</button>
+      </div>
+    </div>
+  </div>`));
+
+// 37 Fuel partners
+add('control-panel/37-fuel-partners',1440,900,2, desktop(`
+  ${cpSidebar('Fuel partners')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${cpTopbar('Fuel partners','Partner stations that accept driver fuel vouchers · per country')}
+    <div style="flex:1;padding:24px 30px;overflow:hidden;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;gap:12px">
+          ${[['Active stations','24',C.primary],['Vouchers redeemed (30d)','512',C.text],['Owed to stations','18,600,000',C.warn]].map(([a,b,col])=>`<div style="background:#fff;border:1px solid ${C.line};border-radius:14px;padding:14px 20px"><div class="mono" style="font-weight:800;font-size:20px;color:${col}">${b}</div><div style="color:${C.muted};font-size:12px;font-weight:600">${a}</div></div>`).join('')}
+        </div>
+        <button style="border:0;background:${C.ink};color:#fff;font-weight:800;font-size:12.5px;padding:11px 18px;border-radius:11px;display:flex;align-items:center;gap:7px">${ic('plus','#fff',16)} Add station</button>
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:1.4fr 1fr .8fr .9fr 1fr 90px;padding:12px 20px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>STATION</div><div>BRANCH</div><div>COUNTRY</div><div>SHARE</div><div>PORTAL LINK</div><div></div></div>
+        ${[['Al-Noor Fuel','Karrada','Iraq','20%','Generated','#16A34A'],
+           ['Tigris Petrol','Doura','Iraq','15%','Generated','#16A34A'],
+           ['Erbil Energy','Ring Road','Iraq','25%','Pending',C.warn],
+           ['Basra Gas Co.','Corniche','Iraq','10%','Generated','#16A34A']].map((r,i)=>`
+          <div style="display:grid;grid-template-columns:1.4fr 1fr .8fr .9fr 1fr 90px;padding:14px 20px;align-items:center;font-size:13px;${i?'border-top:1px solid '+C.line:''}">
+            <div style="display:flex;align-items:center;gap:9px;font-weight:800">${ic('fuel',C.primary,18)} ${r[0]}</div>
+            <div style="color:${C.muted};font-weight:700">${r[1]}</div><div style="font-weight:700">${r[2]}</div>
+            <div class="mono" style="font-weight:800">${r[3]}</div>
+            <div><span style="font-weight:800;font-size:11.5px;padding:3px 10px;border-radius:999px;color:${r[5]};background:${r[5]}1a">${r[4]}</span></div>
+            <div style="display:flex;gap:8px">${ic('arrow',C.primary,18)}${ic('edit',C.muted,18)}</div>
+          </div>`).join('')}
+      </div>
+      <div style="font-size:12px;color:${C.muted};font-weight:600;display:flex;align-items:center;gap:8px">${ic('shield',C.muted,16)} A generated portal link lets the station operator verify and redeem QR vouchers with any phone camera.</div>
+    </div>
+  </div>`));
+
+// 38 Fuel settlements
+add('control-panel/38-fuel-settlements',1440,900,2, desktop(`
+  ${cpSidebar('Fuel partners')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${cpTopbar('Fuel settlements','What NEXT owes each station for redeemed vouchers · marketing expense')}
+    <div style="flex:1;padding:24px 30px;overflow:hidden;display:flex;flex-direction:column;gap:16px">
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:1.3fr 1.1fr 90px 1fr 100px 110px;padding:12px 20px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>STATION</div><div>PERIOD</div><div>VOUCHERS</div><div>AMOUNT OWED</div><div>STATUS</div><div></div></div>
+        ${[['Al-Noor Fuel','1–15 Aug','142','7,100,000','Open',C.warn],
+           ['Tigris Petrol','1–15 Aug','98','4,900,000','Open',C.warn],
+           ['Basra Gas Co.','16–31 Jul','120','6,000,000','Paid','#16A34A'],
+           ['Erbil Energy','16–31 Jul','52','2,600,000','Paid','#16A34A']].map((r,i)=>`
+          <div style="display:grid;grid-template-columns:1.3fr 1.1fr 90px 1fr 100px 110px;padding:14px 20px;align-items:center;font-size:13px;${i?'border-top:1px solid '+C.line:''}">
+            <div style="display:flex;align-items:center;gap:9px;font-weight:800">${ic('fuel',C.primary,18)} ${r[0]}</div>
+            <div style="color:${C.muted};font-weight:700">${r[1]}</div>
+            <div style="font-weight:700;color:${C.muted}">${r[2]}</div>
+            <div class="mono" style="font-weight:800">${r[3]}</div>
+            <div><span style="font-weight:800;font-size:11.5px;padding:3px 10px;border-radius:999px;color:${r[5]};background:${r[5]}1a">${r[4]}</span></div>
+            <div>${r[4]==='Open'?`<button style="border:0;background:${C.ink};color:#fff;font-weight:800;font-size:11.5px;padding:8px 13px;border-radius:9px">Mark paid</button>`:`<span style="color:${C.muted};font-size:12px;font-weight:700">Settled</span>`}</div>
+          </div>`).join('')}
+      </div>
+      <div style="font-size:12px;color:${C.muted};font-weight:600;display:flex;align-items:center;gap:8px">${ic('money',C.muted,16)} Marking a settlement paid writes balanced ledger entries: loyalty/marketing expense → fuel voucher payable. Requires an idempotency key.</div>
+    </div>
+  </div>`));
+
+/* ============================================================= FLEET: rewards tab */
+add('fleet-portal/19-rewards',1440,900,2, desktop(`
+  ${portalSidebar('Rewards')}
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${portalTop('Rewards','Driver loyalty points, tiers and fuel savings')}
+    <div style="flex:1;padding:22px 30px;overflow:hidden;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;gap:12px">
+        ${[['Fleet points','142,300',C.primary],['Fuel saved (30d)','3,850,000','#16A34A'],['Quick pays (30d)','61',C.text],['Platinum drivers','7',C.primaryD]].map(([a,b,col])=>`<div style="flex:1;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:16px 18px"><div class="mono" style="font-weight:800;font-size:21px;color:${col}">${b}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${a}</div></div>`).join('')}
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+        <div style="padding:16px 20px;border-bottom:1px solid ${C.line};font-weight:800;font-size:16px">Drivers by points</div>
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1fr;padding:12px 20px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>DRIVER</div><div>TIER</div><div>POINTS</div><div>FUEL SAVED</div><div>QUICK PAYS</div></div>
+        ${[['Karim A.','Platinum','8,900','1,250,000','9'],
+           ['Mustafa R.','Gold','5,400','620,000','5'],
+           ['Zaid H.','Gold','4,800','540,000','4'],
+           ['Ali K.','Silver','2,100','180,000','2']].map((r,i)=>`
+          <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1fr;padding:14px 20px;align-items:center;font-size:13px;${i?'border-top:1px solid '+C.line:''}">
+            <div style="display:flex;align-items:center;gap:9px;font-weight:800">${ic('user',C.primary,18)} ${r[0]}</div>
+            <div><span style="font-weight:800;font-size:11.5px;padding:3px 10px;border-radius:999px;color:${C.primaryD};background:${C.primaryL}">${r[1]}</span></div>
+            <div class="mono" style="font-weight:800">${r[2]}</div>
+            <div class="mono" style="font-weight:700;color:#16A34A">${r[3]}</div>
+            <div style="font-weight:700;color:${C.muted}">${r[4]}</div>
+          </div>`).join('')}
+      </div>
+      <div style="font-size:12px;color:${C.muted};font-weight:600;display:flex;align-items:center;gap:8px">${ic('trophy',C.muted,16)} Tiers use the same Bronze→Platinum model as dispatch priority. Points belong to each driver.</div>
+    </div>
+  </div>`));
+
+/* ============================================================= MERCHANT (fuel station) portal */
+// 00 Station login (via generated portal link)
+add('merchant-portal/00-login',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 30px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:26px"><div style="width:44px;height:44px;border-radius:13px;background:${C.ink};display:flex;align-items:center;justify-content:center">${ic('fuel',C.accent,26)}</div><div><div style="font-weight:800;font-size:20px">NEXT Station</div><div style="color:${C.muted};font-size:13px;font-weight:600">Fuel partner portal</div></div></div>
+    <div style="font-weight:800;font-size:22px;margin-bottom:8px">Al-Noor Fuel · Karrada</div>
+    <p style="color:${C.muted};font-size:14px;line-height:1.5;margin:0 0 22px">Sign in to verify and redeem driver fuel vouchers. Scan a driver's QR with your phone camera.</p>
+    <div style="background:#fff;border:1px solid ${C.line};border-radius:14px;padding:15px;margin-bottom:12px"><div style="color:${C.muted};font-size:12px;font-weight:700">Operator phone</div><div style="font-weight:700;font-size:16px;margin-top:3px">+964 771 234 5678</div></div>
+    <div style="background:#fff;border:1px solid ${C.line};border-radius:14px;padding:15px;margin-bottom:20px"><div style="color:${C.muted};font-size:12px;font-weight:700">One-time code</div><div style="font-weight:700;font-size:16px;margin-top:3px;letter-spacing:6px">• • • • • •</div></div>
+    <button style="width:100%;border:0;background:${C.accent};color:#20160a;font-weight:800;font-size:17px;padding:17px;border-radius:14px">Sign in</button>
+  </div>`));
+
+// 01 Verify voucher — VALID + confirm redeem
+add('merchant-portal/01-verify-valid',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.ink};display:flex;align-items:center;justify-content:center">${ic('fuel',C.accent,20)}</div>
+      <div style="font-weight:800;font-size:17px">Voucher check</div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:20px 18px;display:flex;flex-direction:column">
+      <div style="border-radius:20px;padding:26px 20px;background:#fff;border:1px solid ${C.line};text-align:center">
+        <div style="width:78px;height:78px;border-radius:50%;background:#16A34A1a;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">${ic('check','#16A34A',44)}</div>
+        <div style="font-weight:800;font-size:22px;color:#16A34A">Valid voucher</div>
+        <div style="color:${C.muted};font-size:13px;font-weight:600;margin-top:4px">FV-8QK-25K · Al-Noor Fuel</div>
+        <div style="font-weight:800;font-size:34px;margin:16px 0 2px">25,000 <span style="font-size:15px;color:${C.muted}">IQD</span></div>
+        <div style="color:${C.muted};font-size:12px;font-weight:600">Expires 30 Sep 2026 · single use</div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;align-items:center;gap:10px;background:#FFF4E0;border-radius:14px;padding:13px 15px;margin-bottom:12px">${ic('shield',C.accentD,20)}<div style="font-size:12px;color:${C.accentD};font-weight:700;line-height:1.4">Fill the fuel, then confirm. This voucher can only be redeemed once.</div></div>
+      <button style="width:100%;border:0;background:#16A34A;color:#fff;font-weight:800;font-size:17px;padding:17px;border-radius:14px">Confirm redemption</button>
+    </div>
+  </div>`));
+
+// 02 Verify voucher — already USED
+add('merchant-portal/02-verify-used',430,932,3, phone(`
+  <div style="flex:1;display:flex;flex-direction:column;background:${C.bg}">
+    <div style="padding:14px 20px;display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid ${C.line}">
+      <div style="width:38px;height:38px;border-radius:11px;background:${C.ink};display:flex;align-items:center;justify-content:center">${ic('fuel',C.accent,20)}</div>
+      <div style="font-weight:800;font-size:17px">Voucher check</div>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:20px 18px;display:flex;flex-direction:column">
+      <div style="border-radius:20px;padding:26px 20px;background:#fff;border:1px solid ${C.line};text-align:center">
+        <div style="width:78px;height:78px;border-radius:50%;background:${C.danger}1a;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">${ic('shield',C.danger,42)}</div>
+        <div style="font-weight:800;font-size:22px;color:${C.danger}">Already used</div>
+        <div style="color:${C.muted};font-size:13px;font-weight:600;margin-top:4px">FV-3ZP-10K</div>
+        <div style="margin-top:16px;background:${C.bg};border-radius:14px;padding:14px 16px;text-align:left">
+          ${[['Redeemed at','Al-Noor Fuel · Karrada'],['Redeemed on','14 Aug 2026 · 11:32'],['Value','10,000 IQD']].map(([a,b],i)=>`<div style="display:flex;justify-content:space-between;padding:8px 0;${i?'border-top:1px solid '+C.line:''}"><span style="font-size:12.5px;color:${C.muted};font-weight:600">${a}</span><span style="font-weight:800;font-size:12.5px">${b}</span></div>`).join('')}
+        </div>
+      </div>
+      <div style="flex:1"></div>
+      <button style="width:100%;border:1.5px solid ${C.line};background:#fff;color:${C.text};font-weight:800;font-size:16px;padding:16px;border-radius:14px">Scan another voucher</button>
+    </div>
+  </div>`));
+
+// 03 Station dashboard (desktop)
+add('merchant-portal/03-dashboard',1440,900,2, desktop(`
+  <div style="width:250px;background:${C.ink};color:#fff;display:flex;flex-direction:column;flex-shrink:0;padding:22px 14px">
+    <div style="display:flex;align-items:center;gap:11px;padding:6px 10px 16px"><div style="width:40px;height:40px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center">${ic('fuel',C.primary,24)}</div><div style="font-weight:800;font-size:16px">NEXT <span style="color:${C.accent}">Station</span></div></div>
+    ${[['grid','Dashboard',true],['qr','Scan voucher',false],['doc','Redemptions',false],['money','Statements',false],['gauge','Settings',false]].map(([k,l,on])=>`<div style="display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;margin-bottom:2px;background:${on?'rgba(234,91,12,.16)':'transparent'};color:${on?'#fff':'rgba(255,255,255,.62)'};font-weight:${on?800:600};font-size:14px;${on?'box-shadow:inset 3px 0 0 '+C.accent:''}">${ic(k,on?C.accent:'rgba(255,255,255,.6)',19)} ${l}</div>`).join('')}
+    <div style="flex:1"></div>
+    <div style="display:flex;align-items:center;gap:11px;padding:12px;border-radius:12px;background:rgba(255,255,255,.06)"><div style="width:36px;height:36px;border-radius:50%;background:${C.accent};color:#20160a;font-weight:800;display:flex;align-items:center;justify-content:center">AN</div><div><div style="font-weight:700;font-size:13.5px">Al-Noor Fuel</div><div style="font-size:12px;color:rgba(255,255,255,.5)">Karrada branch</div></div></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    ${portalTop('Dashboard','Fuel vouchers redeemed at your station')}
+    <div style="flex:1;padding:22px 30px;overflow:hidden;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;gap:12px;align-items:stretch">
+        ${[['Redeemed today','8',C.primary],['Value today','185,000',C.text],['This period','142',C.text],['Owed to you','7,100,000','#16A34A']].map(([a,b,col])=>`<div style="flex:1;background:#fff;border:1px solid ${C.line};border-radius:14px;padding:16px 18px"><div class="mono" style="font-weight:800;font-size:22px;color:${col}">${b}</div><div style="color:${C.muted};font-size:12.5px;font-weight:600">${a}</div></div>`).join('')}
+        <div style="background:${C.ink};color:#fff;border-radius:14px;padding:16px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:180px">${ic('qr',C.accent,30)}<div style="font-weight:800;font-size:14px">Scan voucher</div></div>
+      </div>
+      <div style="background:#fff;border:1px solid ${C.line};border-radius:16px;overflow:hidden">
+        <div style="padding:16px 20px;border-bottom:1px solid ${C.line};font-weight:800;font-size:16px">Recent redemptions</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:12px 20px;background:${C.bg};font-weight:800;font-size:12px;color:${C.muted}"><div>VOUCHER</div><div>DRIVER</div><div>VALUE</div><div>TIME</div></div>
+        ${[['FV-8QK-25K','Karim A.','25,000','11:32'],['FV-2LM-10K','Mustafa R.','10,000','10:58'],['FV-9RT-25K','Zaid H.','25,000','09:41'],['FV-5PA-10K','Ali K.','10,000','08:17']].map((r,i)=>`
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:14px 20px;align-items:center;font-size:13px;${i?'border-top:1px solid '+C.line:''}">
+            <div style="font-weight:800">${r[0]}</div><div style="color:${C.muted};font-weight:700">${r[1]}</div>
+            <div class="mono" style="font-weight:800">${r[2]} IQD</div><div style="color:${C.muted};font-weight:700">${r[3]}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+  </div>`));
+
 /* write manifest */
 fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,null,2));
 
@@ -3753,8 +4224,9 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
     'agent-portal': { title:'Country Agent Portal', tag:'Web · country agent operator', kind:'desktop' },
     'fleet-portal': { title:'Fleet Portal',   tag:'Web · scoped operator portal', kind:'desktop' },
     'broker-portal':{ title:'Broker Portal',  tag:'Web · scoped broker portal', kind:'desktop' },
+    'merchant-portal':{ title:'Fuel Station Portal', tag:'Mobile · fuel partner voucher app', kind:'phone' },
   };
-  const order = ['client','driver','control-panel','company-portal','agent-portal','fleet-portal','broker-portal'];
+  const order = ['client','driver','control-panel','company-portal','agent-portal','fleet-portal','broker-portal','merchant-portal'];
   const titleize = s => s.replace(/^\d+[a-z]?-/,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
   const byGroup = {};
   const bySlug  = {};
@@ -3834,6 +4306,14 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
         ['client/23-invoice','Invoice & POD'],
         ['client/24-rewards','Loyalty points'],
       ]},
+      { title:'NEXT Rewards · earn & redeem', steps:[
+        ['client/13-profile','Profile → Rewards'],
+        ['client/24-rewards','Rewards home'],
+        ['client/24a-rewards-history','Points history'],
+        ['client/24b-rewards-catalog','Redeem catalog'],
+        ['client/24c-referrals','Invite & challenges'],
+        ['client/10-wallet','Wallet rewards card'],
+      ]},
       { title:'Cancel & refund', steps:[
         ['client/07-orders','My orders'],
         ['client/08a-order-active','Active order · pre-pickup'],
@@ -3885,6 +4365,15 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
         ['driver/02d-border','Border crossing'],
         ['driver/03-proof','Proof of delivery'],
       ]},
+      { title:'NEXT Rewards · fuel, quick pay & invites', steps:[
+        ['driver/20-profile','Profile → Rewards'],
+        ['driver/24-rewards','Rewards home'],
+        ['driver/24a-rewards-history','Points history'],
+        ['driver/24b-redeem','Redeem points'],
+        ['driver/24c-vouchers','Fuel voucher + QR'],
+        ['driver/24d-quick-pay','Quick pay'],
+        ['driver/24e-referrals-challenges','Invite & challenges'],
+      ]},
     ]},
     { surface:'Control Panel', kind:'desktop', color:'#6366F1', flows:[
       { title:'Sign in & monitor operations', steps:[
@@ -3926,6 +4415,12 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
         ['control-panel/28-marketing','Campaigns & coupons'],
         ['control-panel/29-fraud','Fraud rules'],
       ]},
+      { title:'NEXT Rewards administration', steps:[
+        ['control-panel/35-rewards','Reward factors'],
+        ['control-panel/36-reward-catalog','Catalog & challenges'],
+        ['control-panel/37-fuel-partners','Fuel partners'],
+        ['control-panel/38-fuel-settlements','Fuel settlements'],
+      ]},
       { title:'Configure catalog & pricing', steps:[
         ['control-panel/10-catalog','Vehicle catalog'],
         ['control-panel/10b-countries','Countries'],
@@ -3963,6 +4458,10 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
         ['fleet-portal/07b-request-payout','Request payout'],
         ['fleet-portal/08-violations','Violations'],
       ]},
+      { title:'Driver rewards & fuel savings', steps:[
+        ['fleet-portal/01-overview','Overview'],
+        ['fleet-portal/19-rewards','Rewards dashboard'],
+      ]},
     ]},
     { surface:'Broker Portal', kind:'desktop', color:'#0F766E', flows:[
       { title:'Operate & bid', steps:[
@@ -3999,6 +4498,14 @@ fs.writeFileSync(path.join(__dirname,'manifest.json'),JSON.stringify(manifest,nu
       { title:'Commission & settlement', steps:[
         ['agent-portal/01-overview','Overview'],
         ['agent-portal/04-settlements','Settlements'],
+      ]},
+    ]},
+    { surface:'Fuel Station Portal', kind:'phone', color:'#B4470A', flows:[
+      { title:'Verify & redeem a fuel voucher', steps:[
+        ['merchant-portal/00-login','Station sign in'],
+        ['merchant-portal/03-dashboard','Station dashboard'],
+        ['merchant-portal/01-verify-valid','Scan · valid voucher'],
+        ['merchant-portal/02-verify-used','Scan · already used'],
       ]},
     ]},
   ];

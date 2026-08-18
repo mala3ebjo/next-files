@@ -819,6 +819,76 @@
     "out": "client/24-rewards.png"
   },
   {
+    "file": "client/24a-rewards-history.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/24a-rewards-history.png"
+  },
+  {
+    "file": "client/24b-rewards-catalog.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/24b-rewards-catalog.png"
+  },
+  {
+    "file": "client/24c-referrals.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "client/24c-referrals.png"
+  },
+  {
+    "file": "driver/20-profile.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/20-profile.png"
+  },
+  {
+    "file": "driver/24-rewards.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/24-rewards.png"
+  },
+  {
+    "file": "driver/24a-rewards-history.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/24a-rewards-history.png"
+  },
+  {
+    "file": "driver/24b-redeem.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/24b-redeem.png"
+  },
+  {
+    "file": "driver/24c-vouchers.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/24c-vouchers.png"
+  },
+  {
+    "file": "driver/24d-quick-pay.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/24d-quick-pay.png"
+  },
+  {
+    "file": "driver/24e-referrals-challenges.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "driver/24e-referrals-challenges.png"
+  },
+  {
     "file": "client/25-cancel-refund.html",
     "w": 430,
     "h": 932,
@@ -901,5 +971,68 @@
     "h": 932,
     "scale": 3,
     "out": "driver/23-offline.png"
+  },
+  {
+    "file": "control-panel/35-rewards.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/35-rewards.png"
+  },
+  {
+    "file": "control-panel/36-reward-catalog.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/36-reward-catalog.png"
+  },
+  {
+    "file": "control-panel/37-fuel-partners.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/37-fuel-partners.png"
+  },
+  {
+    "file": "control-panel/38-fuel-settlements.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "control-panel/38-fuel-settlements.png"
+  },
+  {
+    "file": "fleet-portal/19-rewards.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "fleet-portal/19-rewards.png"
+  },
+  {
+    "file": "merchant-portal/00-login.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "merchant-portal/00-login.png"
+  },
+  {
+    "file": "merchant-portal/01-verify-valid.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "merchant-portal/01-verify-valid.png"
+  },
+  {
+    "file": "merchant-portal/02-verify-used.html",
+    "w": 430,
+    "h": 932,
+    "scale": 3,
+    "out": "merchant-portal/02-verify-used.png"
+  },
+  {
+    "file": "merchant-portal/03-dashboard.html",
+    "w": 1440,
+    "h": 900,
+    "scale": 2,
+    "out": "merchant-portal/03-dashboard.png"
   }
 ]
